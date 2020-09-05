@@ -192,7 +192,7 @@ Mesh的提取也被封装在<code>CubeHandler</code>的成员函数中：</p>
 <p>与点云，三角网格相比，对于TSDF进行旋转平移稍有不同。体素是将世界分割成一个个立方体，而在旋转平移之后，变换之后的voxel中心坐标成了实数，需要重新映射到世界坐标系下的体素中，映射到旋转后的中心的8个neighbor体素。</p>
 <p><img alt="" src="../../img/8_neighbor.jpg" /></p>
 <p>如果只映射到最近的体素，会导致不准确的结果，可能产生空洞以及缺失。</p>
-<p>在<code>CubeHandler</code>中，提供了上述两种Transform的方法，可以比较：</p>
+<p>在<code>CubeHandler</code>中，提供了上述两种Transform的方法，可以比较(体素分辨率越高越明显)：</p>
 <pre><code class="cpp">//映射到最近的voxel
 std::shared_ptr&lt;CubeHandler&gt; 
     TransformNearest(const geometry::TransformationMatrix &amp;trans) const;
@@ -201,7 +201,10 @@ std::shared_ptr&lt;CubeHandler&gt;
     Transform(const geometry::TransformationMatrix &amp;trans) const;
 </code></pre>
 
-<p><img alt="" src="" /></p>
+<p><img alt="" src="../../img/8_neighbor.bmp" />
+<center><font color=gray>8-neighbor(分辨率0.00625)</font></center></p>
+<p><img alt="" src="../../img/nearest.bmp" />
+<center><font color=gray>neareast(分辨率0.00625)</font></center></p>
 <p>需要说明的，FCLib实现的最原始的Marching Cubes算法。得到的Mesh往往点很密集，可以使用<code>ClusteringSimplify</code>将相同的点或者距离过近的聚合为一个点，需要法向量可以通过<code>ComputeNormals</code>来计算。</p>
               
             </div>

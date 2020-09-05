@@ -228,6 +228,9 @@
 <center><font color=gray>生成的Line Arrangement/生成的房间平面图</font></center></p>
 <p>详细内容可以阅读文章<a href="https://www.sciencedirect.com/science/article/pii/S0097849314000661">Automatic room detection and reconstruction in cluttered indoor environments with complex room layouts</a>。</p>
 <h3 id="_4">三个重建系统</h3>
+<p>一个没有后端的系统是不完整的。如果只追踪，而不进行优化，得到的结果会出现重影，如下图：
+<img alt="" src="../img/without_loop.bmp" /></p>
+<p>FCLib实现了3种较为完整的系统，使用的方法在前端或者后端略有不同，下面逐一介绍。</p>
 <h4 id="fbafusion">FBAFusion</h4>
 <p>FBAFusion用的是SparseTracking，Mild闭环检测，加上Fast BundleAdjustment后端优化，也就是首页展示的内容。</p>
 <pre><code>./FBAFusion ../../TestData/rgbd/607 0.01
@@ -250,6 +253,7 @@
 
 <p>重建结果：
 <img alt="" src="../img/DenseFusion.bmp" /></p>
+<p><em>注：颜色的问题是OpenCV的BGR与RGB存储问题。</em></p>
               
             </div>
           </div>

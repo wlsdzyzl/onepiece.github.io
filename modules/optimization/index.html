@@ -171,8 +171,7 @@ E(T, p) = \sum_i^{N_f}\sum_{j}^{N_p}\Vert u_{i,j} -  \omega(T_i^{-1} p_j) \Vert,
 </code></pre>
 
 <p>在实现FastBA时，FCLib使用高斯牛顿优化法，而BA一定要使用列文伯格-马夸尔特算法，因为很容易出现奇异矩阵，导致高斯牛顿变得很脆弱，使得结果无法收敛。对于BA的详细推导，可以看<code>related_paper/BARevisited.pdf</code>。</p>
-<p>下面是BA的一个简单例子，只有两个frame，但是可以很明显看到重投影误差的减少(运行example/BATest.cpp可以得到)：
-<img alt="" src="" /></p>
+<p>点击查看<a href="../../examples/#bundleadjustment">示例</a>。</p>
               
             </div>
           </div>

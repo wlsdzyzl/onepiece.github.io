@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>示例 - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u793a\u4f8b";
+    var mkdocs_page_input_path = "examples.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/geometry/">几何</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/odometry/">视觉里程计</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/registration/">点云注册</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/optimization/">优化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/integration/">生成模型</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">示例</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#ply">读取PLY的点云/网格并显示</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rgbd">读取RGBD提取点云并显示</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sparsetrackingdensetracking">SparseTracking和DenseTracking</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">网格简化</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bundleadjustment">BundleAdjustment测试</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#icp">ICP测试</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ransacregistration">RansacRegistration测试</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_3">房间平面图检测</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_4">三个重建系统</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#fbafusion">FBAFusion</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bafusion">BAFusion</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#densefusion">DenseFusion</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>示例</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/examples.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">示例</h2>
+<p>这里是一些使用FCLib的程序。所有的程序都可以在<code>examples</code>文件夹中找到源代码。编译后，进入到<code>build/example</code>下可以输入下面的命令来测试。</p>
+<h3 id="ply">读取PLY的点云/网格并显示</h3>
+<pre><code>./ReadPLYPCD [filename.ply]
+./ReadPLYMesh [filename.ply]
+</code></pre>
+
+<h3 id="rgbd">读取RGBD提取点云并显示</h3>
+<pre><code>./ReadRGBD [color] [depth]
+</code></pre>
+
+<h3 id="sparsetrackingdensetracking">SparseTracking和DenseTracking</h3>
+<pre><code>./SparseOdometry [source_rgb] [source_depth] [target_rgb] [targe_depth]
+./SparseOdometryMild  [source_rgb] [source_depth] [target_rgb] [targe_depth]
+./DenseOdometry  [source_rgb] [source_depth] [target_rgb] [targe_depth]
+</code></pre>
+
+<h3 id="_2">网格简化</h3>
+<pre><code>./SimplifyMeshClustering [filename.ply] [grid_length]
+./SimplifyMeshQuadric [filename.ply] [simplify_ratio]
+</code></pre>
+
+<p>简化效果如下：</p>
+<p><img alt="" src="../img/origin.bmp" />
+<center><font color=gray>原始模型（hand.ply）</font></center></p>
+<p><img alt="" src="../img/simplify_q.bmp" />
+<center><font color=gray>边坍塌（剩下10%的三角形）</font></center></p>
+<p><img alt="" src="../img/simplify_c.bmp" />
+<center><font color=gray>原始模型（体素长0.1）</font></center></p>
+<h3 id="bundleadjustment">BundleAdjustment测试</h3>
+<p>这里输入一对RGBD frame，BundleAdjutment会根据Feature matching的结果进行位姿调整，之后会可视化匹配结果，并将重投影结果保存到目录下的图片中。</p>
+<pre><code>./BATest [source_rgb] [source_depth] [target_rgb] [targe_depth]
+</code></pre>
+
+<p>结果如下：</p>
+<p><img alt="" src="../img/BATest.bmp" />
+<center><font color=gray>经过BA后的Match</font></center></p>
+<p><center>
+<img src='../img/before_BA_target.png' width=45%/>
+<img src='../img/after_BA_target.png' width=45%/>
+</center>
+<center><font color=gray>重投影对比</font></center></p>
+<p>由于优化的是重投影误差，三维点云可视化的结果看起来可能并没有重投影到2d图片结果好。因为三维可视化只是考虑位姿变化，根据位姿得到3D点，而没有吸收到世界坐标点优化的内容。</p>
+<h3 id="icp">ICP测试</h3>
+<pre><code>ICPTest [source_pcd] [target_pcd]
+</code></pre>
+
+<p>ICPTest对两个点云进行注册。但是具体使用PointToPoint还是PointToPlane需要在代码中修改。下面是两个算法迭代30次后的运行结果，可以看出来PointToPlane的收敛速度比PointToPoint要快很多。</p>
+<p><img alt="" src="../img/point_point.bmp" />
+<center><font color=gray>point_to_point</font></center></p>
+<p><img alt="" src="../img/point_plane.bmp" />
+<center><font color=gray>point_to_plane</font></center></p>
+<h3 id="ransacregistration">RansacRegistration测试</h3>
+<pre><code>RansacTest [source_pcd] [target_pcd]
+</code></pre>
+
+<p>RansacTest对两个点云进行注册，在注册之前会对点云进行一个随机旋转，并加上平移，这样才能看出来GlobalRegistration的优势在哪里。</p>
+<p>下面是运行结果，可以修改代码，可以选择直接看匹配后的结果：</p>
+<p><img alt="" src="../img/ransac.bmp" />
+<center><font color=gray>ransac registration</font></center></p>
+<p>选择画出来correspondence：
+<img alt="" src="../img/ransac_corr.bmp" />
+<center><font color=gray>fpfh correspondence</font></center></p>
+<h3 id="_3">房间平面图检测</h3>
+<p>使用<code>algorithm</code>中的算法做的一些有意思的事情。在<code>example/RoomDetection.cpp</code>中，实现了根据有着semantic信息的点云来得知房间平面图。这里面用到了：LineDetection, PlaneDetection（实际上只需要使用一种，不过示例中两个都用了）, DCEL, KMedoidsClusteringDynamic。</p>
+<pre><code>./RoomDetection ../../TestData/room_with_labels.ply
+</code></pre>
+
+<p>输入的模型：
+<img alt="" src="../img/room_with_label.bmp" /></p>
+<p>检测到的直线：
+<img alt="" src="../img/lines.bmp" /></p>
+<p>检测到的平面（点云形式）：
+<img alt="" src="../img/planes.bmp" /></p>
+<p>生成的Line Arrangements：
+<img alt="" src="../img/cells.bmp" /></p>
+<p>聚类后得到的房间平面图：
+<img alt="" src="../img/room_map.bmp" /></p>
+<h3 id="_4">三个重建系统</h3>
+<h4 id="fbafusion">FBAFusion</h4>
+<p>FBAFusion用的是SparseTracking，Mild闭环检测，加上Fast BundleAdjustment后端优化，也就是首页展示的内容。</p>
+<pre><code>./FBAFusion ../../TestData/rgbd/607 0.01
+</code></pre>
+
+<p><img alt="" src="../img/index.gif" /></p>
+<p>FBAFusion最快。重建模型如下：</p>
+<p><img alt="" src="../img/FBAFusion.bmp" /></p>
+<h4 id="bafusion">BAFusion</h4>
+<p>BAFusion用的是SparseTracking，Mild闭环检测，加上BundleAdjustment后端优化。之前说过了，BA在后面矩阵维度会很大，即使在BAFusion中，每个keyframe的特征点只有30个，后面依然要一分钟左右甚至更久才能优化一次。而且BA会优化空间点（优化投影噪声以及参数），但是这部分优化在最后生成模型的时候并没有考虑，只用到了优化的位姿，所以重建模型看起来效果不如FBAFusion，不过依然可以看到优化的效果（没有出现重影）。如果考虑到各方面，BA的效果应该是最好的。</p>
+<pre><code>./BAFusion ../../TestData/rgbd/607 0.01
+</code></pre>
+
+<p>重建效果如下：
+<img alt="" src="../img/BAFusion.bmp" /></p>
+<h4 id="densefusion">DenseFusion</h4>
+<p>DenseFusion使用的是DenseTracking，并且没有用2D的闭环检测。它将读入的帧每过<span class="arithmatex">\(N\)</span>个作为一个submap，再检测到新的submap后，利用当前的submap与之前的submap进行GlobalRegistration，再通过设定阈值来检测是否匹配成功，这样也能达到global consistency。当然，DenseTracking以及GlobalRegistration相对于SparseTracking和通过Mild来排除掉大部分错误的闭环，要慢很多，所以DenseFusion速度也很一般，是一个离线重建系统。后端优化，DenseFusion采用的是Fast BundleAdjustment。</p>
+<pre><code>./DenseFusion ../../TestData/rgbd/607 0.01
+</code></pre>
+
+<p>重建结果：
+<img alt="" src="../img/DenseFusion.bmp" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../thanksto/" class="btn btn-neutral float-right" title="致谢">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../modules/tool/" class="btn btn-neutral" title="其他工具"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../modules/tool/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../thanksto/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

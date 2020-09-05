@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>点云注册 - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u70b9\u4e91\u6ce8\u518c";
+    var mkdocs_page_input_path = "modules\\registration.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">几何</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">视觉里程计</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">点云注册</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#global-registration">Global Registration</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#icp">ICP</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#pointtopoint">PointToPoint</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pointtoplane">PointToPlane</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">优化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">生成模型</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">示例</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>模块 &raquo;</li>
+        
+      
+    
+    <li>点云注册</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/modules/registration.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">点云注册</h2>
+<p>点云注册的任务和视觉里程计很像，只不过视觉里程计的输入是一对Frame，而点云注册的输入是两个点云，没有别的假设，也就没法利用重投影到二维图片这样的操作了。一般来说用来注册的点云的规模比Frame要更大，可以是几十个帧提取的model，甚至是两个房间的model。</p>
+<p>对于点云注册，和视觉里程计的Sparse和Dense类似，也有两种：基于特征与不基于特征。基于特征匹配的，一般称为Global Registration，不需要有初始位姿估计，也叫粗匹配，而后者的比较经典的算法就是ICP了，也叫精细匹配。</p>
+<h3 id="global-registration">Global Registration</h3>
+<p>Global Registration不需要初始位姿，基本步骤为：
+- 提取3D特征
+- 特征匹配
+- outlier过滤
+- 计算变换矩阵</p>
+<p>实际上和SparseTracking是一样的。函数原型为：</p>
+<pre><code class="cpp">std::shared_ptr&lt;RANSACRegistrationResult&gt; 
+    RansacRegistration(const geometry::PointCloud &amp;source_pcd, 
+    const geometry::PointCloud &amp;target_pcd, 
+    const RANSACParameter &amp;r_para = RANSACParameter());
+std::shared_ptr&lt;RANSACRegistrationResult&gt; 
+    RansacRegistration(const geometry::PointCloud &amp;source_feature_pcd, 
+    const geometry::PointCloud &amp;target_feature_pcd, 
+    const FeatureSet &amp; source_features,
+    const FeatureSet &amp; target_features,
+    const RANSACParameter &amp;r_para);
+</code></pre>
+
+<p>上面两个函数的区别在于第一个是直接对两个点云进行注册，第二个是对特征点进行注册，也就是跳过了提取3D特征这一步。在构建一个系统时候，保存3D特征可以避免重复计算，提高效率。</p>
+<p>提取3D特征的库一般在PCL或者Open3D这种库中有实现，但是这样的库太大，OpenCV没有实现3D特征的提取，所以FCLib实现了这一部分，提取FPFH特征，可以通过下面的函数计算得到：</p>
+<pre><code class="cpp">std::tuple&lt;geometry::PointCloud, FeatureSet&gt; DownSampleAndExtractFeature(const geometry::PointCloud &amp;pcd, 
+    const RANSACParameter &amp;r_para = RANSACParameter()); 
+</code></pre>
+
+<p>上面函数输入为点云以及相关参数，返回提取到的特征点位置以及特征（33维向量）。在match时候，只要进行knnsearch，搜索最近点得到匹配结果。outlier的过滤与<a href="../odometry/#sparsetracking">SparseTracking</a>中原理很相似，在这里就不多介绍了。最后通过<a href="../geometry/#ransach">RANSAC</a>来计算得到变换矩阵以及inliers。</p>
+<h3 id="icp">ICP</h3>
+<p>ICP(iterative closest point)是很经典的算法，变种很多，FCLib实现了ICP比较基础的两种，一种是点对点（PointToPoint），一种是点对面（PointToPlane）。</p>
+<h4 id="pointtopoint">PointToPoint</h4>
+<p>优化点到点的距离，优化的目标函数为：<span class="arithmatex">\(\Vert T \cdot p_s - p_t\Vert^2\)</span>。根据OpenCV的KDtree找到最近点，可通过<code>geometry::EstimateRigidTransformation</code>函数直接求得最优的<span class="arithmatex">\(T\)</span>（也可以通过求雅可比矩阵优化），接着根据新的<span class="arithmatex">\(T\)</span>重新寻找最近点，不断迭代到收敛。</p>
+<h4 id="pointtoplane">PointToPlane</h4>
+<p>优化点到面的距离，需要知道target点云的法向量。经过<span class="arithmatex">\(p_t\)</span>的，法向量为<span class="arithmatex">\(n_t\)</span>的平面方程为：</p>
+<div class="arithmatex">\[
+n_t^T (\cdot p - p_t) = 0,
+\]</div>
+<p><span class="arithmatex">\(n_t^T (\cdot p - p_t)\)</span>为点到该平面的距离，因此优化的目标函数为：<span class="arithmatex">\(\Vert n_t^T\cdot(T\cdot p_s - p_t)\Vert^2\)</span>。对于这个cost function的线性化，可以查看<code>related_paper/lowk_point-to-plane_icp_techrep.pdf</code>。通过雅可比矩阵优化得到新的<span class="arithmatex">\(T\)</span>，接着根据新的<span class="arithmatex">\(T\)</span>重新寻找最近点，不断迭代到收敛。</p>
+<p>实验和理论分析都证明了，PointToPlane比PointToPoint有更快的收敛速度。调用方法为：</p>
+<pre><code class="cpp">std::shared_ptr&lt;ICPRegistrationResult&gt; PointToPoint(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target, 
+    const geometry::TransformationMatrix &amp;init_T = geometry::TransformationMatrix::Identity(), const ICPParameter &amp;icp_para = ICPParameter() );
+std::shared_ptr&lt;ICPRegistrationResult&gt; PointToPlane(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target,
+    const geometry::TransformationMatrix &amp;init_T = geometry::TransformationMatrix::Identity(), const ICPParameter &amp;icp_para = ICPParameter() );
+</code></pre>
+
+<p>其中<code>icp_para</code>是相关参数，直接使用默认的就是很好的选择。有两个类RegistrationResult类包含了:</p>
+<pre><code class="cpp">class RegistrationResult
+{
+    public:
+    //相对变换
+    geometry::TransformationMatrix T;
+    //匹配点ID
+    geometry::FMatchSet correspondence_set_index;
+    //匹配点
+    geometry::PointCorrespondenceSet correspondence_set;
+    //rmse
+    double rmse;
+};
+</code></pre>
+
+<p>在这里，是否匹配成功交给使用者来判断。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../optimization/" class="btn btn-neutral float-right" title="优化">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../lcdetection/" class="btn btn-neutral" title="闭环检测"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../lcdetection/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../optimization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

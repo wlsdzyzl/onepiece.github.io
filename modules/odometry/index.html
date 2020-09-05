@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>视觉里程计 - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u89c6\u89c9\u91cc\u7a0b\u8ba1";
+    var mkdocs_page_input_path = "modules\\odometry.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">几何</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">视觉里程计</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#sparsetracking">SparseTracking</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#densetracking">DenseTracking</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_2">比较</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rgbdframe">RGBDFrame</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">点云注册</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">优化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">生成模型</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">示例</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>模块 &raquo;</li>
+        
+      
+    
+    <li>视觉里程计</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/modules/odometry.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">视觉里程计</h2>
+<p>这里的视觉里程计特指RGBD视觉里程计。视觉里程计的作用是估计两帧之间相机的运动，是SLAM的第一步。在FCLib中实现了两种视觉里程计，用得都比较广泛：基于特征点的稀疏匹配，以及基于光流的稠密匹配。用法非常简单：</p>
+<pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
+
+
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame);
+
+
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTrackingMILD(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
+
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTrackingMILD(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame);
+
+std::shared_ptr&lt;DenseTrackingResult&gt; DenseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth, 
+const geometry::TransformationMatrix &amp;initial_T, int term_type = 0);
+
+std::shared_ptr&lt;DenseTrackingResult&gt; DenseTracking(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame, 
+const geometry::TransformationMatrix &amp;initial_T, int term_type = 0);
+</code></pre>
+
+<p>你可以选择用一对深度图一对彩色图来匹配，也可以用两个之前介绍的<code>geometry::RGBDFrame</code>来匹配。返回的结果是一个智能指针，指向一个<code>odometry::SparseTrackingResult</code>对象，或者是<code>odometry::DenseTrackingResult</code>。二者的定义分别如下：</p>
+<pre><code class="cpp">class SparseTrackingResult
+{
+    public:
+    //相对位姿
+    geometry::TransformationMatrix T;
+    //匹配的inliers的id对
+    geometry::FMatchSet correspondence_set_index;
+    //匹配的inliers的点对
+    geometry::PointCorrespondenceSet correspondence_set;
+    //rmse误差
+    double rmse = 1e6;
+    //是否追踪成功
+    bool tracking_success;
+};
+class DenseTrackingResult
+{
+    public:
+    //相对位姿
+    geometry::TransformationMatrix T;
+    //匹配的inliers的id对
+    geometry::PixelCorrespondenceSet pixel_correspondence_set;
+    //匹配的inliers的点对
+    geometry::PointCorrespondenceSet correspondence_set;
+    //rmse误差
+    double rmse = 1e6;
+    //是否追踪成功
+    bool tracking_success;
+};
+</code></pre>
+
+<p>主要区别在于，二者最后得到的匹配点的ID类型不同，sparse tracking特征点ID是一维的，一对正确匹配的特征点类似于<span class="arithmatex">\((501, 308)\)</span>，指的是source frame中的第501个特征点和第308个特征点为一对。而dense tracking最后点的ID是二维的，结果例如：<span class="arithmatex">\([(501, 308), (489, 311)]\)</span>，指的是像素位置<span class="arithmatex">\((501, 308)\)</span>对应的3D点与像素位置为<span class="arithmatex">\((489, 311)\)</span>对应的3D点为一对。当然，可以将dense tracking的结果整合成与sparse tracking结果一样的形式，但是FCLib认为这样更接近算法的本质，因为它透漏出一个信息就是：sparse tracking是基于提取出来的特征点的，而dense tracking是逐像素的。</p>
+<h3 id="sparsetracking">SparseTracking</h3>
+<p>SparseTracking的基本步骤如下：
+- 提取特征点
+- 特征点匹配
+- outlier过滤
+- 求得变换矩阵</p>
+<p>FCLib提取的是ORB特征点，速度快。在特征点匹配时，选择了两种策略：OpenCV的BFMatcher（brutal fource），以及<a href="https://github.com/lhanaf/MILD">MILD</a>中提到的Sparse Match。这个部分的内容也在上述链接中开源了，文章可以参考<a href="https://arxiv.org/abs/1709.05833">Beyond SIFT Using Binary features in Loop Closure Detection</a>，在code部分的<code>relative_paper/sparse_match.pdf</code>也是这篇文章。这个文章中提到的方法在FCLib中被封装成一个类<code>SparseMatcher</code>，主要成员函数：</p>
+<pre><code class="cpp">//Match
+void Match(const geometry::Descriptor &amp;source_descriptors, const geometry::Descriptor &amp;target_descriptors, 
+    geometry::DMatchSet &amp; matches);
+//在match之后，可以进一步改进得到的匹配，
+//需要特征点的3D坐标，也就是只用于RGBD frame
+void RefineMatches(const geometry::Descriptor &amp;source_descriptors, const geometry::Point3List &amp;source_local_points,
+    const geometry::KeyPointSet &amp;source_keypoints,  const geometry::KeyPointSet &amp;target_keypoints, 
+    const geometry::TransformationMatrix &amp; H,geometry::DMatchSet &amp; matches);
+</code></pre>
+
+<p>特征点过滤方法也很多，<code>odometry::outlier_filter</code>类提供了几个常用的方法。</p>
+<pre><code class="cpp">//删除掉距离大于最小距离n倍的匹配（Naive）
+void MinDistance(const geometry::KeyPointSet &amp;source_keypoints,
+    const geometry::KeyPointSet &amp;target_keypoints,geometry::DMatchSet &amp; matches);
+//删除掉最优距离与次优距离比值比较大的点（正确的匹配最优结果应该比次优结果好很多）
+void KnnMatch(const geometry::Descriptor &amp;source, 
+    geometry::Descriptor &amp; target, const cv::BFMatcher &amp;matcher, 
+    std::vector&lt; cv::DMatch &gt; &amp;matches, float minRatio = 1.5);
+//通过Ransac计算本征矩阵，清点inliers
+void Ransac(const geometry::KeyPointSet &amp;source_keypoints, 
+    const geometry::KeyPointSet &amp;target_keypoints,geometry::DMatchSet &amp; matches);
+//对当前检查的匹配对，随机选择几个别的匹配，查看他们是否consistent
+//错误的匹配很难找到其他比较consistent的匹配对
+void RanSaPC(const geometry::Point3List &amp;source_local_points, 
+    const geometry::Point3List &amp;target_local_points, std::default_random_engine &amp;engine, std::vector&lt; cv::DMatch &gt; &amp;init_matches);
+</code></pre>
+
+<p>FCLib将使用<a href="https://github.com/lhanaf/MILD">MILD</a>中sparse match的tracking函数，封装成<code>SparseTrackingMILD</code>，一般来说相对于<code>SparseTracking</code>有更好的效果，可以得到更多的正确的inliers。</p>
+<h3 id="densetracking">DenseTracking</h3>
+<p>DenseTracking的原理可以参考论文：<a href="https://vision.cs.tum.edu/_media/spezial/bib/steinbruecker_sturm_cremers_iccv11.pdf">Real-Time Visual Odometry from Dense RGB-D Images</a>，也就是<code>related_paper/steinbruecker_sturm_cremers_iccv11.pdf</code>。
+上述文章只是追踪颜色图的intensity，也就是光流法，但是很容易拓展到追踪深度图的depth。在FCLib中，是可以根据最后一个参数<code>term_type</code>来选择使用颜色或者深度，或者是混合项：</p>
+<pre><code class="cpp">if(term_type == 0 )//混合
+std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using hybrid term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+else if(term_type == 1)//颜色
+std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using photo term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+else if(term_type == 2)//深度
+std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using geometry term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+</code></pre>
+
+<p>DenseTracking的步骤：
+- 对source frame的每个pixel根据当前位姿计算source到target重投影的对应点
+- 找到所有的inliers对应点
+- 根据这些对于inliers求雅可比矩阵，改进位姿
+- 重复上述过程</p>
+<p>可以看到DenseTracking需要一个初始位姿，如果没有初始估计，需要假设这两个frame的相对位姿很接近。这个过程有点像PointToPoint的<a href="../registration/#PointToPoint">ICP</a>，区别在于优化的目标函数不同，因此PointToPoint需要找到最近点而不是通过重投影，找到最近点的过程很耗时。</p>
+<p>在具体实现时候，会利用图像金字塔，提高运行效率。</p>
+<h3 id="_2">比较</h3>
+<p>SparseTracking特征点个数少，更快，也不需要初始位姿，但是只考虑了视觉信息，在某些纹理比较少或者颜色图很差的地方就不能用了。而DenseTracking比较慢，需要初始位姿，但是它更鲁棒，甚至在只有深度或者只有颜色图的情况下也能使用，在SparseTracking失败的时候，是一个很好的后备方案。</p>
+<h3 id="rgbdframe">RGBDFrame</h3>
+<p>可以看到对于每一种tracking都有两个函数：分别是直接作用于rgb和depth上的：</p>
+<pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
+</code></pre>
+
+<p>与作用于<code>geometry::RGBDFrame</code>上的：</p>
+<pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame);
+</code></pre>
+
+<p>区别在于<code>geometry::RGBDFrame</code>会保存中间信息，搭建系统时可以避免重复计算：</p>
+<pre><code class="cpp">//part of RGBDFrame
+/*for sparse odometry*/
+geometry::Descriptor descriptor;
+geometry::KeyPointSet keypoints;
+PointCloud feature_pcd;//for optimization
+
+
+/*for dense odometry*/
+cv::Mat gray;//gray image of rgb
+cv::Mat depth32f;//refined depth
+std::vector&lt;cv::Mat&gt; color_pyramid;
+std::vector&lt;cv::Mat&gt; depth_pyramid;
+std::vector&lt;cv::Mat&gt; color_dx_pyramid;
+std::vector&lt;cv::Mat&gt; color_dy_pyramid;
+std::vector&lt;cv::Mat&gt; depth_dx_pyramid;
+std::vector&lt;cv::Mat&gt; depth_dy_pyramid;
+std::vector&lt;geometry::ImageXYZ&gt; image_xyz;
+</code></pre>
+
+<p>上述中<code>std::vector&lt;geometry::ImageXYZ&gt; image_xyz</code>可以看作一种三维图片：对每个Pixel有一个对应点，通过像素坐标来找到对应的3D点，这也是开头提到的<code>DenseTrackingResult</code>中对应点ID为二维的原因。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../lcdetection/" class="btn btn-neutral float-right" title="闭环检测">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../geometry/" class="btn btn-neutral" title="几何"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../geometry/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../lcdetection/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>生成模型 - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u751f\u6210\u6a21\u578b";
+    var mkdocs_page_input_path = "modules\\integration.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">几何</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">视觉里程计</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">点云注册</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">优化</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">生成模型</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#tsdf">TSDF</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#frametsdf">从Frame到TSDF</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tsdfmesh">从TSDF到Mesh</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tsdf_1">TSDF的变换</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">示例</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>模块 &raquo;</li>
+        
+      
+    
+    <li>生成模型</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/modules/integration.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">生成模型</h2>
+<p>通过tracking，optimization，现在我们已经得到了有着精确位姿的图片序列，如何根据这些序列生成高精度的网格模型就是integration要解决的事情。</p>
+<h3 id="tsdf">TSDF</h3>
+<p>TSDF是一种对于三维场景的隐式表征。世界被划分成一个个体素，而每个体素中存储着到最近表面的距离，这个距离是有符号的，而插值到0的位置就是真正表面上的点。如果这个距离很远，实际上就没什么用，所以可以直接进行截断，这也就是TSDF(Truncated Signed Distance Field)。</p>
+<p>在FCLib中，这样的体素F被定义为</p>
+<pre><code class="cpp">class TSDFVoxel
+{
+    public:
+    //距离
+    float sdf = 999;
+    //权重
+    float weight = 0;
+    //颜色
+    geometry::Point3 color = geometry::Point3(-1,-1,-1);
+};
+</code></pre>
+
+<p>为了提高效率和节省内存，一个普遍的做法是使用空间哈希，只存储距离表面比较近的voxel，在FCLib中，<span class="arithmatex">\(8\times 8 \times 8\)</span>个体素被当成一个立方体（Cube），而这些Cube又通过空间哈希函数来存储。</p>
+<pre><code class="cpp">class VoxelCube
+{
+    public:
+    std::vector&lt;TSDFVoxel&gt; voxels;
+    Eigen::Vector3i cube_id;
+};
+</code></pre>
+
+<p>通过Cube的ID可以很容易找到Cube位置，进而找到内部的voxel。关于Cube的哈希映射表被封装到类<code>CubeHandler</code>中。</p>
+<h3 id="frametsdf">从Frame到TSDF</h3>
+<p>对于一个体素（Voxel），一个frame，如何得到它的sdf值？首先，我们通过Voxel的位置以及其所在的Cube，计算得到Voxel中心的世界坐标系的位置，接着，将这个位置投影到frame中，找到该位置的depth，这个depth就是表面的点到相机平面的距离。SDF被定义为：</p>
+<div class="arithmatex">\[
+sdf = z(T^{-1} * p_v) - d(\omega(T^{-1} * p_v)) 
+\]</div>
+<p><span class="arithmatex">\(z(\cdot)\)</span>取出三维向量的<span class="arithmatex">\(z\)</span>值，<span class="arithmatex">\(d(\cdot)\)</span>读取帧在某一位置的depth，<span class="arithmatex">\(\omega\)</span>为重投影函数。</p>
+<p>有一个问题是，三维世界是无限大的，因此我们不可能对每一个voxel来这样做。这里要介绍一个视锥体的概念，也就是对于相机来说的一个成像有效区域，在视锥体之外的点不考虑。视锥体在FCLib中定义为<code>Frustum.h</code>。</p>
+<p>对于某个frame，我们只对视锥体内的cube进行处理。即使这样，voxel的个数依然很多。所以我们可以根据8个顶点采样滤波，如果8个顶点的SDF value符号都一致，则认为这个Cube中没有表面，详细内容可以参考<a href="http://roboticsproceedings.org/rss14/p06.pdf">FlashFusion</a>。</p>
+<p>一个Voxel对于多个frame的计算可能会得到不同的结果，根据<span class="arithmatex">\(weights\)</span>使用加权相加，来得到最终的值。</p>
+<p>将一张rgbd frame融合到一个TSDF中，是通过<code>CubeHandler</code>的成员函数实现的：</p>
+<pre><code class="cpp">void CubeHandler::IntegrateImage(const cv::Mat &amp;depth, 
+    const cv::Mat &amp;rgb, const geometry::TransformationMatrix &amp; pose);
+void CubeHandler::IntegrateImage(const geometry::RGBDFrame &amp;rgbd, 
+    const geometry::TransformationMatrix &amp; pose);
+</code></pre>
+
+<h3 id="tsdfmesh">从TSDF到Mesh</h3>
+<p>我们可以从TSDF中进一步提取出三角网格，比较有名的算法是<a href="http://www.eecs.berkeley.edu/~jrs/meshpapers/LorensenCline.pdf">Marching Cubes</a>。Marching Cubes中，网格提取是通过一个个正方体的。一个正方体有8个顶点，分别有8个sdf值。而每个顶点的sdf值可能大于0，也可能小于0，因此所有可能情况就是<span class="arithmatex">\(2^8 = 256\)</span>中情况，但是实际上，有8个大于0的与有8个小于0的情况一样，正如有2个大于0的与有6个大于0的情况一样，最后列举出最基本情况只有15种：
+<img alt="" src="../../img/marching_cubes_0.jpg" /></p>
+<p>256种情况都被列举出来，形成一个映射表，存储三角形顶点所在的边（我们为每条边设定一个序号），因此给定一个这样的正方体，根据映射表就能提取出三角形的顶点，从而提取出三角形。在TSDF中，8个Voxel正好可以看成是正方体的8个顶点，TSDF到Mesh就是这样进行的。
+Mesh的提取也被封装在<code>CubeHandler</code>的成员函数中：</p>
+<pre><code class="cpp">void CubeHandler::ExtractTriangleMesh(geometry::TriangleMesh &amp;mesh);
+</code></pre>
+
+<h3 id="tsdf_1">TSDF的变换</h3>
+<p>与点云，三角网格相比，对于TSDF进行旋转平移稍有不同。体素是将世界分割成一个个立方体，而在旋转平移之后，变换之后的voxel中心坐标成了实数，需要重新映射到世界坐标系下的体素中，映射到旋转后的中心的8个neighbor体素。</p>
+<p><img alt="" src="../../img/8_neighbor.jpg" /></p>
+<p>如果只映射到最近的体素，会导致不准确的结果，可能产生空洞以及缺失。</p>
+<p>在<code>CubeHandler</code>中，提供了上述两种Transform的方法，可以比较：</p>
+<pre><code class="cpp">//映射到最近的voxel
+std::shared_ptr&lt;CubeHandler&gt; 
+    TransformNearest(const geometry::TransformationMatrix &amp;trans) const;
+//映射到8个voxel，加权得到新的value
+std::shared_ptr&lt;CubeHandler&gt; 
+    Transform(const geometry::TransformationMatrix &amp;trans) const;
+</code></pre>
+
+<p><img alt="" src="" /></p>
+<p>需要说明的，FCLib实现的最原始的Marching Cubes算法。得到的Mesh往往点很密集，可以使用<code>ClusteringSimplify</code>将相同的点或者距离过近的聚合为一个点，需要法向量可以通过<code>ComputeNormals</code>来计算。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../visualization/" class="btn btn-neutral float-right" title="可视化">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../optimization/" class="btn btn-neutral" title="优化"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../optimization/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../visualization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>几何 - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u51e0\u4f55";
+    var mkdocs_page_input_path = "modules\\geometry.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">几何</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#geometryh">Geometry.h</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#geometry2dh">Geometry2d.h</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pointcloudh">PointCloud.h</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#trianglemeshh">TriangleMesh.h</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ransach">Ransac.h</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rgbdframeh">RGBDFrame.h</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">视觉里程计</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">点云注册</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">优化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">生成模型</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">示例</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>模块 &raquo;</li>
+        
+      
+    
+    <li>几何</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/modules/geometry.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">几何模块</h2>
+<p>几何模块是整个系统的一个基础。这里面定义了一些很基础的数据结构，实现了基础的运算和算法，包括对于点，变换矩阵（Transformation），李群李代数（SE(3), se(3)）之间的转换等等，还有点云，三角网格等常用数据结构及相关算法的定义和实现。</p>
+<h3 id="geometryh">Geometry.h</h3>
+<p>在<code>Geometry.h</code>中，首先要注意的一点就是：</p>
+<pre><code class="cpp">typedef float scalar; 
+</code></pre>
+
+<p>这里默认将<code>float</code>作为标量类型，因此之后点云，矩阵等，格式都是单精度的，在这里可以改变整个库使用的浮点数精度。</p>
+<pre><code class="cpp">typedef Vector6 Se3;
+typedef Matrix4 SE3;
+</code></pre>
+
+<p>李群李代数被定义为SE3和Se3，分别是四维方阵和6维矩阵，可以通过函数：</p>
+<pre><code class="cpp">Matrix4 Se3ToSE3(const Vector6 &amp;input);
+Vector6 SE3ToSe3(const Matrix4 &amp;input);
+</code></pre>
+
+<p>来互相转换，这个函数内部实现是通过<code>Sophus</code>库完成的（在Open3D中，从6维向量到4维方阵的互相变换，对于平移部分是完全不变的，但是从数学推导上来说，二者是有微小区别的，所以理论上<code>Sophus</code>库是更准确的变换，如下图）。
+<img alt="" src="../../img/lie.jpg" /></p>
+<pre><code class="cpp">struct VoxelGridHasher;
+struct PixelGridHasher;
+</code></pre>
+
+<p>上面两个分别是三维和二维整型向量的哈希函数，空间哈希是很高效的数据结构。</p>
+<pre><code class="cpp">std::tuple&lt;Point3, double, double&gt; FitPlane(const Point3List &amp; _points);
+std::tuple&lt;Vector2, double, double&gt; FitLine(const Point2List &amp; _points);
+</code></pre>
+
+<p>上述函数分别用来拟合一组3D点的平面，以及2D点的直线。例如三维坐标系下，平面的参数方程为：<span class="arithmatex">\(ax+by+cz+d = 0\)</span>，其中<span class="arithmatex">\(n=\{a, b, c\}^T\)</span>是平面的法向量。上述函数返回值类型为<code>std::tuple</code>，其中第一个为平面或者直线的法向量，第二个为<span class="arithmatex">\(d\)</span>，第三个是次大奇异值与最大奇异值的一个比值(使用SVD来拟合平面或者直线，可以得到奇异值)，可以用来作为对原始点与拟合平面误差的指标，如果所有点都在平面上，该值为0。也就是平面fit得越好，该值越小。</p>
+<p>在<code>Geometry.h</code>中还定义了一些其他的别名，用于之后的特征匹配等，这些别名之所以被定义也正是因为起别名更便于理解，如果对基础知识足够了解，一看就知道指的是什么了。</p>
+<h3 id="geometry2dh">Geometry2d.h</h3>
+<p><code>Geometry2d.h</code>实现了一些2d上的几何算法，主要是计算几何的一些非常非常基础的内容。这部分是为了实现之后<code>Algorithm</code>中<code>DCEL</code>(doubly connected edge list)而写的。对于这部分中比较重要的函数有：</p>
+<pre><code class="cpp">//检查一个点是否在一个凸多边形内
+int CheckPointInConvexPoly(const geometry::Point2List &amp;points, const Point2 &amp;p);
+//计算一个凸多边形的面积
+float ComputeAreaConvexPoly(const Point2List &amp;points);
+</code></pre>
+
+<h3 id="pointcloudh">PointCloud.h</h3>
+<p>PointCloud是点云相关的数据结构与一些简单的处理算法。点云包含点，颜色，法向（后面二者是可选的），相关算法包含了点云的下采样，法向量估计等等。下面列出一些基本的成员函数：</p>
+<pre><code class="cpp">//从PLY文件读取点云
+void LoadFromPLY(const std::string &amp;filename);
+//从OBJ文件读取点云
+void LoadFromOBJ(const std::string &amp;filename);
+//从RGBD图读取点云
+void LoadFromRGBD(const cv::Mat &amp;rgb, const cv::Mat &amp; depth, const camera::PinholeCamera &amp;camera );
+void LoadFromRGBD(const RGBDFrame &amp;rbgd, const camera::PinholeCamera &amp;camera );
+//估计法向量，通过对某个点的周围点进行平面拟合。radius代表了搜索半径，knn代表拟合点的数量
+void EstimateNormals(float radius = 0.1, int knn = 30);
+//根据变换矩阵对点云进行旋转平移
+void Transform(const TransformationMatrix &amp;T);
+//对点云进行下采样
+std::shared_ptr&lt;PointCloud&gt; DownSample(double grid_len);
+//将点云写到PLY文件中
+bool WriteToPLY(const std::string &amp;fileName) const;
+//将点云写到OBJ文件中
+bool WriteToOBJ(const std::string &amp;fileName) const;
+//与另外一个点云合并
+void MergePCD(const PointCloud &amp; another_pcd);
+</code></pre>
+
+<h4 id="trianglemeshh">TriangleMesh.h</h4>
+<p>TriangleMesh定义了三角网格数据结构以及相关的算法，三角网格与点云最大的区别就是有边和面，在三角网格中每个面都是三角形，由3个点构成。因此，除了点之外，三角网格中还有面表，里面存放的是构成面的3个点的索引。目前实现的网格，是不包含纹理的，因为这一块儿作者不懂。</p>
+<pre><code class="cpp">//从PLY文件读取网格
+void LoadFromPLY(const std::string &amp;filename);
+//从OBJ文件读取网格
+void LoadFromOBJ(const std::string &amp;filename);
+/*
+计算法向量，三角网格的法向量相对于网格的法向量估计就容易多了。
+首先，三角网格已经有面了，也就可以直接根据三个点求平面得到面的法向量，
+接着，我们只要对与点相连接的所有的面的法向量进行加权平均，
+就得到点的法向量
+*/
+void ComputeNormals(float radius = 0.1, int knn = 30);
+//根据变换矩阵对网格进行旋转平移
+void Transform(const TransformationMatrix &amp;T);
+//将网格写到PLY文件中
+bool WriteToPLY(const std::string &amp;fileName) const;
+//将网格写到OBJ文件中
+bool WriteToOBJ(const std::string &amp;fileName) const;
+//基于二次误差的边坍塌简化网格
+std::shared_ptr&lt;geometry::TriangleMesh&gt; QuadricSimplify(int target_num) const;
+//基于体素的均匀网格简化，类似于点云下采样
+std::shared_ptr&lt;geometry::TriangleMesh&gt; ClusteringSimplify(float grid_len) const;
+//删除点比较少的碎片
+std::shared_ptr&lt;geometry::TriangleMesh&gt; Prune(int min_points) const;
+</code></pre>
+
+<p>关于网格简化的原理，可以看论文：<code>related_paper/quadrics.pdf</code>。</p>
+<p>网格简化效果对比：<a href="../../examples/#_2">网格简化</a></p>
+<h3 id="ransach">Ransac.h</h3>
+<p><code>Ransac.h</code>中主要实现了两个具体的利用ransac的算法，基于一个基本的Ransac框架<a href="https://github.com/drsrinathsridhar/GRANSAC">GRANSAC</a>。Ransac的好处是，它会随机抽取一些点来求某个变换或者模型，这样可以很大程度上排除outlier。比如在拟合平面时，如果利用<code>Geometry.h</code>中<code>FitPlane</code>直接拟合，那么outlier会对结果造成很大影响，而使用Ransac则能得到更好的效果。</p>
+<pre><code class="cpp">//使用RANSAC来估计一组对应点之间的刚体变换
+TransformationMatrix EstimateRigidTransformationRANSAC(const PointCorrespondenceSet &amp;correspondence_set,
+    PointCorrespondenceSet &amp; inliers, std::vector&lt;int&gt; &amp;inlier_ids, int max_iteration = 2000, float threshold = 0.1);
+//使用RANSAC来拟合平面
+std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3List &amp;points, 
+    Point3List &amp; inliers, std::vector&lt;int&gt; &amp;inlier_ids, int max_iteration = 2000, float threshold = 0.05);
+</code></pre>
+
+<p>使用上述Ransac函数，还可以得到对应得inliers的集合。</p>
+<h3 id="rgbdframeh">RGBDFrame.h</h3>
+<p><code>RGBDFrame.h</code>定义了RGBDFrame这个数据结构，它整合了深度图和颜色图，可以简化调用过程。这个数据结构主要是为了搭建一个RGBD SLAM系统来服务的。它可以保存一些已经提取的feature，pointcloud等等，这些在追踪时候需要用到。在搭建一个RGBD SLAM时候，这些内容不用重复计算，可以提高效率。<code>Release()</code>用来释放掉所有保存的内容。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../odometry/" class="btn btn-neutral float-right" title="视觉里程计">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../camera/" class="btn btn-neutral" title="相机"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../camera/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../odometry/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

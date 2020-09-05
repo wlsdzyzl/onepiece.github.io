@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>优化 - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u4f18\u5316";
+    var mkdocs_page_input_path = "modules\\optimization.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">几何</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">视觉里程计</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">点云注册</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">优化</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#fast-bundleadjustment">Fast BundleAdjustment</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bundleadjutment">BundleAdjutment</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">生成模型</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">示例</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>模块 &raquo;</li>
+        
+      
+    
+    <li>优化</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/modules/optimization.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">优化</h2>
+<p>在<a href="../lcdetection">回环检测</a>中提到了，tracking一定会有累积误差，需要闭环检测提供约束来优化消除误差，优化也就是这部分的内容。</p>
+<p>后端优化一般会用一个优化器，g2o，ceres都是很不错的，可惜的是作者只会Eigen。当然，对于优化部分自己用Eigen实现，应该会更有助于学习吧。FCLib实现了两种后端优化方式：Fast BundleAdjustment与BundleAdjustment。</p>
+<h3 id="fast-bundleadjustment">Fast BundleAdjustment</h3>
+<p>介绍之前，先介绍一个数据结构：<code>Correspondence</code>:</p>
+<pre><code class="cpp">class Correspondence
+{
+    public:
+    int source_id = -1;
+    int target_id = -1;
+    float average_disparity = 1e6;
+    geometry::PointCorrespondenceSet correspondence_set;
+};
+</code></pre>
+
+<p>一个Frame Correspondence意思是一对匹配的frame，其中source id是source frame在优化变量中的id，target id是target frame在优化变量中的id。而<code>average_disparity</code>用来衡量这些配对点在2维图片上的位移，主要是根据这个位移来判断是否应该开始一个新的关键帧。<code>geometry::PointCorrespondenceSet</code>是这一对匹配的frame包含的匹配点的集合。</p>
+<p>Fast BundleAdjustment（FBA）比传统的BundleAdjustment更快。实际上FBA是在FCLib中的叫法，并没有一个很标准的名字。它和BundleAdjustment的区别在于优化变量与目标函数。FBA只优化相机位姿，优化目标函数为：</p>
+<div class="arithmatex">\[
+E(T) = \sum_{i}^{\vert\Omega\vert}\sum_{j}^{\vert C_{i}\vert}\Vert T_sp_{s(j)} - T_tp_{t(j)} \Vert^2
+\]</div>
+<p><span class="arithmatex">\(\Omega\)</span>为所有的frame correspondences，<span class="arithmatex">\(C_{i}\)</span>指的是第<span class="arithmatex">\(i\)</span>个frame correspondence，由多个point correspondence组成。<span class="arithmatex">\(T_s, T_t\)</span>分别代表了frame correspondence中的source frame的位姿与target frame的位姿，而<span class="arithmatex">\(p_{s(j)}\)</span>表示第<span class="arithmatex">\(j\)</span>个point correspondence中的source point。对于这部分的优化，可以参考文章<a href="https://ieeexplore.ieee.org/document/8606275">fastgo</a>，也就是<code>related_paper/fastgo.pdf</code>。在这篇文章中还包含了有更多的优化技巧，提高系统效率，而FCLib只实现了比较基础的部分，函数如下：</p>
+<pre><code class="cpp">void FastBA(const std::vector&lt;Correspondence&gt; &amp;correspondences, geometry::SE3List &amp;poses, int max_iteration =5);
+</code></pre>
+
+<h3 id="bundleadjutment">BundleAdjutment</h3>
+<p>传统的BundleAdjustment（BA）除了优化位姿，还会优化世界坐标系下的三维点坐标，同时优化目标是二维的重投影误差。一般来说，传统BA的输入是世界坐标系下3d点，相机位姿，3D点在各个相机位姿下的投影2D坐标。目标函数为：</p>
+<div class="arithmatex">\[
+E(T, p) = \sum_i^{N_f}\sum_{j}^{N_p}\Vert u_{i,j} -  \omega(T_i^{-1} p_j) \Vert,
+\]</div>
+<p><span class="arithmatex">\(N_f\)</span>是相机位姿（frame）的数量，<span class="arithmatex">\(N_p\)</span>是世界坐标点的数量，而<span class="arithmatex">\(u_{i,j}\)</span>是实际投影的位置（特征匹配时候的uv坐标），而<span class="arithmatex">\(\omega\)</span>是计算投影的函数，将世界点根据相机位姿重新投影得到的坐标。</p>
+<p>对于这种优化，除了优化相机位姿，还有优化了世界下点的位置，这也就优化了投影过程中的噪声。但是，由于世界点的数量往往非常多，使得最后优化矩阵维度上万甚至百万。因此到了后面它的优化速度变得很慢。但是BA是很经典的方法，早在SLAM出现之前就提出了，也有很多它的变种，加速方法，这个只是用来了解一下最基本的BA罢了。</p>
+<pre><code class="cpp">void BundleAdjustment(geometry::Point3List &amp;world_points, 
+    std::vector&lt;ProjectedPointsOnFrame&gt; &amp;projected_points, 
+    geometry::SE3List &amp;poses,
+    const camera::PinholeCamera &amp;camera, int max_iteration = 20);
+</code></pre>
+
+<p>在实现FastBA时，FCLib使用高斯牛顿优化法，而BA一定要使用列文伯格-马夸尔特算法，因为很容易出现奇异矩阵，导致高斯牛顿变得很脆弱，使得结果无法收敛。对于BA的详细推导，可以看<code>related_paper/BARevisited.pdf</code>。</p>
+<p>下面是BA的一个简单例子，只有两个frame，但是可以很明显看到重投影误差的减少(运行example/BATest.cpp可以得到)：
+<img alt="" src="" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../integration/" class="btn btn-neutral float-right" title="生成模型">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../registration/" class="btn btn-neutral" title="点云注册"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../registration/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../integration/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

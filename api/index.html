@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>FCLib - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "FCLib";
+    var mkdocs_page_input_path = "api.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">概览</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">简单介绍</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../rules/">一些关于代码的规则</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">模块</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/camera/">相机</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/geometry/">几何</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/odometry/">视觉里程计</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/lcdetection/">闭环检测</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/registration/">点云注册</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/optimization/">优化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/integration/">生成模型</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/visualization/">可视化</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/algorithm/">一些算法</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../modules/tool/">其他工具</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../examples/">示例</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">其他</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../thanksto/">致谢</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../about/">关于作者</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>FCLib</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/MyEvolution/FCLib/edit/master/docs/api.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="fclib">FCLib</h1>
+<p>FCLib，即Fucking Cool Fusion，是一个以SLAM为基础的三维重建的库，实际上一点也不cool。</p>
+<h2 id="modules">Modules</h2>
+<h3 id="camera">Camera</h3>
+<p>相机模块定义了一个简单的针孔相机模型，定义了相机的内参，畸变参数（项目中没有矫正畸变，所以没有用到），以及深度范围。你可以根据自己标定相机的结果设定相机的参数矩阵，也可以使用库中定义好的TUM数据集或者是默认相机参数。默认相机参数的深度范围depth scale是1000，TUM数据集中depth scale是5000。对于针孔相机模型的原理以及各个参数的意义可以参考下面的文章：<a href="">相机模型</a>。</p>
+<h3 id="tool">Tool</h3>
+<p>工具模块定义了一些其他模块需要使用的，比较杂的功能，目前tool中包含了图片的基本处理，对于控制台颜色输出的控制，Ply文件的读取，计时器，多线程等等。</p>
+<h4 id="consolecolor">ConsoleColor</h4>
+<p>定义了一些对于控制台输出颜色的控制。我希望FCLib整个构架清晰，输出也尽量优雅。在该头文件中定义了红黄绿篮四种颜色，红色对应Error，黄色对应Warning，而绿色表示运行成功，蓝色则是输出一些相关信息，利于Debug之类的。使用方法，包含了ConsoleColor头文件后，输出：</p>
+<pre><code class="cpp">//输出ERROR
+std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+</code></pre>
+
+<p>相应的，黄绿蓝分别对应YELLOW，GREEN，BLUE。RESET会使得输出颜色恢复默认的白色。</p>
+<h4 id="imageprocessing">ImageProcessing</h4>
+<p>图片处理的相关内容，封装了一些OpenCV的函数，包括高斯滤波，sobel滤波，创建图像金字塔等等。</p>
+<h4 id="rplymanager">RPLYManager</h4>
+<p>使用RPLY库来进行RPLY的读取，可以读取点云与三角网格。这里是基础使用的模块，因此不包含点云，网格的定义，你只需要提供ply文件的路径以及用来存取点云或者网格的<code>std::vector</code>，函数声明如下：</p>
+<pre><code class="cpp">bool ReadPLY(const std::string &amp;filename, geometry::Point3List &amp;points, geometry::Point3List &amp;normals, 
+    geometry::Point3List &amp;colors);
+bool ReadPLY(const std::string &amp;filename, geometry::Point3List &amp;points, geometry::Point3List &amp;normals, 
+    geometry::Point3List &amp;colors, std::vector&lt;Eigen::Vector3i&gt; &amp;triangles);
+</code></pre>
+
+<h4 id="multithreads">MultiThreads</h4>
+<p>一个对于循环的多线程实现的模板函数。你需要提供的是参数，也就是输入，以及需要改变的输出，以及调用的函数。参数与返回，分别存放在两个<code>std::vector</code>中。函数原型如下：</p>
+<pre><code class="cpp">template &lt;class T1, class T2&gt;
+void MultiThreads(const std::vector&lt;T1&gt; &amp;p1, std::vector&lt;T2&gt; &amp;p2, std::function&lt;void(const T1 &amp;, T2&amp;)&gt; &amp;f);
+</code></pre>
+
+<p>对于具体的使用也很简单，将输入和输出分别放到两个std::vector中，接着使用std::function绑定函数，一起传入上述函数中即可，之后介绍的网格生成会有使用的例子。</p>
+<p>Note：MultiThreads不会管你的循环能不能并行，所以确保循环可以并行加速是使用者的责任。</p>
+<h4 id="ticktock">TickTock</h4>
+<p>TickTock是计时器，里面定义了一个计时器类Timer。Timer可以给多个过程计时，他们可以交叉，只要名字不同就可以。没错，使用Timer你必须要给计时的过程定义一个独特的名字。使用起来很简单：</p>
+<pre><code class="cpp">tool::Timer timer;
+timer.TICK(&quot;My Process&quot;);
+// code of process
+timer.TOCK(&quot;My Process&quot;);
+timer.Log(&quot;My Process&quot;);
+</code></pre>
+
+<p>Log函数用来输出使用的时间，单位是毫秒，你可以使用LogAll()来输出所有的统计。但是对于只Tick比Tock大的情况会输出警告。所以就尽量正确地使用这些工具吧。</p>
+<h3 id="geometry">Geometry</h3>
+<p>几何模块定义了一些几何相关的内容和数据结构。比如，对于point，Transformation，李群李代数（SE(3), se(3)）之间的转还等等，还有点云，三角网格等常用数据结构及相关算法的定义。</p>
+<h4 id="geometry_1">Geometry</h4>
+<p>这里面是一些基本的定义以及为了程序便于理解起得别名，也没什么太多好说的。</p>
+<h4 id="pointcloud">PointCloud</h4>
+<p>PointCloud是点云相关的数据结构与一些简单的处理算法。点云包含点，颜色，法向（后面二者是可选的），相关算法包含了点云的下采样，法相估计等等。下面介绍一些基本的成员函数：</p>
+<pre><code class="cpp">//从PLY文件读取点云
+void LoadFromPLY(const std::string &amp;filename);
+//从RGBD图读取点云
+void LoadFromRGBD(const cv::Mat &amp;rgb, const cv::Mat &amp; depth, const camera::PinholeCamera &amp;camera );
+//估计法向量
+void EstimateNormals();
+//移动点云
+void Transform(const TransformationMatrix &amp;T);
+//对点云进行下采样
+std::shared_ptr&lt;PointCloud&gt; DownSample(double grid_len);
+//将点云写到文件中
+bool WriteToPLY(const std::string &amp;fileName) const;
+</code></pre>
+
+<p>这里主要想提一下下采样与法向量估计的算法。
+- 下采样
+下采样采用的是最简单的均匀下采样，也就是体素化，因此参数中需要提供一个体素网格的长度。将各个点映射到对应的体素中，每个体素中可能有多个原来的点。这些点在新的点云里，全部使用体素的中心坐标来表示，至于颜色值可以对体素中的点求平均得到，我在实现里简单的将颜色值设为了第一个映射进来的点。这个算法非常简单也好理解。效果图如下：
+<img alt="" src="" />
+<img alt="" src="" />
+- 法向估计
+点云的法向估计实际上是用最小二乘法拟合平面的过程，选取最近的N个点拟合平面，接着求出平面的法向量作为点云的法向量。这个算法，最重要的部分在于怎么找到最邻近的点，使用的是kd树。kd树是一种二叉树，它可以在高纬度下用来寻找最邻近点。
+<img alt="" src="" />
+在OpenCV中有对kd树的实现。通过kd树得到最邻近的k个点（knn search），利用这些点拟合平面，从而根据平面求得法向量。使用多个点拟合平面可以使用最小二乘法。这样求解得到的法向量具有二义性，一般来说还需要有一个统一法向量的过程，可以根据视点的位置，如果视点到点的距离与法向量是相反的，则对法向量取反。
+<img alt="" src="" />
+另外，还有一些别的求解法向量的算法，比如拟合曲面，这样得到的法向量是统一的，但是速度较慢。</p>
+<h4 id="trianglemesh">TriangleMesh</h4>
+<p>TriangleMesh定义了三角网格数据结构以及相关的算法，三角网格与点云最大的区别就是有边和面，在三角网格中每个面都是三角形，有3个点构成。因此，除了点之外，三角网格中还有面表，里面存放的是构成面的3个点的索引。网格一系列算法有网格简化，法向估计等等。
+- 法向量估计
+三角网格的法向量估计相对于点云的法向量估计就容易多了。首先，三角网格已经有面了，也就可以得到面的法向量，接着，我们只要对与点相连接的所有的面的法向量进行加权平均，就可以作为点的法向量。
+- 网格简化实现了两种算法，基于体素的聚类简化算法，以及基于二次错误的边坍塌算法。对于这两个算法之后会详细介绍。调用网格简化，不会改变原来的网格，而是返回一个指向新的简化后的网格的智能指针。对于体素的聚类方法，需要提供的参数是体素的边长，体素越大简化程度越高，而对于边坍塌算法，需要提供目标的三角形个数。
+调用方法如下：</p>
+<pre><code class="cpp">auto cs_mesh_ptr = mesh.ClusteringSimplify(grid_len);
+auto qs_mesh_ptr = mesh.QuadricSimplify(target_num);
+</code></pre>
+
+<h4 id="meshsimplification">MeshSimplification</h4>
+<ul>
+<li>Vertex Clustering</li>
+<li>Quadric Edge Decimation</li>
+</ul>
+<h3 id="visualization">Visualization</h3>
+<h3 id="odometry">Odometry</h3>
+<p>Odometry指的是Visual Odometry，也就是视觉里程计。对于不需要知道视觉里程计的人，可以将视觉里程计看成一个黑盒子，它的输入输出如下：</p>
+<p><img alt="" src="" /></p>
+<p>可以看到，输入的是一对RGBD图片（包括rgb与depth），输出的内容包括相对位姿，提取到的对应点（后续优化需要用到），以及是否匹配成功（根据Threshold决定）。对于想要了解Odometry具体实现的朋友，请看下面的部分。</p>
+<p>在FCLib中，我实现了两种Odometry：也就是稀疏估计与稠密估计。</p>
+<h4 id="sparse-extimation">Sparse Extimation</h4>
+<h4 id="dense-extimation">Dense Extimation</h4>
+<h3 id="integration">Integration</h3>
+<h4 id="frustum">Frustum</h4>
+<p>视锥体的作用是确定每一帧图片重建的范围，我们只对视锥体内部的体素进行融合。视锥体有近平面与远平面。为了求一个视锥体，也就是主要求8个顶点。这里求解需要了解针孔相机模型。</p>
+<p>首先，我们需要得到的是相机的FOV，这个很容易理解，也就是成像平面的高到交点的这个垂直的角度。在相机模型介绍中，我们已经知道了fx，fy，cx，cy的意思，分别是横纵焦距（理论上应该相等，但是实际上往往是有一些偏差），以及相机原点坐标的偏移量，只不过单位是像素的个数。像素的长宽虽然不一样，但是这个不影响FOV的计算，fov只需要像素的宽。因此fov很容易得到，就是<span class="arithmatex">\(2 * \arctan\frac{cy}{fy}\)</span>。理论上上半角和下半角是应该一样的，但是实际生产中，焦点与成像平面的中心的连线不一定垂直成像平面，为了得到更精确的交矩，我们可以分成两部分求，也就是：
+$$
+\text{fov} = \arctan{\frac{cy}{fy}} + \arctan{\frac{height - cy}{fy}}
+$$</p>
+<p>接着我们需要求成像平面的长宽比，由于像素的长宽不一样，我们需要转化成实际的距离单位来比较，这样更精确（这里CHISEL中代码应该是个bug，但是实际上一般影响不大）：
+$$
+\text{aspect} =\frac{dx * width}{ dy * height} =  \frac{fy * width}{ fx * height}
+$$</p>
+<p>在相机坐标系中，z轴是相机朝向的位置(也称为forward))，也就是在相机坐标系下，远近平面的中心点是在z轴上的。而旋转矩阵的三列是一组新的坐标基<span class="arithmatex">\(\mathbf x_r\)</span>，<span class="arithmatex">\(\mathbf y_r\)</span>，<span class="arithmatex">\(\mathbf z_r\)</span>，也是方向向量，分别对应了相机坐标的前（forward），下（down），右（right）（右手坐标系），由于一般习惯用上（up），up也就是<span class="arithmatex">\(-y_r\)</span>。由于远平面的中心点是在z轴上， 所以它们在相机坐标系下位置为<span class="arithmatex">\((0,0,FarDist)\)</span>，对它的旋转只需要乘上z的方向向量。而对于远平面上其他的4个点，比如左上点，在相机坐标系下为<span class="arithmatex">\((WidthFar/2, -HeightFar/2, FarDist)\)</span>，因此它转化后为：<span class="arithmatex">\((WidthFar \cdot x_r/2, -HeightFar \cdot y_r, FarDist \cdot z_r)\)</span>。对于其他的点以及近平面的也是如此求得。这里说得比较复杂，实际上就是简单的对视锥体的旋转和平移，但是明白了就能把代码读懂。</p>
+<h3 id="geometry_2">Geometry</h3>
+<h4 id="icp">ICP</h4>
+<h5 id="point-to-point">Point To Point</h5>
+<h5 id="point-to-plane">Point To Plane</h5>
+<p>The cost function of Point-To-Plane ICP is <span class="arithmatex">\(\Vert (Tp_s - p_t)n \Vert^2\)</span>, which is quiet easy, because it's just the distance to plane. More information can get from <a href="https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf">PointToPlane</a>. However, the method paper given(<span class="arithmatex">\(Ax=b\)</span>) can be the solving of large matrix, related to the number of points. We consider this as a optimization problem and use the Jacobian Matrix. So the solution is unrelated to the number of points. The cost function is still <span class="arithmatex">\(Ax=b\)</span>, which the Jacobian Matrix is easy-computing. </p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

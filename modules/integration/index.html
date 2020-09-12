@@ -135,6 +135,7 @@
             <div class="section">
               
                 <h2 id="_1">生成模型</h2>
+<p><em>namespace: integration</em></p>
 <p>通过tracking，optimization，现在我们已经得到了有着精确位姿的图片序列，如何根据这些序列生成高精度的网格模型就是integration要解决的事情。</p>
 <h3 id="tsdf">TSDF</h3>
 <p>TSDF是一种对于三维场景的隐式表征。世界被划分成一个个体素，而每个体素中存储着到最近表面的距离，这个距离是有符号的，而插值到0的位置就是真正表面上的点。如果这个距离很远，实际上就没什么用，所以可以直接进行截断，这也就是TSDF(Truncated Signed Distance Field)。</p>

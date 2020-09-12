@@ -131,6 +131,7 @@
             <div class="section">
               
                 <h2 id="_1">优化</h2>
+<p><em>namespace: optimization</em></p>
 <p>在<a href="../lcdetection">回环检测</a>中提到了，tracking一定会有累积误差，需要闭环检测提供约束来优化消除误差，优化也就是这部分的内容。</p>
 <p>后端优化一般会用一个优化器，g2o，ceres都是很不错的，可惜的是作者只会Eigen。当然，对于优化部分自己用Eigen实现，应该会更有助于学习吧。FCLib实现了两种后端优化方式：Fast BundleAdjustment与BundleAdjustment。</p>
 <h3 id="fast-bundleadjustment">Fast BundleAdjustment</h3>

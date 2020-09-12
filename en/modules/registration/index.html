@@ -137,6 +137,7 @@
             <div class="section">
               
                 <h2 id="point-cloud-registration">Point Cloud Registration</h2>
+<p><em>namespace: registration</em></p>
 <p>The task of point cloud registration is very similar to the visual odometer, except that the input of the visual odometer is a pair of frames and camera intrinsics, and the input of the point cloud registration is two point clouds without other conditiosn, such as camera parameters. So it is impossible to use 2D reprojection for point cloud registration. Generally speaking, the scale of the point cloud used for registration is much larger than frame, which can be a model extracted from dozens of frames, or even a model of two rooms.</p>
 <p>For point cloud registration, there are also two different ways just the spase tracking and dense tracking in visual odometry: ICP based on dense points and Global Registration based on 3D features.</p>
 <h3 id="global-registration">Global Registration</h3>

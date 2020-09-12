@@ -137,6 +137,7 @@
             <div class="section">
               
                 <h2 id="_1">点云注册</h2>
+<p><em>namespace: registration</em></p>
 <p>点云注册的任务和视觉里程计很像，只不过视觉里程计的输入是一对Frame，而点云注册的输入是两个点云，没有别的假设，也就没法利用重投影到二维图片这样的操作了。一般来说用来注册的点云的规模比Frame要更大，可以是几十个帧提取的model，甚至是两个房间的model。</p>
 <p>对于点云注册，和视觉里程计的Sparse和Dense类似，也有两种：基于特征与不基于特征。基于特征匹配的，一般称为Global Registration，不需要有初始位姿估计，也叫粗匹配，而后者的比较经典的算法就是ICP了，也叫精细匹配。</p>
 <h3 id="global-registration">Global Registration</h3>

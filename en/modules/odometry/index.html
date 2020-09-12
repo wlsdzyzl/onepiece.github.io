@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Odometry - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Odometry";
+    var mkdocs_page_input_path = "modules\\odometry.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Overview</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Brief Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">Some Rules</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">Camera</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">Geometry</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Odometry</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#sparsetracking">SparseTracking</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#densetracking">DenseTracking</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#_1">比较</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rgbdframe">RGBDFrame</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">Loop Closure Detection</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">Point Cloud Registration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">Optimization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">Generate Model</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">Some Algorithms</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">Other Useful Tools</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Others</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">Acknowledgments</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">About Author</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Odometry</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="visual-odometry">Visual Odometry</h2>
+<p>The visual odometer here specifically refers to the RGBD visual odometer. The function of the visual odometer is to estimate the camera movement between two frames, which is the first step of SLAM. Two visual odometries are implemented in FCLib, which are widely used: Sparse matching based on feature points, and dense matching based on optical flow. The usage is very simple:</p>
+<pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
+
+
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame);
+
+
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTrackingMILD(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
+
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTrackingMILD(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame);
+
+std::shared_ptr&lt;DenseTrackingResult&gt; DenseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth, 
+const geometry::TransformationMatrix &amp;initial_T, int term_type = 0);
+
+std::shared_ptr&lt;DenseTrackingResult&gt; DenseTracking(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame, 
+const geometry::TransformationMatrix &amp;initial_T, int term_type = 0);
+</code></pre>
+
+<p>You can choose to use a pair of rgb and depth to tracking, or a pair of <code>geometry::RGBDFrame</code>. The result retunred is a shared_ptr, which pointer an object of<code>odometry::SparseTrackingResult</code> or <code>odometry::DenseTrackingResult</code>. They are defined as following：</p>
+<pre><code class="cpp">class SparseTrackingResult
+{
+    public:
+    //relative pose
+    geometry::TransformationMatrix T;
+    //indices of inliers
+    geometry::FMatchSet correspondence_set_index;
+    //nliers
+    geometry::PointCorrespondenceSet correspondence_set;
+    //rmse
+    double rmse = 1e6;
+    //if the tracking is successful
+    bool tracking_success;
+};
+class DenseTrackingResult
+{
+    public:
+    //relative pose
+    geometry::TransformationMatrix T;
+    //indices of inliers
+    geometry::PixelCorrespondenceSet pixel_correspondence_set;
+    //inliers
+    geometry::PointCorrespondenceSet correspondence_set;
+    //rmse
+    double rmse = 1e6;
+    //if the tracking is successful
+    bool tracking_success;
+};
+</code></pre>
+
+<p>The main difference is that the ID types of the matching points finally obtained by the two are different. The sparse tracking feature point ID is one-dimensional. For example, a pair of correctly matched feature points is <span class="arithmatex">\((501, 308)\)</span>, which refers to the 501st feature point of source frame and the 308th feature point of target frame. The ID of the point for dense tracking is two-dimensional. The result is for example: <span class="arithmatex">\([(501, 308), (489, 311)]\)</span>, which refers to a pair of 3D points of source frame and target frame in pixel <span class="arithmatex">\((501, 308)\)</span>  and <span class="arithmatex">\((489, 311)\)</span>. Of course, the results of dense tracking can be integrated into the same form as the results of sparse tracking, but FCLib believes that this format is closer to the essence of the algorithm, because it reveals a piece of information: sparse tracking is based on the extracted feature points, while dense tracking is pixel by pixel.</p>
+<h3 id="sparsetracking">SparseTracking</h3>
+<p>The basic steps of SparseTracking are as follows:
+- Extract feature points
+- Feature point matching
+- Outlier filtering
+- Compute the transformation matrix</p>
+<p>FCLib extract ORB feature, which is a fast binary feature. For feature matching, FCLib introduce two methods: BFMatcher(brutal fource) based on OpenCV, and Sparse Match introduced in <a href="https://github.com/lhanaf/MILD">MILD</a>(Open Source Library). Refer to <a href="https://arxiv.org/abs/1709.05833">Beyond SIFT Using Binary features in Loop Closure Detection</a> for details, which is downloaded in <code>relative_paper/sparse_match.pdf</code>. This method is packaged in class <code>SparseMatcher</code>, the main member functions are listed as following:</p>
+<pre><code class="cpp">//Match
+void Match(const geometry::Descriptor &amp;source_descriptors, const geometry::Descriptor &amp;target_descriptors, 
+    geometry::DMatchSet &amp; matches);
+//Refine the matching results after matching
+//Need 3D points
+void RefineMatches(const geometry::Descriptor &amp;source_descriptors, const geometry::Point3List &amp;source_local_points,
+    const geometry::KeyPointSet &amp;source_keypoints,  const geometry::KeyPointSet &amp;target_keypoints, 
+    const geometry::TransformationMatrix &amp; H,geometry::DMatchSet &amp; matches);
+</code></pre>
+
+<p>There are also several methods for outlier filtering, <code>odometry::outlier_filter</code> provides several common methods.</p>
+<pre><code class="cpp">//Delete matches with a distance greater than n times the minimum distance (Naive)
+void MinDistance(const geometry::KeyPointSet &amp;source_keypoints,
+    const geometry::KeyPointSet &amp;target_keypoints,geometry::DMatchSet &amp; matches);
+//Only keep the matches with a larger ratio between the sub-optimal distance and the optimal distance (the optimal result of a correct match should be much better than the sub-optimal result)
+void KnnMatch(const geometry::Descriptor &amp;source, 
+    geometry::Descriptor &amp; target, const cv::BFMatcher &amp;matcher, 
+    std::vector&lt; cv::DMatch &gt; &amp;matches, float minRatio = 1.5);
+//Use ransic to find the Homography matrix, keep the inliers
+void Ransac(const geometry::KeyPointSet &amp;source_keypoints, 
+    const geometry::KeyPointSet &amp;target_keypoints,geometry::DMatchSet &amp; matches);
+//For the currently checked matching pair, randomly select several other matches to see if they are consistent
+//Wrong matching is difficult to find other consistent matching pairs
+void RanSaPC(const geometry::Point3List &amp;source_local_points, 
+    const geometry::Point3List &amp;target_local_points, std::default_random_engine &amp;engine, std::vector&lt; cv::DMatch &gt; &amp;init_matches);
+</code></pre>
+
+<p>FCLib names the tracking function using <a href="https://github.com/lhanaf/MILD">MILD</a> as <code>SparseTrackingMILD</code>. Generally speaking, it has better performance than <code>SparseTracking</code> and can get more The right inliers.</p>
+<h3 id="densetracking">DenseTracking</h3>
+<p>For details of DenseTracking, refer to <a href="https://vision.cs.tum.edu/_media/spezial/bib/steinbruecker_sturm_cremers_iccv11.pdf">Real-Time Visual Odometry from Dense RGB-D Images</a>, you can also find the paper from <code>related_paper/steinbruecker_sturm_cremers_iccv11.pdf</code>.</p>
+<p>The above paper is only for tracking the intensity of the color map, that is, the optical flow method. However it is easy to extend to track the depth of the depth map. In FCLib, you can choose to use color or depth term, or hybrid terms by changing the last parameter <code>term_type</code> :</p>
+<pre><code class="cpp">if(term_type == 0 )//hybrid
+std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using hybrid term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+else if(term_type == 1)//color
+std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using photo term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+else if(term_type == 2)//depth
+std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using geometry term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
+</code></pre>
+
+<p>Steps of DenseTracking:
+- Calculate the corresponding point in target from for each pixel of the source frame according to the current pose
+- Find all inliers of corresponding points
+- According to these points, compute the Jacobian matrix for inliers and update the pose
+- Repeat the above process</p>
+<p>It can be seen that DenseTracking requires an initial pose. If there is no initial estimation, it is necessary to assume that the relative poses of the two frames are very close. This process is a bit like PointToPoint's <a href="../registration/#PointToPoint">ICP</a>, the difference is that the optimized objective function, so PointToPoint needs to find the closest point instead of using reprojection. The process of finding the closest point is time-consuming, so dense tracking is much faster than ICP.</p>
+<p>In the specific implementation, the image pyramid will be used to improve the efficiency.</p>
+<h3 id="_1">比较</h3>
+<p>SparseTracking has fewer feature points, is faster, and does not require initial pose. However, it only considers visual information, and cannot be used in some places with less texture or poor color map. DenseTracking is slower and requires an initial pose. But it is more robust, and can be used even in the case of only depth or only color map. It is a good backup solution when SparseTracking fails.</p>
+<h3 id="rgbdframe">RGBDFrame</h3>
+<p>It can be seen that there are two functions for each type of tracking: they act directly on rgb and depth or act on <code>RGBDFrame</code>:</p>
+<pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
+const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
+std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(geometry::RGBDFrame &amp;source_frame, 
+geometry::RGBDFrame &amp;target_frame);
+</code></pre>
+
+<p>The difference is that <code>geometry::RGBDFrame</code> will save intermediate information, which can avoid repeated calculation when building a SLAM system:</p>
+<pre><code class="cpp">//part of RGBDFrame
+/*for sparse odometry*/
+geometry::Descriptor descriptor;
+geometry::KeyPointSet keypoints;
+PointCloud feature_pcd;//for optimization
+
+
+/*for dense odometry*/
+cv::Mat gray;//gray image of rgb
+cv::Mat depth32f;//refined depth
+std::vector&lt;cv::Mat&gt; color_pyramid;
+std::vector&lt;cv::Mat&gt; depth_pyramid;
+std::vector&lt;cv::Mat&gt; color_dx_pyramid;
+std::vector&lt;cv::Mat&gt; color_dy_pyramid;
+std::vector&lt;cv::Mat&gt; depth_dx_pyramid;
+std::vector&lt;cv::Mat&gt; depth_dy_pyramid;
+std::vector&lt;geometry::ImageXYZ&gt; image_xyz;
+</code></pre>
+
+<p><code>std::vector&lt;geometry::ImageXYZ&gt; image_xyz</code> can be considered as 3D image with a correspondig 3D point for each pixel. We can use 2D pixel coordinate to find the point, which is the reason why the corresponding point ID in <code>DenseTrackingResult</code> is two-dimensional.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../lcdetection/" class="btn btn-neutral float-right" title="Loop Closure Detection">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../geometry/" class="btn btn-neutral" title="Geometry"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../geometry/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../lcdetection/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

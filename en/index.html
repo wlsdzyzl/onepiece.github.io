@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Brief Introduction - FCLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Brief Introduction";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> FCLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Overview</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Brief Introduction</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#get-started">Get Started</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#download">Download</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="rules/">Some Rules</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/camera/">Camera</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/geometry/">Geometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/odometry/">Odometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/lcdetection/">Loop Closure Detection</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/registration/">Point Cloud Registration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/optimization/">Optimization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/integration/">Generate Model</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/visualization/">Visualization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/algorithm/">Some Algorithms</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="modules/tool/">Other Useful Tools</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="examples/">Examples</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Others</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="thanksto/">Acknowledgments</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="about/">About Author</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">FCLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Overview &raquo;</li>
+        
+      
+    
+    <li>Brief Introduction</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="welcome-to-fclib">Welcome to FCLib</h1>
+<p>FCLib (fucking cool library) is a C++ library for RGB-D based SLAM and 3D vision. This library is mainly a summary of some basic knowledge and is used to satisfy the author's obsessive-compulsive disorder. It tries to be designed to be relatively simple, clear in structure, easy to understand, and friendly to novices, but limited to the level of the author, there may still be many areas where the design is not good enough. Currently this library does not use GPU except for the visualization part. The author hopes that FCLib can help people who are more interested in this field get started faster. Therefore, the first demand of FCLib is to be as simple as possible and rely less third libraris. Relatively speaking, FCLib has no advantage in efficiency and speed. In <a href="./examples">example</a>, you can see that using FCLib, you can easily build a simple RGBD SLAM system, and finally extract a three-dimensional model, as shown below:</p>
+<p><img alt="" src="img/index.gif" />
+<center><font color="gray">FBAFusion in example</font></center></p>
+<h2 id="get-started">Get Started</h2>
+<p>The FCLib development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV and Eigen. Other small dependencies are integrated into 3rdParty. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
+<ul>
+<li>Install OpenCV(3.x): <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85OpenCV%20c%2B%2B&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV&amp;rsv_pq=f928910b000254f0&amp;rsv_t=034cztj1mxA2IikxtwpL9m7CGXlFHK9C2o4WUvbn1tLBWgpQpdepgBSOIag&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_sug3=9&amp;rsv_sug1=4&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_btype=t&amp;inputT=29790&amp;rsv_sug4=29888">baidu</a>/<a href="https://www.google.com/search?q=install+OpenCV+ubuntu+c%2B%2B&amp;oq=install+OpenCV+ubuntu+c%2B%2B&amp;aqs=chrome..69i57j0l7.20507j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
+<li>Install Eigen（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85Eigen3&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV%2520c%252B%252B&amp;rsv_pq=896186f10003e52b&amp;rsv_t=1a0emBH99X6quER27vW11eytwjSUxelZj4%2FHFcWuZbbDioMIAKM%2F2d0r3X0&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_btype=t&amp;inputT=23100&amp;rsv_sug3=35&amp;rsv_sug1=28&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_sug4=37169">baidu</a>/<a href="https://www.google.com/search?q=eigen3+install+ubuntu&amp;oq=Eigen3&amp;aqs=chrome.1.0l7j69i60.3110j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
+<li><code>mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</code></li>
+</ul>
+<p>In addition, why not design to be less dependent? In addition to the poor level of the author, another point is that OpenCV and Eigen are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in FCLib).</p>
+<h2 id="download">Download</h2>
+<p>The code is released in github: <a href="https://github.com/MyEvolution/FCLib">FCLib</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rules/" class="btn btn-neutral float-right" title="Some Rules">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/FCLib" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+        <span style="margin-left: 15px"><a href="rules/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

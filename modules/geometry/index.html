@@ -208,7 +208,7 @@ void LoadFromPLY(const std::string &amp;filename);
 //从OBJ文件读取网格
 void LoadFromOBJ(const std::string &amp;filename);
 /*
-计算法向量，三角网格的法向量相对于网格的法向量估计就容易多了。
+计算法向量，三角网格的法向量相对于点云的法向量估计就容易多了。
 首先，三角网格已经有面了，也就可以直接根据三个点求平面得到面的法向量，
 接着，我们只要对与点相连接的所有的面的法向量进行加权平均，
 就得到点的法向量

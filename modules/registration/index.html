@@ -146,11 +146,11 @@
 - outlier过滤
 - 计算变换矩阵</p>
 <p>实际上和SparseTracking是一样的。函数原型为：</p>
-<pre><code class="cpp">std::shared_ptr&lt;RANSACRegistrationResult&gt; 
+<pre><code class="cpp">std::shared_ptr&lt;RegistrationResult&gt; 
     RansacRegistration(const geometry::PointCloud &amp;source_pcd, 
     const geometry::PointCloud &amp;target_pcd, 
     const RANSACParameter &amp;r_para = RANSACParameter());
-std::shared_ptr&lt;RANSACRegistrationResult&gt; 
+std::shared_ptr&lt;RegistrationResult&gt; 
     RansacRegistration(const geometry::PointCloud &amp;source_feature_pcd, 
     const geometry::PointCloud &amp;target_feature_pcd, 
     const FeatureSet &amp; source_features,
@@ -176,9 +176,9 @@ n_t^T (\cdot p - p_t) = 0,
 \]</div>
 <p><span class="arithmatex">\(n_t^T (\cdot p - p_t)\)</span>为点到该平面的距离，因此优化的目标函数为：<span class="arithmatex">\(\Vert n_t^T\cdot(T\cdot p_s - p_t)\Vert^2\)</span>。对于这个cost function的线性化，可以查看<code>related_paper/lowk_point-to-plane_icp_techrep.pdf</code>。通过雅可比矩阵优化得到新的<span class="arithmatex">\(T\)</span>，接着根据新的<span class="arithmatex">\(T\)</span>重新寻找最近点，不断迭代到收敛。</p>
 <p>实验和理论分析都证明了，PointToPlane比PointToPoint有更快的收敛速度。调用方法为：</p>
-<pre><code class="cpp">std::shared_ptr&lt;ICPRegistrationResult&gt; PointToPoint(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target, 
+<pre><code class="cpp">std::shared_ptr&lt;RegistrationResult&gt; PointToPoint(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target, 
     const geometry::TransformationMatrix &amp;init_T = geometry::TransformationMatrix::Identity(), const ICPParameter &amp;icp_para = ICPParameter() );
-std::shared_ptr&lt;ICPRegistrationResult&gt; PointToPlane(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target,
+std::shared_ptr&lt;RegistrationResult&gt; PointToPlane(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target,
     const geometry::TransformationMatrix &amp;init_T = geometry::TransformationMatrix::Identity(), const ICPParameter &amp;icp_para = ICPParameter() );
 </code></pre>
 

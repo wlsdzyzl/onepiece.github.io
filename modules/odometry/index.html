@@ -212,7 +212,7 @@ void RefineMatches(const geometry::Descriptor &amp;source_descriptors, const geo
 <pre><code class="cpp">//删除掉距离大于最小距离n倍的匹配（Naive）
 void MinDistance(const geometry::KeyPointSet &amp;source_keypoints,
     const geometry::KeyPointSet &amp;target_keypoints,geometry::DMatchSet &amp; matches);
-//删除掉最优距离与次优距离比值比较大的点（正确的匹配最优结果应该比次优结果好很多）
+//只保留次优距离与最优距离比值比较大的点（正确的匹配最优结果应该比次优结果好很多）
 void KnnMatch(const geometry::Descriptor &amp;source, 
     geometry::Descriptor &amp; target, const cv::BFMatcher &amp;matcher, 
     std::vector&lt; cv::DMatch &gt; &amp;matches, float minRatio = 1.5);

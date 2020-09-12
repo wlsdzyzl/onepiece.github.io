@@ -66,7 +66,7 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#densetracking">DenseTracking</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#_1">比较</a>
+    <li class="toctree-l2"><a class="reference internal" href="#comparison">Comparison</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#rgbdframe">RGBDFrame</a>
     </li>
@@ -244,7 +244,7 @@ std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using geometry term&quot;&lt;&lt;RES
 - Repeat the above process</p>
 <p>It can be seen that DenseTracking requires an initial pose. If there is no initial estimation, it is necessary to assume that the relative poses of the two frames are very close. This process is a bit like PointToPoint's <a href="../registration/#PointToPoint">ICP</a>, the difference is that the optimized objective function, so PointToPoint needs to find the closest point instead of using reprojection. The process of finding the closest point is time-consuming, so dense tracking is much faster than ICP.</p>
 <p>In the specific implementation, the image pyramid will be used to improve the efficiency.</p>
-<h3 id="_1">比较</h3>
+<h3 id="comparison">Comparison</h3>
 <p>SparseTracking has fewer feature points, is faster, and does not require initial pose. However, it only considers visual information, and cannot be used in some places with less texture or poor color map. DenseTracking is slower and requires an initial pose. But it is more robust, and can be used even in the case of only depth or only color map. It is a good backup solution when SparseTracking fails.</p>
 <h3 id="rgbdframe">RGBDFrame</h3>
 <p>It can be seen that there are two functions for each type of tracking: they act directly on rgb and depth or act on <code>RGBDFrame</code>:</p>

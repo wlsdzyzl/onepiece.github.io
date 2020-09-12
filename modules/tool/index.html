@@ -145,7 +145,7 @@
                 <h2 id="_1">其他工具</h2>
 <p>工具模块定义了一些其他模块需要使用的，比较杂的功能，目前tool中包含了图片的基本处理，对于控制台颜色输出的控制，Ply文件的读取，计时器，多线程等等。</p>
 <h3 id="consolecolor">ConsoleColor</h3>
-<p>定义了一些对于控制台输出颜色的控制。作者希望FCLib整个构架清晰，输出也尽量优雅。在该头文件中定义了红黄绿篮四种颜色，红色对应Error，黄色对应Warning，而绿色表示运行成功，蓝色则是输出一些相关信息，利于Debug之类的。使用方法，包含了ConsoleColor头文件后，输出：</p>
+<p>定义了一些对于控制台输出颜色的控制。作者希望FCLib整个构架清晰，输出也尽量优雅。在该头文件中定义了红黄绿蓝四种颜色，红色对应Error，黄色对应Warning，而绿色表示运行成功，蓝色则是输出一些相关信息，利于Debug之类的。使用方法，包含了ConsoleColor头文件后，输出：</p>
 <pre><code class="cpp">//输出ERROR
 std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&lt;&lt;std::endl;
 </code></pre>
@@ -163,7 +163,7 @@ std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&
 void MultiThreads(const std::vector&lt;T1&gt; &amp;p1, std::vector&lt;T2&gt; &amp;p2, std::function&lt;void(const T1 &amp;, T2&amp;)&gt; &amp;f);
 </code></pre>
 
-<p>对于具体的使用也很简单，将输入和输出分别放到两个std::vector中，接着使用std::function绑定函数，一起传入上述函数中即可，之后介绍的网格生成会有使用的例子。</p>
+<p>对于具体的使用也很简单，将输入和输出分别放到两个<code>std::vector</code>中，接着使用std::function绑定函数，一起传入上述函数中即可，之后介绍的网格生成会有使用的例子。</p>
 <p>这里的实现还是太简单了，就意味着只能有一个输入一个输出，是为了满足作者需要的某个功能临时写的。</p>
 <p>MultiThreads不会管你的循环能不能并行，所以确保循环可以并行加速是使用者的责任。</p>
 <h3 id="ticktock">TickTock</h3>

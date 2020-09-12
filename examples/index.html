@@ -149,7 +149,7 @@
             <div class="section">
               
                 <h2 id="_1">示例</h2>
-<p>这里是一些使用FCLib的程序。所有的程序都可以在<code>examples</code>文件夹中找到源代码。编译后，进入到<code>build/example</code>下可以输入下面的命令来测试。</p>
+<p>这里是一些使用FCLib的程序.所有的程序都可以在<code>examples</code>文件夹中找到源代码.编译后,进入到<code>build/example</code>下可以输入下面的命令来测试.</p>
 <h3 id="ply">读取PLY的点云/网格并显示</h3>
 <pre><code>./ReadPLYPCD [filename.ply]
 ./ReadPLYMesh [filename.ply]
@@ -176,9 +176,9 @@
 <p><img alt="" src="../img/simplify_q.bmp" />
 <center><font color=gray>边坍塌（剩下10%的三角形）</font></center></p>
 <p><img alt="" src="../img/simplify_c.bmp" />
-<center><font color=gray>原始模型（体素长0.1）</font></center></p>
+<center><font color=gray>使用体素聚类（体素长0.1）</font></center></p>
 <h3 id="bundleadjustment">BundleAdjustment测试</h3>
-<p>这里输入一对RGBD frame，BundleAdjutment会根据Feature matching的结果进行位姿调整，之后会可视化匹配结果，并将重投影结果保存到目录下的图片中。</p>
+<p>这里输入一对RGBD frame,BundleAdjutment会根据Feature matching的结果进行位姿调整,之后会可视化匹配结果,并将重投影结果保存到目录下的图片中.</p>
 <pre><code>./BATest [source_rgb] [source_depth] [target_rgb] [targe_depth]
 </code></pre>
 
@@ -190,12 +190,12 @@
 <img src='../img/after_BA_target.png' width=45%/>
 </center>
 <center><font color=gray>重投影对比</font></center></p>
-<p>由于优化的是重投影误差，三维点云可视化的结果看起来可能并没有重投影到2d图片结果好。因为三维可视化只是考虑位姿变化，根据位姿得到3D点，而没有吸收到世界坐标点优化的内容。</p>
+<p>由于优化的是重投影误差,三维点云可视化的结果看起来可能并没有重投影到2d图片结果好.因为三维可视化只是考虑位姿变化,根据位姿得到3D点,而没有吸收到世界坐标点优化的内容.</p>
 <h3 id="icp">ICP测试</h3>
 <pre><code>ICPTest [source_pcd] [target_pcd]
 </code></pre>
 
-<p>ICPTest对两个点云进行注册。但是具体使用PointToPoint还是PointToPlane需要在代码中修改。下面是两个算法迭代30次后的运行结果，可以看出来PointToPlane的收敛速度比PointToPoint要快很多。</p>
+<p>ICPTest对两个点云进行注册.但是具体使用PointToPoint还是PointToPlane需要在代码中修改.下面是两个算法迭代30次后的运行结果,可以看出来PointToPlane的收敛速度比PointToPoint要快很多.</p>
 <p><img alt="" src="../img/point_point.bmp" />
 <center><font color=gray>point_to_point</font></center></p>
 <p><img alt="" src="../img/point_plane.bmp" />
@@ -204,15 +204,15 @@
 <pre><code>RansacTest [source_pcd] [target_pcd]
 </code></pre>
 
-<p>RansacTest对两个点云进行注册，在注册之前会对点云进行一个随机旋转，并加上平移，这样才能看出来GlobalRegistration的优势在哪里。</p>
-<p>下面是运行结果，可以修改代码，可以选择直接看匹配后的结果：</p>
+<p>RansacTest对两个点云进行注册,在注册之前会对点云进行一个随机旋转,并加上平移,这样才能看出来GlobalRegistration的优势在哪里.</p>
+<p>下面是运行结果,可以修改代码,可以选择直接看匹配后的结果：</p>
 <p><img alt="" src="../img/ransac.bmp" />
 <center><font color=gray>ransac registration</font></center></p>
 <p>选择画出来correspondence：
 <img alt="" src="../img/ransac_corr.bmp" />
 <center><font color=gray>fpfh correspondence</font></center></p>
 <h3 id="_3">房间平面图检测</h3>
-<p>使用<code>algorithm</code>中的算法做的一些有意思的事情。在<code>example/RoomDetection.cpp</code>中，实现了根据有着semantic信息的点云来得知房间平面图。这里面用到了：LineDetection, PlaneDetection（实际上只需要使用一种，不过示例中两个都用了）, DCEL, KMedoidsClusteringDynamic。</p>
+<p>使用<code>algorithm</code>中的算法做的一些有意思的事情.在<code>example/RoomDetection.cpp</code>中,实现了根据有着semantic信息的点云来得知房间平面图.这里面用到了：LineDetection, PlaneDetection（实际上只需要使用一种,不过示例中两个都用了）, DCEL, KMedoidsClusteringDynamic.</p>
 <pre><code>./RoomDetection ../../TestData/room_with_labels.ply
 </code></pre>
 
@@ -226,34 +226,34 @@
 <p><center>
 <img src =../img/cells_.bmp width=49%><img src =../img/room_map_.bmp width=49%></center>
 <center><font color=gray>生成的Line Arrangement/生成的房间平面图</font></center></p>
-<p>详细内容可以阅读文章<a href="https://www.sciencedirect.com/science/article/pii/S0097849314000661">Automatic room detection and reconstruction in cluttered indoor environments with complex room layouts</a>。</p>
+<p>详细内容可以阅读文章<a href="https://www.sciencedirect.com/science/article/pii/S0097849314000661">Automatic room detection and reconstruction in cluttered indoor environments with complex room layouts</a>.</p>
 <h3 id="_4">三个重建系统</h3>
-<p>一个没有后端的系统是不完整的。如果只追踪，而不进行优化，得到的结果会出现重影，如下图：
+<p>一个没有后端的系统是不完整的.如果只追踪,而不进行优化,得到的结果会出现重影,如下图：
 <img alt="" src="../img/without_loop.bmp" /></p>
-<p>FCLib实现了3种较为完整的系统，使用的方法在前端或者后端略有不同，下面逐一介绍。</p>
+<p>FCLib实现了3种较为完整的系统,使用的方法在前端或者后端略有不同,下面逐一介绍.</p>
 <h4 id="fbafusion">FBAFusion</h4>
-<p>FBAFusion用的是SparseTracking，Mild闭环检测，加上Fast BundleAdjustment后端优化，也就是首页展示的内容。</p>
+<p>FBAFusion用的是SparseTracking,Mild闭环检测,加上Fast BundleAdjustment后端优化,也就是首页展示的内容.</p>
 <pre><code>./FBAFusion ../../TestData/rgbd/607 0.01
 </code></pre>
 
 <p><img alt="" src="../img/index.gif" /></p>
-<p>FBAFusion最快。重建模型如下：</p>
+<p>FBAFusion最快.重建模型如下：</p>
 <p><img alt="" src="../img/FBAFusion.bmp" /></p>
 <h4 id="bafusion">BAFusion</h4>
-<p>BAFusion用的是SparseTracking，Mild闭环检测，加上BundleAdjustment后端优化。之前说过了，BA在后面矩阵维度会很大，即使在BAFusion中，每个keyframe的特征点只有30个，后面依然要一分钟左右甚至更久才能优化一次。而且BA会优化空间点（优化投影噪声以及参数），但是这部分优化在最后生成模型的时候并没有考虑，只用到了优化的位姿，所以重建模型看起来效果不如FBAFusion，不过依然可以看到优化的效果（没有出现重影）。如果考虑到各方面，BA的效果应该是最好的。</p>
+<p>BAFusion用的是SparseTracking,Mild闭环检测,加上BundleAdjustment后端优化.之前说过了,BA在后面矩阵维度会很大,即使在BAFusion中,每个keyframe的特征点只有30个,后面依然要一分钟左右甚至更久才能优化一次.而且BA会优化空间点（优化投影噪声以及参数）,但是这部分优化在最后生成模型的时候并没有考虑,只用到了优化的位姿,所以重建模型看起来效果不如FBAFusion,不过依然可以看到优化的效果（没有出现重影）.如果考虑到各方面,BA的效果应该是最好的.</p>
 <pre><code>./BAFusion ../../TestData/rgbd/607 0.01
 </code></pre>
 
 <p>重建效果如下：
 <img alt="" src="../img/BAFusion.bmp" /></p>
 <h4 id="densefusion">DenseFusion</h4>
-<p>DenseFusion使用的是DenseTracking，并且没有用2D的闭环检测。它将读入的帧每过<span class="arithmatex">\(N\)</span>个作为一个submap，再检测到新的submap后，利用当前的submap与之前的submap进行GlobalRegistration，再通过设定阈值来检测是否匹配成功，这样也能达到global consistency。当然，DenseTracking以及GlobalRegistration相对于SparseTracking和通过Mild来排除掉大部分错误的闭环，要慢很多，所以DenseFusion速度也很一般，是一个离线重建系统。后端优化，DenseFusion采用的是Fast BundleAdjustment。</p>
+<p>DenseFusion使用的是DenseTracking,并且没有用2D的闭环检测.它将读入的帧每过<span class="arithmatex">\(N\)</span>个作为一个submap,再检测到新的submap后,利用当前的submap与之前的submap进行GlobalRegistration,再通过设定阈值来检测是否匹配成功,这样也能达到global consistency.当然,DenseTracking以及GlobalRegistration相对于SparseTracking和通过Mild来排除掉大部分错误的闭环,要慢很多,所以DenseFusion速度也很一般,是一个离线重建系统.后端优化,DenseFusion采用的是Fast BundleAdjustment.</p>
 <pre><code>./DenseFusion ../../TestData/rgbd/607 0.01
 </code></pre>
 
 <p>重建结果：
 <img alt="" src="../img/DenseFusion.bmp" /></p>
-<p><em>注：颜色的问题是OpenCV的BGR与RGB存储问题。</em></p>
+<p><em>注：颜色的问题是OpenCV的BGR与RGB存储问题.</em></p>
               
             </div>
           </div>

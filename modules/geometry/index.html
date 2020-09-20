@@ -74,6 +74,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#rgbdframeh">RGBDFrame.h</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#kdtreeh">KDTree.h</a>
+    </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../odometry/">视觉里程计</a>
@@ -170,6 +172,12 @@ std::tuple&lt;Vector2, double, double&gt; FitLine(const Point2List &amp; _points
 </code></pre>
 
 <p>上述函数分别用来拟合一组3D点的平面，以及2D点的直线。例如三维坐标系下，平面的参数方程为：<span class="arithmatex">\(ax+by+cz+d = 0\)</span>，其中<span class="arithmatex">\(n=\{a, b, c\}^T\)</span>是平面的法向量。上述函数返回值类型为<code>std::tuple</code>，其中第一个为平面或者直线的法向量，第二个为<span class="arithmatex">\(d\)</span>，第三个是次大奇异值与最大奇异值的一个比值(使用SVD来拟合平面或者直线，可以得到奇异值)，可以用来作为对原始点与拟合平面误差的指标，如果所有点都在平面上，该值为0。也就是平面fit得越好，该值越小。</p>
+<p>FCLib使用<code>Point3List</code>来表示一组<code>Eigen::Matrix&lt;geometry::scalar, 3, 1&gt;</code>，类似的， <code>PointXList</code>表示一组<code>Eigen::Matrix&lt;scalar, Eigen::Dynamic, 1&gt;</code>。另外，有了CPP11标准，我们可以给一个模板类取别名，比如<code>Eigen::Matrix&lt;geometry::Scalar, T, 1&gt;</code>通过下面方式命名：</p>
+<pre><code class="cpp">    template &lt;int T&gt;
+        using Vector = Eigen::Matrix&lt;scalar, T, 1&gt;;
+</code></pre>
+
+<p>这样可以通过<code>Vector&lt;10&gt;</code>来声明一个10维度的向量。因此，我们使用<code>PointList</code>来表示模板向量的数组。 这意味着你可以使用<code>PointList&lt;100&gt;</code>来做<code>std::vector&lt;Eigen::Matrix&lt;scalar, 100, 1&gt;, Eigen::aligned_allocator&lt;Eigen::Matrix&lt;scalar, 100, 1&gt;&gt;&gt;</code>的别名。这个非常有用。</p>
 <p>在<code>Geometry.h</code>中还定义了一些其他的别名，用于之后的特征匹配等，这些别名之所以被定义也正是因为起别名更便于理解，如果对基础知识足够了解，一看就知道指的是什么了。</p>
 <h3 id="geometry2dh">Geometry2d.h</h3>
 <p><code>Geometry2d.h</code>实现了一些2d上的几何算法，主要是计算几何的一些非常非常基础的内容。这部分是为了实现之后<code>Algorithm</code>中<code>DCEL</code>(doubly connected edge list)而写的。对于这部分中比较重要的函数有：</p>
@@ -244,6 +252,106 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
 <p>使用上述Ransac函数，还可以得到对应得inliers的集合。</p>
 <h3 id="rgbdframeh">RGBDFrame.h</h3>
 <p><code>RGBDFrame.h</code>定义了RGBDFrame这个数据结构，它整合了深度图和颜色图，可以简化调用过程。这个数据结构主要是为了搭建一个RGBD SLAM系统来服务的。它可以保存一些已经提取的feature，pointcloud等等，这些在追踪时候需要用到。在搭建一个RGBD SLAM时候，这些内容不用重复计算，可以提高效率。<code>Release()</code>用来释放掉所有保存的内容。</p>
+<h3 id="kdtreeh">KDTree.h</h3>
+<p><code>KDTree.h</code>是对OpenCV中FLANN的封装，简化了调用过程。这里发现OpenCV的<code>flann</code>有不少挺坑爹的地方，需要注意（FCLib使用的是OpenCV-3.4.5）。</p>
+<p>调用OpenCV的KDTree最麻烦的地方在于，eigen和opencv的互相转换，而实际上封装kdtree就是为了解决这个。</p>
+<p>下面是一段用OpenCv的<code>flann</code>建立kdtree的代码（源自互联网）：</p>
+<pre><code class="cpp">int main() {
+    //用于构造kdtree的点集
+    vector&lt;cv::Point2f&gt; features = { { 1,1 },{ 2, 2},{ 3, 3},{ 4, 4},{ 2, 4} };
+    cv::Mat source = cv::Mat(features).reshape(1);
+    source.convertTo(source, CV_32F);
+
+    cv::flann::KDTreeIndexParams indexParams(2);
+    cv::flann::Index kdtree(source, indexParams); 
+
+    //预设knnSearch所需参数及容器
+    int queryNum = 3;//用于设置返回邻近点的个数
+    vector&lt;float&gt; vecQuery(2);//存放查询点的容器
+    vector&lt;int&gt; vecIndex(queryNum);//存放返回的点索引
+    vector&lt;float&gt; vecDist(queryNum);//存放距离
+    cv::flann::SearchParams params(32);//设置knnSearch搜索参数
+
+    //KD树knn查询
+    vecQuery = { 3, 4};
+    kdtree.knnSearch(vecQuery, vecIndex, vecDist, queryNum, params);
+
+    cout &lt;&lt; &quot;vecDist: &quot; &lt;&lt; endl;
+    for (auto&amp;x : vecDist)
+        cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;vecIndex: &quot; &lt;&lt; endl;
+    for (auto&amp;x : vecIndex)
+        cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+
+    return 0;
+}
+</code></pre>
+
+<p>需要注意的点：
+1. OpenCV的flann不支持double类型
+2. 上述代码中，<code>query</code>是<code>vector&lt;float&gt;</code>，如果用<code>cv::Mat(features[0])</code>，会出问题。
+3. 对于建立kdtree引入的Input matrix，需要一直维护着，不能释放掉，也不能对它进行别的操作。如果想要将建立kdtree与search分成两个函数，那么就一定要克隆一份input matrix，再用它来建立kdtree，使用中不可以释放掉它。
+4. <code>knnSearch</code>不会返回什么值，并且<code>indices</code>与<code>dists</code>需要在开始提前<code>resize(k)</code>，而<code>radiusSearch</code>中，开始时候不需要对<code>indices</code>与<code>dists</code>进行<code>resize</code>，并且会返回查找到的点有多少。一定要根据这个值来访问<code>indices</code>与<code>dists</code>，而不是<code>indices.size()</code>。</p>
+<p>不过上面的这些问题已经通过封装解决了。<code>FCLib</code>中，<code>KDTree</code>使用很简单。它是一个模板类，也就是你需要指定放入树中的数据的维度。建立树时，直接传入<code>geometry</code>中提供的<code>PointList</code>系列（本质上是<code>Eigen</code>向量的<code>vector</code>），可以是动态向量组，也可以是静态向量组。如果是动态向量组，需要让动态向量的维度等于设定模板的维度。此外，通过<code>RadiusSearch</code>与<code>KnnSearch</code>来进行查找，也是可以直接根据<code>Eigen</code>的向量来查询。调用方式类似于<code>OpenCV</code>的方式，只是少了很多需要考虑的麻烦事。</p>
+<pre><code class="cpp">    class SearchParameter
+    {
+        public:
+        //kdtree parameter
+        SearchParameter(int _checks = 256, 
+            float _eps = 1e-8, bool _sorted = true)
+        {
+            checks = _checks;
+            eps = _eps;
+            sorted = _sorted;
+        }
+        //返回结果根据距离排序
+        bool sorted = true;
+        //定义EPS
+        float eps = 1e-8;
+        //递归迭代的次数（搜索深度，越大结果越准确，但是耗时越多）
+        int checks = 256;
+
+
+    };
+    template&lt;int T = 3&gt;
+    class KDTree
+    {
+        public:
+        KDTree(int _trees = 4)
+        {
+            trees = 4;
+        }
+        //从一组高维向量中，建立KDTree，可以选择动态向量的vector，也可以选择静态向量的vector
+        void BuildTree(const geometry::PointXList &amp;points);
+
+        void BuildTree(const geometry::PointList&lt;T&gt; &amp;points);
+        //strange rules in opencv flann: 
+        //when you do knnsearch, you need to resize(k) at beginning.
+        //when you do radius search, you need to get the returned points_count and do a resize for the results.
+        //半径搜索，可以搜索动态向量和静态向量
+        void RadiusSearch(const geometry::VectorX &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, double radius, int max_result, 
+            const SearchParameter &amp;sp = SearchParameter());
+        void RadiusSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, double radius, int max_result, 
+            const SearchParameter sp = SearchParameter());
+        //knn搜索，可以搜索动态向量和静态向量
+        void KnnSearch(const geometry::VectorX &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, int k, 
+            const SearchParameter &amp;sp = SearchParameter());
+        void KnnSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, int k, 
+            const SearchParameter &amp;sp = SearchParameter());
+        cv::flann::Index kdtree;
+        //设定有几棵树并行搜索，默认是4
+        int trees;
+        cv::Mat input_array;
+    };
+</code></pre>
+
+<p>使用<code>KDTree</code>的例子可以查看<code>example/GetLabelUsingKDTree.cpp</code>，输入是两个模型：original model（不带语义信息）与reference model（带有语义信息），通过KDTree找到最近点，从而获得original model中的语义信息。</p>
               
             </div>
           </div>

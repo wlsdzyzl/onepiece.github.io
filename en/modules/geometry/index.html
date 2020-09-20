@@ -74,6 +74,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#rgbdframeh">RGBDFrame.h</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#kdtreeh">KDTree.h</a>
+    </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../odometry/">Odometry</a>
@@ -170,7 +172,13 @@ std::tuple&lt;Vector2, double, double&gt; FitLine(const Point2List &amp; _points
 </code></pre>
 
 <p>The above functions are used to fit a set of 3D point planes and 2D point lines. For example, in a three-dimensional coordinate system, the parametric equation of a plane is: <span class="arithmatex">\(ax+by+cz+d = 0\)</span>, where <span class="arithmatex">\(n=\{ a, b, c\)^T\)</span> is the normal vector of the plane. The return value type of the above function is <code>std::tuple</code>, where the first term is the normal vector, and the second is <span class="arithmatex">\(d\)</span>. The third one is a ratio of the second largest singular value to the largest singular value (using SVD to fit a plane or a straight line, you can get singular values), which can be used as an indicator of the error between the original points and the fitted plane. If all points are in On the plane, the value is 0. That is, the better the plane fits, the smaller the value.</p>
-<p>In <code>Geometry.h</code>, some other aliases are also defined. These aliases are defined for easy-understanding. Some basic knowledges of Feature Matching, etc. is needed to understand the meaning.</p>
+<p>FCLib use <code>Point3List</code> to denote an array of <code>Eigen::Matrix&lt;geometry::scalar, 3, 1&gt;</code>, similarly, <code>PointXList</code> represents an array of <code>Eigen::Matrix&lt;scalar, Eigen::Dynamic, 1&gt;</code>. Also, with cpp 11, we can give an alias for <code>Eigen::Matrix&lt;geometry::Scalar, T, 1&gt;</code> by:</p>
+<pre><code class="cpp">    template &lt;int T&gt;
+        using Vector = Eigen::Matrix&lt;scalar, T, 1&gt;;
+</code></pre>
+
+<p>So you can use <code>Vector&lt;10&gt;</code> to declare a 10D vector. Therefore, we also use <code>PointList</code> to denote an array of template vector, which means we use <code>PointList&lt;100&gt;</code> as an alias of <code>std::vector&lt;Eigen::Matrix&lt;scalar, 100, 1&gt;, Eigen::aligned_allocator&lt;Eigen::Matrix&lt;scalar, 100, 1&gt;&gt;&gt;</code>.  This is much useful.</p>
+<p>In <code>Geometry.h</code>, some other aliases are also defined. These aliases are defined for easy-understanding. Some basic knowledges of Feature Matching, etc. is needed to understand the meanings.</p>
 <h3 id="geometry2dh">Geometry2d.h</h3>
 <p><code>Geometry2d.h</code> implements some geometric algorithms on 2d, mainly to calculate some very basic content of geometry. This part is written for <code>DCEL</code> (doubly connected edge list) in <code>Algorithm</code>. The main functions in this part are:</p>
 <pre><code class="cpp">//Check if a point is inside a convex polygon
@@ -244,6 +252,106 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
 <p>You can get the inlies and corresponding indices using above function.</p>
 <h3 id="rgbdframeh">RGBDFrame.h</h3>
 <p><code>RGBDFrame.h</code> defines the RGBDFrame data structure, which integrates the depth map and the color map, and can simplify the calling process. This data structure is mainly used to serve an RGBD SLAM system. It can save some of the extracted features, point cloud and so on, which are needed for tracking. When building an RGBD SLAM, for efficiency these contents do not need to be recalculated. <code>Release()</code> is used to release all saved content.</p>
+<h3 id="kdtreeh">KDTree.h</h3>
+<p><code>KDTree.h</code> is an encapsulation of FLANN in OpenCV to simplify the calling process. You should notice that there are a lot of pitfalls in OpenCV's <code>flann</code>(Using opencv-3.4.5 in FCLib).</p>
+<p>The most troublesome part of calling OpenCV's KDTree is the mutual conversion between Eigen and OpenCv, and in fact, <code>geometry::KDTree</code> is to solve this.</p>
+<p>The following is a piece of code (from the Internet) that uses kdtree in OpenCV.</p>
+<pre><code class="cpp">int main() {
+    //Points to build tree
+    vector&lt;cv::Point2f&gt; features = { { 1,1 },{ 2, 2},{ 3, 3},{ 4, 4},{ 2, 4} };
+    cv::Mat source = cv::Mat(features).reshape(1);
+    source.convertTo(source, CV_32F);
+
+    cv::flann::KDTreeIndexParams indexParams(2);
+    cv::flann::Index kdtree(source, indexParams); 
+
+    //Parameter
+    int queryNum = 3;//knn 
+    vector&lt;float&gt; vecQuery(2);//query point
+    vector&lt;int&gt; vecIndex(queryNum);//indices of the k nearest points
+    vector&lt;float&gt; vecDist(queryNum);//distances
+    cv::flann::SearchParams params(32);//max search depth
+
+
+    vecQuery = { 3, 4};
+    kdtree.knnSearch(vecQuery, vecIndex, vecDist, queryNum, params);
+
+    cout &lt;&lt; &quot;vecDist: &quot; &lt;&lt; endl;
+    for (auto&amp;x : vecDist)
+        cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;vecIndex: &quot; &lt;&lt; endl;
+    for (auto&amp;x : vecIndex)
+        cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+
+    return 0;
+}
+</code></pre>
+
+<p>There is some points you should be careful:
+1. FLANN in OpenCV does not support <code>double</code>
+2. In this part, the type of query point is <code>vector&lt;float&gt;</code>，if you are using <code>cv::Mat(features[0])</code>, there will be a segmentation fault.
+3. You need to maintain the input array all the time. So if you want to separate the building process and searching process, you need to maintain a shared matrix cloned from the origin matrix. FCLib uses a member(<code>input_array</code>) in class. 
+4. <code>knnSearch</code> won't return any value, and you need to do a <code>resize(k)</code> for indices and distances array before searching. In <code>radiusSearch</code>, you don't have to resize the indices and distances array. <code>radiusSearch</code> will reture a number of searched points. You need to use the retured value to iterate the indices and distance array rather than <code>indices.size()</code>, because <code>indices.size()</code> is equal to <code>max_points</code> you set before, which is the maximum number of points you want to search.</p>
+<p>Anyway, you have no needs to worry about these problems in FCLib. In <code>FCLib</code>, <code>KDTree</code> is very simple to use. It is a template class, that is, you need to specify the dimensions of the data placed in the tree. When building the tree, directly input the <code>PointList</code> series defined in <code>geometry.h</code> (essentially the <code>vector</code> of the <code>Eigen</code> vector), which can be a dynamic vector array or a static vector array. If it is a dynamic vector array, the dimension of the dynamic vector needs to be equal to the dimension of the template. In addition, searching through <code>RadiusSearch</code> and <code>KnnSearch</code> can also be directly based on the vector of <code>Eigen</code>, and FCLib doesn't have any assumption about the <code>indices</code> array and <code>distances</code> array.</p>
+<pre><code class="cpp">    class SearchParameter
+    {
+        public:
+        //kdtree parameter
+        SearchParameter(int _checks = 256, 
+            float _eps = 1e-8, bool _sorted = true)
+        {
+            checks = _checks;
+            eps = _eps;
+            sorted = _sorted;
+        }
+        //the indices array is sorted based on the distances
+        bool sorted = true;
+        //EPS
+        float eps = 1e-8;
+        //Max search depth
+        int checks = 256;
+
+
+    };
+    template&lt;int T = 3&gt;
+    class KDTree
+    {
+        public:
+        KDTree(int _trees = 4)
+        {
+            trees = 4;
+        }
+        //To build KDTree from a set of high-dimensional vectors, you can choose to use a dynamic vector vector or a static vector vector
+        void BuildTree(const geometry::PointXList &amp;points);
+
+        void BuildTree(const geometry::PointList&lt;T&gt; &amp;points);
+        //strange rules in opencv flann: 
+        //when you do knnsearch, you need to resize(k) at beginning.
+        //when you do radius search, you need to get the returned points_count and do a resize for the results.
+        //search points within radius for a dynamic vector or static vector 
+        void RadiusSearch(const geometry::VectorX &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, double radius, int max_result, 
+            const SearchParameter &amp;sp = SearchParameter());
+        void RadiusSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, double radius, int max_result, 
+            const SearchParameter sp = SearchParameter());
+        //search the k nearest points for a dynamic vector or static vector 
+        void KnnSearch(const geometry::VectorX &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, int k, 
+            const SearchParameter &amp;sp = SearchParameter());
+        void KnnSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;int&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, int k, 
+            const SearchParameter &amp;sp = SearchParameter());
+        cv::flann::Index kdtree;
+        //Set the number of trees to search in parallel, the default is 4
+        int trees;
+        cv::Mat input_array;
+    };
+</code></pre>
+
+<p>You can view <code>example/GetLabelUsingKDTree.cpp</code> to better understand how to use KDTree in FCLib. The input is two models: original model (without semantic information) and reference model (with semantic information). By finding the closest point through KDTree, we can obtain the original model's semantic labels.</p>
               
             </div>
           </div>

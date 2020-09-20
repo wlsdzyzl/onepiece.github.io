@@ -92,6 +92,10 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#keyframebasedslam">KeyframeBasedSlam</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cppextension">CPPExtension</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#io">IO</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -156,6 +160,24 @@ std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&
 <p>图片处理的相关内容，封装了一些OpenCV的函数，包括高斯滤波，sobel滤波，创建图像金字塔等等。</p>
 <h3 id="rplymanager">RPLYManager</h3>
 <p>使用RPLY库来进行PLY的读写，可以读取点云与三角网格，<code>geometry::PointCloud</code>以及<code>geometry::TriangleMesh</code>中load，write操作是对这个类的封装。</p>
+<p>同时，FCLib支持对vertex的其他属性或者label的读写，你可以读写语义信息等。用法如下：</p>
+<pre><code class="cpp">//模板函数。读某个label的信息，你需要提供的是label名，value的类型，以及对应的容器vector
+//每次读一个label，你可以只读自己感兴趣的label
+template&lt;typename T&gt;
+    bool ReadVertexLabelFromPLY(const std::string &amp;filename, const std::string &amp;label_name,
+        std::vector&lt;T&gt; &amp;vertex_labels);
+//将附加的label信息写入ply。写的时候稍微有点麻烦，规定只能写int32, float, double, unchar, ushort几种类型。
+//你需要将要写的信息打包成进一个容器vector，而这个vector的类型是AdditionalLabel，是tuple类型，包含了label_name, label_type, 以及一个指向要写的数据的指针。
+//可以一次性写入多个属性
+typedef std::tuple&lt;std::string, e_ply_type, void *&gt; AdditionalLabel;
+bool WritePLY(const std::string &amp;filename, const geometry::Point3List&amp;points, 
+    const geometry::Point3List &amp;normals, const geometry::Point3List &amp;colors,
+    const std::vector&lt;Eigen::Vector3i&gt; &amp;triangles, 
+    const std::vector&lt;AdditionalLabel&gt; &amp; additional_labels = std::vector&lt;AdditionalLabel&gt;(),
+    bool use_ascii = true);
+</code></pre>
+
+<p>对于其他属性或者label的读写，可以查看<code>example/GetLabelUsingKDTree.cpp</code>，会读写mesh中的语音信息。这里可以将Read打包成与Write一样的形式，但是实际上Write在调用时候是比较麻烦的，而且意味着要为void指针分配空间（之后还需要释放）。这是比较危险的行为，因此放弃了这种做法。</p>
 <h3 id="objmanager">OBJManager</h3>
 <p>对OBJ文件的读写，与RPLYManager相似。</p>
 <h3 id="multithreads">MultiThreads</h3>
@@ -181,6 +203,10 @@ timer.Log(&quot;My Process&quot;);
 <p>封装了OpenNI读取深度图与颜色图的接口，有待完善。</p>
 <h3 id="keyframebasedslam">KeyframeBasedSlam</h3>
 <p>基于关键帧的slam系统的一个基类，<code>example/BAFusion.cpp</code>以及<code>example/FBAFusion.cpp</code>都是基于这个类的。</p>
+<h3 id="cppextension">CPPExtension</h3>
+<p>关于CPP的一些拓展，目前包含了对字符串的切片操作<code>Split</code>与<code>RSplit</code>，以及模板函数<code>ShuffleVector</code>，来随机打乱一个<code>std::vector</code>。</p>
+<h3 id="io">IO</h3>
+<p>这里包含了对TUM数据集格式以及Scannet数据集格式的读写，并且函数<code>AlignColorToDepth</code>可以用来在颜色相机与深度相机参数不一致时，对齐颜色深度图（一般来说color map比depth map更大）。</p>
               
             </div>
           </div>

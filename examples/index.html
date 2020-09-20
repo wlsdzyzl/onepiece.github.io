@@ -86,6 +86,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#sparsetrackingdensetracking">SparseTracking和DenseTracking</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scannet">生成Scannet数据集的模型</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#_2">网格简化</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#bundleadjustment">BundleAdjustment测试</a>
@@ -165,6 +167,15 @@
 ./DenseOdometry  [source_rgb] [source_depth] [target_rgb] [targe_depth]
 </code></pre>
 
+<h3 id="scannet">生成Scannet数据集的模型</h3>
+<p><code>example/GenerateModelFromScannet.cpp</code>可以根据scannet提供的相机位姿，颜色以及深度图生成对应的模型。Scannet数据集有的颜色与深度图相机参数不一致，需要进行对齐。</p>
+<pre><code>./GenerateModelFromScannet [Path]
+</code></pre>
+
+<p><code>GetLabelUsingKDTree.cpp</code>可以根据scannet提供的带有语义label的mesh，来给生成的模型提供语义信息。</p>
+<pre><code>./GetLabelUsingKDTree [original model path] [reference model path]
+</code></pre>
+
 <h3 id="_2">网格简化</h3>
 <pre><code>./SimplifyMeshClustering [filename.ply] [grid_length]
 ./SimplifyMeshQuadric [filename.ply] [simplify_ratio]
@@ -213,7 +224,7 @@
 <center><font color=gray>fpfh correspondence</font></center></p>
 <h3 id="_3">房间平面图检测</h3>
 <p>使用<code>algorithm</code>中的算法做的一些有意思的事情.在<code>example/RoomDetection.cpp</code>中,实现了根据有着semantic信息的点云来得知房间平面图.这里面用到了：LineDetection, PlaneDetection（实际上只需要使用一种,不过示例中两个都用了）, DCEL, KMedoidsClusteringDynamic.</p>
-<pre><code>./RoomDetection ../../TestData/room_with_labels.ply
+<pre><code>./RoomDetection ../../TestData/model/room_with_labels.ply
 </code></pre>
 
 <p>输入的模型：</p>

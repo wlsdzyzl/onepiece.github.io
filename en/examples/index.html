@@ -86,6 +86,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#sparsetracking-and-densetracking">SparseTracking and DenseTracking</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generate-model-from-scannet-dataset">Generate Model from Scannet dataset</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#mesh-simplification">Mesh Simplification</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#bundle-adjustment">Bundle Adjustment</a>
@@ -163,6 +165,15 @@
 <pre><code>./SparseOdometry [source_rgb] [source_depth] [target_rgb] [targe_depth]
 ./SparseOdometryMild  [source_rgb] [source_depth] [target_rgb] [targe_depth]
 ./DenseOdometry  [source_rgb] [source_depth] [target_rgb] [targe_depth]
+</code></pre>
+
+<h3 id="generate-model-from-scannet-dataset">Generate Model from Scannet dataset</h3>
+<p><code>example/GenerateModelFromScannet.cpp</code> can generate a model based on the given color, depth and camera pose. Note that there is an alignment between color and depth because of different camera intrinsics.</p>
+<pre><code>./GenerateModelFromScannet [Path]
+</code></pre>
+
+<p><code>GetLabelUsingKDTree.cpp</code> can infer the semantic label of each point in generated model based on KDTree and the given labeled model.</p>
+<pre><code>./GetLabelUsingKDTree [original model path] [reference model path]
 </code></pre>
 
 <h3 id="mesh-simplification">Mesh Simplification</h3>

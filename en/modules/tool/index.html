@@ -92,6 +92,10 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#keyframebasedslam">KeyframeBasedSlam</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cppextension">CPPExtension</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#io">IO</a>
+    </li>
     </ul>
                     </li>
                 </ul>
@@ -156,6 +160,24 @@ std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&
 <p><code>ImageProcessing.h</code>implements some image processing related content, encapsulates some OpenCV functions, including Gaussian filter, Sobel filter, creation of image pyramid and so on.</p>
 <h3 id="rplymanager">RPLYManager</h3>
 <p>FCLib uses the RPLY library to read and write PLY and to read the point Cloud or triangle mesh. The loading and writing of 'geometry::PointCloud' and 'geometry::TriangleMesh' are encapsulation of this class.</p>
+<p>FCLib also supports reading or writing of other properties or labels of vertices(FCLib supports int32, float, double, unchar, ushort currently). However, when you want to do this, you need to call some low-level functions implemented in <code>RPLYManager.h</code>.</p>
+<pre><code class="cpp">//template function for reading the information of a certain label, you need to provide the label name, value type, and corresponding contained vector
+//You can read the values of one label at a time.
+template&lt;typename T&gt;
+    bool ReadVertexLabelFromPLY(const std::string &amp;filename, const std::string &amp;label_name,
+        std::vector&lt;T&gt; &amp;vertex_labels);
+//Write additional label information into ply. It's a little troublesome to write.
+//You need to pack the information to be written into a container(vector), and the type of this vector is AdditionalLabel, which is a tuple type. It contains label_name, label_type, and a pointer to the data.
+//You write multiple attributes at once
+typedef std::tuple&lt;std::string, e_ply_type, void *&gt; AdditionalLabel;
+bool WritePLY(const std::string &amp;filename, const geometry::Point3List&amp;points, 
+    const geometry::Point3List &amp;normals, const geometry::Point3List &amp;colors,
+    const std::vector&lt;Eigen::Vector3i&gt; &amp;triangles, 
+    const std::vector&lt;AdditionalLabel&gt; &amp; additional_labels = std::vector&lt;AdditionalLabel&gt;(),
+    bool use_ascii = true);
+</code></pre>
+
+<p>For reading and writing of labels or properties, you can check <code>example/GetLabelUsingKDTree.cpp</code>, which will perform  reading and writing semantic information of meshes. Here FCLib can pack Reading operation into the same form as Writing, but in fact Writing is more troublesome to call, and it also means to allocate space for void pointers (which needs to be released). This is more dangerous behavior, so FCLib gave up this method.</p>
 <h3 id="objmanager">OBJManager</h3>
 <p>FCLib uses OBJManager to read and write OBJ file, which is an encapsulation of tinyobjloader.</p>
 <h3 id="multithreads">MultiThreads</h3>
@@ -181,6 +203,10 @@ timer.Log(&quot;My Process&quot;);
 <p><code>OpenNIReader</code> encapsulates the interface of OpenNI to read depth and rgb, which needs to be improved.</p>
 <h3 id="keyframebasedslam">KeyframeBasedSlam</h3>
 <p>A base class of the key frame-based slam system, <code>example/BAFusion.cpp</code> and <code>example/FBAFusion.cpp</code> are based on this class.</p>
+<h3 id="cppextension">CPPExtension</h3>
+<p><code>CPPExtension.h</code> implements some extensions of CPP. It currently includes the string slice operations <code>Split</code> and <code>RSplit</code>, and the template function <code>ShuffleVector</code> to randomly shuffle a <code>std::vector</code>.</p>
+<h3 id="io">IO</h3>
+<p><code>IO.h</code> contains some IO operations of TUM dataset and Scannet dataset. <code>AlignColorToDepth</code> can be used to align color map and depth map, when the color camera and depth camera have different camera intrinsics( Generally, color camera has a high resolution).</p>
               
             </div>
           </div>

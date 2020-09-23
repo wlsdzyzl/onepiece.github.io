@@ -80,7 +80,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#imageprocessing">ImageProcessing</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#rplymanager">RPLYManager</a>
+    <li class="toctree-l2"><a class="reference internal" href="#plymanager">PLYManager</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#rplymanagerdeleted">RPLYManager(Deleted)</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#objmanager">OBJManager</a>
     </li>
@@ -105,6 +109,8 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Others</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">ChangeLog</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">Acknowledgments</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../about/">About Author</a>
@@ -158,7 +164,40 @@ std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&
 <p>RESET will set the output color to the default white color.</p>
 <h3 id="imageprocessing">ImageProcessing</h3>
 <p><code>ImageProcessing.h</code>implements some image processing related content, encapsulates some OpenCV functions, including Gaussian filter, Sobel filter, creation of image pyramid and so on.</p>
-<h3 id="rplymanager">RPLYManager</h3>
+<h3 id="plymanager">PLYManager</h3>
+<p><code>PLYManager</code> implements the reading and writing of ply files based on <a href="https://github.com/ddiakopoulos/tinyply">tinyply</a>. In addition to vertices, colors, normals, and triangular faces, <code>PLYManager</code> also supports to read and write arbitrary elements with properties, and comments. For additional elements you want to add, they need to be packaged in <code>AdditionalElement</code> to be correctly used by <code>PLYManager</code>:</p>
+<pre><code class="cpp">struct AdditionalElement
+{
+    //Number of elements
+    size_t count;
+    //The total number of bytes occupied by data, which is equal to (count * sizeof(type) * element_property.size())
+    size_t byte_size;
+    //Name of elements
+    std::string element_key;
+    //name of elements' property
+    std::vector&lt;std::string&gt; element_property;
+    //type of property, which can be char, short, int, and unsigned version, float, double
+    tinyply::Type type;
+    //property can also be a list, this is the type of list's length
+    tinyply::Type list_type = tinyply::Type::INVALID;
+    //list'length
+    size_t list_count = 0;
+    //pointer to data
+    unsigned char *data; 
+};
+//When reading additional elements, remember to delete the data pointer after conversion to the datatype you need.
+bool ReadPLY(const std::string &amp;filename, geometry::Point3List &amp;points, geometry::Point3List &amp;normals,
+    geometry::Point3List &amp;colors, geometry::Point3uiList &amp;triangles, 
+    std::vector&lt;AdditionalElement&gt; &amp; additional_labels);
+bool WritePLY(const std::string &amp;filename, const geometry::Point3List&amp;points, 
+    const geometry::Point3List &amp;normals, const geometry::Point3List &amp;colors,
+    const geometry::Point3uiList &amp;triangles = geometry::Point3uiList(), 
+    const std::vector&lt;std::string&gt; &amp; comments = std::vector&lt;std::string&gt;(),
+    const std::vector&lt;AdditionalElement&gt; &amp; additional_labels = std::vector&lt;AdditionalElement&gt;(),
+    bool use_ascii = false);
+</code></pre>
+
+<h4 id="rplymanagerdeleted">RPLYManager(Deleted)</h4>
 <p>FCLib uses the RPLY library to read and write PLY and to read the point Cloud or triangle mesh. The loading and writing of 'geometry::PointCloud' and 'geometry::TriangleMesh' are encapsulation of this class.</p>
 <p>FCLib also supports reading or writing of other properties or labels of vertices(FCLib supports int32, float, double, unchar, ushort currently). However, when you want to do this, you need to call some low-level functions implemented in <code>RPLYManager.h</code>.</p>
 <pre><code class="cpp">//template function for reading the information of a certain label, you need to provide the label name, value type, and corresponding contained vector

@@ -75,6 +75,12 @@
     <li class="toctree-l2"><a class="reference internal" href="#rgbdframeh">RGBDFrame.h</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#kdtreeh">KDTree.h</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#opencv-not-recommended">OpenCV (Not Recommended)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nanoflann">nanoflann</a>
+    </li>
+        </ul>
     </li>
     </ul>
                     </li>
@@ -101,6 +107,8 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Others</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">ChangeLog</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">Acknowledgments</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../../about/">About Author</a>
@@ -253,7 +261,8 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
 <h3 id="rgbdframeh">RGBDFrame.h</h3>
 <p><code>RGBDFrame.h</code> defines the RGBDFrame data structure, which integrates the depth map and the color map, and can simplify the calling process. This data structure is mainly used to serve an RGBD SLAM system. It can save some of the extracted features, point cloud and so on, which are needed for tracking. When building an RGBD SLAM, for efficiency these contents do not need to be recalculated. <code>Release()</code> is used to release all saved content.</p>
 <h3 id="kdtreeh">KDTree.h</h3>
-<p><code>KDTree.h</code> is an encapsulation of FLANN in OpenCV to simplify the calling process. You should notice that there are a lot of pitfalls in OpenCV's <code>flann</code>(Using opencv-3.4.5 in FCLib).</p>
+<p>There are two underlying implementations of KDTree, which are based on OpenCV and nanoflann respectively. You can choose any of the by settingt the pre-defined variable <code>NANO_IMPLAMENTATION</code>.</p>
+<h4 id="opencv-not-recommended">OpenCV (Not Recommended)</h4>
 <p>The most troublesome part of calling OpenCV's KDTree is the mutual conversion between Eigen and OpenCv, and in fact, <code>geometry::KDTree</code> is to solve this.</p>
 <p>The following is a piece of code (from the Internet) that uses kdtree in OpenCV.</p>
 <pre><code class="cpp">int main() {
@@ -295,6 +304,9 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
 3. You need to maintain the input array all the time. So if you want to separate the building process and searching process, you need to maintain a shared matrix cloned from the origin matrix. FCLib uses a member(<code>input_array</code>) in class. 
 4. <code>knnSearch</code> won't return any value, and you need to do a <code>resize(k)</code> for indices and distances array before searching. In <code>radiusSearch</code>, you don't have to resize the indices and distances array. <code>radiusSearch</code> will reture a number of searched points. You need to use the retured value to iterate the indices and distance array rather than <code>indices.size()</code>, because <code>indices.size()</code> is equal to <code>max_points</code> you set before, which is the maximum number of points you want to search.</p>
 <p>Anyway, you have no needs to worry about these problems in FCLib. In <code>FCLib</code>, <code>KDTree</code> is very simple to use. It is a template class, that is, you need to specify the dimensions of the data placed in the tree. When building the tree, directly input the <code>PointList</code> series defined in <code>geometry.h</code> (essentially the <code>vector</code> of the <code>Eigen</code> vector), which can be a dynamic vector array or a static vector array. If it is a dynamic vector array, the dimension of the dynamic vector needs to be equal to the dimension of the template. In addition, searching through <code>RadiusSearch</code> and <code>KnnSearch</code> can also be directly based on the vector of <code>Eigen</code>, and FCLib doesn't have any assumption about the <code>indices</code> array and <code>distances</code> array.</p>
+<h4 id="nanoflann">nanoflann</h4>
+<p><a href="https://github.com/jlblancoc/nanoflann">nanoflann</a> is a very lightweight C++11 library, with only one hpp file. Compared with the implementation of OpenCV, nanoflann is more efficient and occupies less memory. In nanoflann, you need to declare a class for each kinds of points(such as 2D or 3D points) that needs to be searched, which contains certain functions. In FCLib, there is no need to do this.  Nanoflann's <code>radiusSearch</code> cannot specify <code>max_neighbors</code>, which means it will find all points within the radius. This is not necessary in some cases and can cause waste of computing resources. FCLib modified the source code of <code>nanoflann</code> to get this feature (all points will be searched when <code>max_neighbors</code>=0).</p>
+<p>The KDTree based on nanoflann implementation has the same usage of KDTree based on OpenCV. Additionally, it supports indices of <code>std::vector&lt;size_t&gt;</code>.</p>
 <pre><code class="cpp">    class SearchParameter
     {
         public:
@@ -344,10 +356,23 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
         void KnnSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;int&gt; &amp;indices, 
             std::vector&lt;float &gt; &amp;dists, int k, 
             const SearchParameter &amp;sp = SearchParameter());
-        cv::flann::Index kdtree;
-        //Set the number of trees to search in parallel, the default is 4
-        int trees;
-        cv::Mat input_array;
+
+#if NANO_IMPLEMENTATION
+        //only nanoflann based KDTree supports
+        void RadiusSearch(const geometry::VectorX &amp;point, std::vector&lt;size_t&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, double radius, int max_result, 
+            const SearchParameter &amp;sp = SearchParameter());
+        void RadiusSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;size_t&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, double radius, int max_result, 
+            const SearchParameter sp = SearchParameter());
+        //search the k nearest points for a dynamic vector or static vector 
+        void KnnSearch(const geometry::VectorX &amp;point, std::vector&lt;size_t&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, int k, 
+            const SearchParameter &amp;sp = SearchParameter());
+        void KnnSearch(const geometry::Vector&lt;T&gt; &amp;point, std::vector&lt;size_t&gt; &amp;indices, 
+            std::vector&lt;float &gt; &amp;dists, int k, 
+            const SearchParameter &amp;sp = SearchParameter());
+#endif
     };
 </code></pre>
 

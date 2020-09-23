@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>一些关于代码的规则 - FCLib</title>
+  <title>变更日志 - FCLib</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,8 +18,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u4e00\u4e9b\u5173\u4e8e\u4ee3\u7801\u7684\u89c4\u5219";
-    var mkdocs_page_input_path = "rules.md";
+    var mkdocs_page_name = "\u53d8\u66f4\u65e5\u5fd7";
+    var mkdocs_page_input_path = "changelog.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -48,12 +48,10 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
                 <p class="caption"><span class="caption-text">概览</span></p>
-                <ul class="current">
+                <ul>
                     <li class="toctree-l1"><a class="reference internal" href="..">简单介绍</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">一些关于代码的规则</a>
-    <ul class="current">
-    </ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../rules/">一些关于代码的规则</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">模块</span></p>
@@ -84,8 +82,10 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">其他</span></p>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../changelog/">变更日志</a>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">变更日志</a>
+    <ul class="current">
+    </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../thanksto/">致谢</a>
                     </li>
@@ -113,11 +113,11 @@
     
       
         
-          <li>概览 &raquo;</li>
+          <li>其他 &raquo;</li>
         
       
     
-    <li>一些关于代码的规则</li>
+    <li>变更日志</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -128,13 +128,12 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="_1">一些规则</h2>
-<p>既然想要对初学者友好，代码结构尽量清晰是很有必要的。这里说明一些FCLib在编写时候遵循的规则。</p>
-<p>首先，除了示例，所有的类，函数等，都被包含在<code>fucking_cool</code>命名空间里。而FCLib分成各个模块，每个模块也有各自的命名空间，分别是相机(<code>camera</code>)，几何(<code>geometry</code>)，视觉里程计(<code>odometry</code>)，闭环检测(<code>lcdetection</code>)，点云注册(<code>registration</code>)，优化(<code>optimization</code>)，生成模型(<code>integration</code>)，可视化(<code>visualization</code>)，算法(<code>algorithm</code>)以及其他工具(<code>tool</code>)。</p>
-<p>目录以及文件名称都是大写加小写的方式(<code>FuckingCool</code>)，命名空间都是小写加下划线(<code>fucking_cool</code>)，函数以及类名都是大写加小写(<code>FuckingCool</code>)，而某个特定的对象是小写加下划线的方式(<code>fucking_cool</code>)(基本都是这样，有些函数可能由于作者疏忽而可能会有破坏规则的情况)。对于提前定义的一些特殊值或者参数用全部大写加下划线的方式(<code>MAX_VALUE</code>)。</p>
-<p>代码缩进参考python的语法。</p>
-<p>作者的注释写的很差。但是相关的文章会在<code>related_paper</code>文件夹中给出。</p>
-<p>在<code>examples</code>中，作者给出了若干个示例，也会在后面的内容中介绍。没有介绍的部分，可能就是临时创建的项目未来得及删掉罢了，可以直接忽略。</p>
+                <h2 id="_1">变更日志</h2>
+<ul>
+<li>2020.9.17：添加<code>geometry::KDTree</code>（对OpenCV的封装），增加了对Scannet数据库的一些支持，比如读取帧序列，对齐深度相机与颜色相机，生成模型等，增加对PLY文件的其他任意顶点属性的读写。</li>
+<li>2020.9.21：删除<code>RPLYManager</code>，增加<code>PLYManager</code>，将读取ply文件的库从<code>rply</code>改成<code>tinyply</code>。后者为cpp11库，实现更优雅，同时改进了PLY文件对其他属性的读写，并且拓展到可以随意添加元素及属性，以及注释。</li>
+<li>2020.9.23：将KDTree的实现改成使用<code>nanoflann</code>，比OpenCV的flann在内存与时间上都更高效；说明文档中增加了变更日志这一栏。</li>
+</ul>
               
             </div>
           </div>
@@ -142,10 +141,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../modules/camera/" class="btn btn-neutral float-right" title="相机">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../thanksto/" class="btn btn-neutral float-right" title="致谢">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href=".." class="btn btn-neutral" title="简单介绍"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../examples/" class="btn btn-neutral" title="示例"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -173,10 +172,10 @@
           <a href="https://github.com/MyEvolution/FCLib" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../examples/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../modules/camera/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../thanksto/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

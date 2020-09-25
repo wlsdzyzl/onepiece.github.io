@@ -133,6 +133,7 @@
 <li>2020.9.17：添加<code>geometry::KDTree</code>（对OpenCV的封装），增加了对Scannet数据库的一些支持，比如读取帧序列，对齐深度相机与颜色相机，生成模型等，增加对PLY文件的其他任意顶点属性的读写。</li>
 <li>2020.9.21：删除<code>RPLYManager</code>，增加<code>PLYManager</code>，将读取ply文件的库从<code>rply</code>改成<code>tinyply</code>。后者为cpp11库，实现更优雅，同时改进了PLY文件对其他属性的读写，并且拓展到可以随意添加元素及属性，以及注释。</li>
 <li>2020.9.23：将KDTree的实现改成使用<code>nanoflann</code>，比OpenCV的flann在内存与时间上都更高效；说明文档中增加了变更日志这一栏。</li>
+<li>2020.9.25：为<code>geometry::Visualizer</code>添加设置视图矩阵的函数，这样可以在做slam时候跟着相机视角观察，以及根据传入模型点的位置自动选择观察视角（之前的版本你可能需要拖动很久才看到模型），点击查看：<a href="../modules/visualization/">可视化</a>。</li>
 </ul>
               
             </div>

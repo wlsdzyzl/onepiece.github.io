@@ -155,7 +155,18 @@
 };
 </code></pre>
 
-<p><code>Visualizer</code>的功能目前比较少，目前也不支持多种几何一起显示（如点云和网格一起显示），也不支持UI。以后可能也继续不会支持。</p>
+<hr />
+<p>目前<code>Visualizer</code>添加了设置视图矩阵的方法<code>SetModelViewMatrix</code>，只需要传入相机外参，这个函数会自动转化当前相机位姿在OpenGL坐标系中的视图矩阵。背后的原理会稍微有点绕，下面会解释一下。</p>
+<p>首先，想要理解视图矩阵，模型是怎样渲染的：先将世界坐标系，转化成相机坐标系，再通过相机坐标系下进行透射投影到2D图片，就是我们看到的结果。</p>
+<p>将世界坐标系下的点转化成相机坐标系下的点，就是视图矩阵（View Matrix），将三维点投影到二维图片上是投影矩阵（Projection Matrix）。通过<code>SetModelViewMatrix</code>，也就是设定视图矩阵，我们可以实现下面跟踪相机位姿的效果：</p>
+<p><center></p>
+<p><img alt="" src="../../img/fbafusion_follow_pose.gif" /></p>
+<p></center></p>
+<p>下面几点会详细介绍如何根据真实的相机位姿求得OpenGL的视图矩阵：
+- 一个相机位姿为<span class="arithmatex">\(T = [R|t]\)</span>，那么它的坐标系也是用一样方式进行旋转和平移。首先进行旋转，世界坐标系的<span class="arithmatex">\(x, y, z\)</span>向量分别为<span class="arithmatex">\((1, 0, 0)^T, (0, 1, 0)^T, (0, 0, 1)^T\)</span>，旋转后坐标系变为：<span class="arithmatex">\(R\cdot[x, y, z] = R\)</span>。
+因此，实际上旋转后的坐标系向量就是<span class="arithmatex">\(R\)</span>的列向量。为了得到某个点在该坐标系下的坐标，需要将列向量转化为行向量。因此转化后的坐标系为<span class="arithmatex">\(R^T\)</span>。旋转后，我们再对坐标系进行平移，相机位置在这个旋转后的坐标系下的坐标为：<span class="arithmatex">\(R^Tt\)</span>。如果坐标系平移<span class="arithmatex">\(t\)</span>后，则原先点<span class="arithmatex">\(p\)</span>的坐标为<span class="arithmatex">\(p - t\)</span>。因此，我们可以得到在相机位姿为<span class="arithmatex">\([R|t]\)</span>的时候，其视图矩阵为<span class="arithmatex">\([R^T|-R^Tt] = T^{-1}\)</span>
+- OpenGL中，规定<span class="arithmatex">\(z\)</span>轴是指向相机的，而<span class="arithmatex">\(y\)</span>轴是朝上的。而在SLAM中（一般的相机模型），<span class="arithmatex">\(z\)</span>轴是从相机指出去的，因此求得相机坐标系后<span class="arithmatex">\(z\)</span>要取反。如果在建模时，相机的<span class="arithmatex">\(f_y\)</span>是正的，那么意味着成像是上下颠倒的（<span class="arithmatex">\(z\)</span>从相机指出去，<span class="arithmatex">\(y\)</span>轴朝下，而<span class="arithmatex">\(f_y\)</span>为正，意味着世界坐标系y轴也朝下，<span class="arithmatex">\(x\)</span>轴朝右，因此<span class="arithmatex">\(x\)</span>轴是正常的）。如果是这种情况，<span class="arithmatex">\(y\)</span>轴也需要取反。因此，根据相机位姿求得相机坐标系后，需要对这两个轴进行处理，另外一个轴朝右，可以通过叉乘得到（右手坐标系），这样就得到OpenGL中的相机坐标系的方向向量矩阵<span class="arithmatex">\(R_g\)</span>。
+- 处理后得到坐标系的方向向量，还需要对坐标系进行平移，方法也就是方向向量组成的矩阵乘上观察位置<span class="arithmatex">\(t\)</span>再取负：<span class="arithmatex">\(t_g = - R_g  t\)</span>，则最终视图矩阵为<span class="arithmatex">\([R_g|t_g]\)</span>。</p>
               
             </div>
           </div>

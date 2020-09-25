@@ -155,7 +155,8 @@
 };
 </code></pre>
 
-<h2 id="visualizer-does-not-support-the-display-of-multiple-kinds-of-geometric-objectssuch-as-display-of-point-cloud-and-mesh-nor-does-it-support-ui-these-functions-may-not-be-supported-in-the-future"><code>visualizer</code> does not support the display of multiple kinds of geometric objects(such as display of point cloud and mesh), nor does it support UI. These functions may not be supported in the future.</h2>
+<p><code>visualizer</code> does not support the display of multiple kinds of geometric objects(such as display of point cloud and mesh), nor does it support UI. These functions may not be supported in the future.</p>
+<hr />
 <p>At present, <code>Visualizer</code> adds the method <code>SetModelViewMatrix</code> to set the view matrix. You only need to pass in the camera pose, and this function will automatically compute the view matrix of the current camera pose in the OpenGL coordinate system. The principle behind is a little confusing, The explanation is as follows.</p>
 <p>First of all, we need to know that how the model is rendered: firstly the world coordinate system need to be transformed into the camera coordinate system, and then perform a transmission projection on 3D model to a 2D picture under the camera coordinate system. Finally we got what we see.</p>
 <p><strong>View Matrix</strong> converts world coordinates of points into camera coordinates, and <strong>Projection Matrix</strong> projects 3D points onto a 2D plane.  Through <code>SetModelViewMatrix</code>, which is to set the view matrix, we can follow camera poses during a reconstruction process as follows:</p>

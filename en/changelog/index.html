@@ -133,7 +133,8 @@
 <li>2020.9.17: Add <code>geometry::KDTree</code> (encapsulation of OpenCV); add some supports for Scannet database, such as reading frame sequence, aligning depth camera and color camera, generating model, etc.; Add supporting reading and writing of PLY file for any other vertex properties.</li>
 <li>2020.9.21: Delete <code>RPLYManager</code>, add <code>PLYManager</code>. Use <code>tinyply</code> for reading and writing of ply files instead of <code>rply</code>. <code>tinyply</code> is the cpp11 based library, which is more elegant. At the same time, it improves the methods of reading and writing of arbitrary elements and properties as well as comments.</li>
 <li>2020.9.23: Change the implementation of KDTree to use <code>nanoflann</code>, which is more efficient in memory and running time than OpenCV's flann; the change log column is added to the documentation.</li>
-<li>2020.9.25：Add function to set view matrix for <code>geometry::Visualizer</code>. Now we can follow camera pose during the reconstruction process. Also we can dynamically and automatically change the view matrix for each geometry added in visualizer, so we don't need to drag the mouse for a long time to find the model. See <a href="../modules/visualization/">Visualization</a>.</li>
+<li>2020.9.25: Add function to set view matrix for <code>geometry::Visualizer</code>. Now we can follow camera pose during the reconstruction process. Also we can dynamically and automatically change the view matrix for each geometry added in visualizer, so we don't need to drag the mouse for a long time to find the model. See <a href="../modules/visualization/">Visualization</a>.</li>
+<li>2020.9.26: 0 error(s) 0 warning(s).</li>
 </ul>
               
             </div>

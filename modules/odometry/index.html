@@ -138,7 +138,7 @@
               
                 <h2 id="_1">视觉里程计</h2>
 <p><em>namespace: odometry</em></p>
-<p>这里的视觉里程计特指RGBD视觉里程计。视觉里程计的作用是估计两帧之间相机的运动，是SLAM的第一步。在FCLib中实现了两种视觉里程计，用得都比较广泛：基于特征点的稀疏匹配，以及基于光流的稠密匹配。用法非常简单：</p>
+<p>这里的视觉里程计特指RGBD视觉里程计。视觉里程计的作用是估计两帧之间相机的运动，是SLAM的第一步。在OPLib中实现了两种视觉里程计，用得都比较广泛：基于特征点的稀疏匹配，以及基于光流的稠密匹配。用法非常简单：</p>
 <pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
 const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
 
@@ -193,14 +193,14 @@ class DenseTrackingResult
 };
 </code></pre>
 
-<p>主要区别在于，二者最后得到的匹配点的ID类型不同，sparse tracking特征点ID是一维的，一对正确匹配的特征点类似于<span class="arithmatex">\((501, 308)\)</span>，指的是source frame中的第501个特征点和第308个特征点为一对。而dense tracking最后点的ID是二维的，结果例如：<span class="arithmatex">\([(501, 308), (489, 311)]\)</span>，指的是像素位置<span class="arithmatex">\((501, 308)\)</span>对应的3D点与像素位置为<span class="arithmatex">\((489, 311)\)</span>对应的3D点为一对。当然，可以将dense tracking的结果整合成与sparse tracking结果一样的形式，但是FCLib认为这样更接近算法的本质，因为它透漏出一个信息就是：sparse tracking是基于提取出来的特征点的，而dense tracking是逐像素的。</p>
+<p>主要区别在于，二者最后得到的匹配点的ID类型不同，sparse tracking特征点ID是一维的，一对正确匹配的特征点类似于<span class="arithmatex">\((501, 308)\)</span>，指的是source frame中的第501个特征点和第308个特征点为一对。而dense tracking最后点的ID是二维的，结果例如：<span class="arithmatex">\([(501, 308), (489, 311)]\)</span>，指的是像素位置<span class="arithmatex">\((501, 308)\)</span>对应的3D点与像素位置为<span class="arithmatex">\((489, 311)\)</span>对应的3D点为一对。当然，可以将dense tracking的结果整合成与sparse tracking结果一样的形式，但是OPLib认为这样更接近算法的本质，因为它透漏出一个信息就是：sparse tracking是基于提取出来的特征点的，而dense tracking是逐像素的。</p>
 <h3 id="sparsetracking">SparseTracking</h3>
 <p>SparseTracking的基本步骤如下：
 - 提取特征点
 - 特征点匹配
 - outlier过滤
 - 求得变换矩阵</p>
-<p>FCLib提取的是ORB特征点，速度快。在特征点匹配时，选择了两种策略：OpenCV的BFMatcher（brutal fource），以及<a href="https://github.com/lhanaf/MILD">MILD</a>中提到的Sparse Match。这个部分的内容也在上述链接中开源了，文章可以参考<a href="https://arxiv.org/abs/1709.05833">Beyond SIFT Using Binary features in Loop Closure Detection</a>，在code部分的<code>relative_paper/sparse_match.pdf</code>也是这篇文章。这个文章中提到的方法在FCLib中被封装成一个类<code>SparseMatcher</code>，主要成员函数：</p>
+<p>OPLib提取的是ORB特征点，速度快。在特征点匹配时，选择了两种策略：OpenCV的BFMatcher（brutal fource），以及<a href="https://github.com/lhanaf/MILD">MILD</a>中提到的Sparse Match。这个部分的内容也在上述链接中开源了，文章可以参考<a href="https://arxiv.org/abs/1709.05833">Beyond SIFT Using Binary features in Loop Closure Detection</a>，在code部分的<code>relative_paper/sparse_match.pdf</code>也是这篇文章。这个文章中提到的方法在OPLib中被封装成一个类<code>SparseMatcher</code>，主要成员函数：</p>
 <pre><code class="cpp">//Match
 void Match(const geometry::Descriptor &amp;source_descriptors, const geometry::Descriptor &amp;target_descriptors, 
     geometry::DMatchSet &amp; matches);
@@ -228,10 +228,10 @@ void RanSaPC(const geometry::Point3List &amp;source_local_points,
     const geometry::Point3List &amp;target_local_points, std::default_random_engine &amp;engine, std::vector&lt; cv::DMatch &gt; &amp;init_matches);
 </code></pre>
 
-<p>FCLib将使用<a href="https://github.com/lhanaf/MILD">MILD</a>中sparse match的tracking函数，封装成<code>SparseTrackingMILD</code>，一般来说相对于<code>SparseTracking</code>有更好的效果，可以得到更多的正确的inliers。</p>
+<p>OPLib将使用<a href="https://github.com/lhanaf/MILD">MILD</a>中sparse match的tracking函数，封装成<code>SparseTrackingMILD</code>，一般来说相对于<code>SparseTracking</code>有更好的效果，可以得到更多的正确的inliers。</p>
 <h3 id="densetracking">DenseTracking</h3>
 <p>DenseTracking的原理可以参考论文：<a href="https://vision.cs.tum.edu/_media/spezial/bib/steinbruecker_sturm_cremers_iccv11.pdf">Real-Time Visual Odometry from Dense RGB-D Images</a>，也就是<code>related_paper/steinbruecker_sturm_cremers_iccv11.pdf</code>。
-上述文章只是追踪颜色图的intensity，也就是光流法，但是很容易拓展到追踪深度图的depth。在FCLib中，是可以根据最后一个参数<code>term_type</code>来选择使用颜色或者深度，或者是混合项：</p>
+上述文章只是追踪颜色图的intensity，也就是光流法，但是很容易拓展到追踪深度图的depth。在OPLib中，是可以根据最后一个参数<code>term_type</code>来选择使用颜色或者深度，或者是混合项：</p>
 <pre><code class="cpp">if(term_type == 0 )//混合
 std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using hybrid term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
 else if(term_type == 1)//颜色

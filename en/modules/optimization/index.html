@@ -135,7 +135,7 @@
                 <h2 id="optimization">Optimization</h2>
 <p><em>namespace: optimization</em></p>
 <p>As mentioned in <a href="../lcdetection">Loop Detection</a>, tracking will have accumulated errors, and we need closed-loop detection to provide constraints to optimize and eliminate errors. Optimization is the content of this part.</p>
-<p>Back-end optimization generally uses an optimizer, libraries like g2o, ceres are very good, but unfortunately the author is only familiar with Eigen. The optimization part is implemented by Eigen, which should be more helpful for learning. FCLib implements two Two back-end optimization methods: Fast Bundle Adjustment and Bundle Adjustment.</p>
+<p>Back-end optimization generally uses an optimizer, libraries like g2o, ceres are very good, but unfortunately the author is only familiar with Eigen. The optimization part is implemented by Eigen, which should be more helpful for learning. OPLib implements two Two back-end optimization methods: Fast Bundle Adjustment and Bundle Adjustment.</p>
 <h3 id="fast-bundleadjustment">Fast BundleAdjustment</h3>
 <p>Frame correspondence is defined in class <code>Correspondence</code>:</p>
 <pre><code class="cpp">class Correspondence
@@ -149,11 +149,11 @@
 </code></pre>
 
 <p>A Frame Correspondence means a pair of matched frames, where the source id is the id of the source frame, and the target id is the id of the target frame in the optimized variable. And <code>average_disparity</code> is used to measure the distance of these matching points in a 2-dimensional picture, and to determine whether to start a new keyframe. <code>geometry::PointCorrespondenceSet</code> is the set of matching points contained in this pair of matching frames.</p>
-<p>Fast BundleAdjustment (FBA) is faster than the traditional Bundle Adjustment. In fact, FBA is called only in FCLib and does not have a very standard name. The difference between it and BundleAdjustment is the optimization variables and objective functions. FBA only optimizes the camera pose, The optimization objective function is:</p>
+<p>Fast BundleAdjustment (FBA) is faster than the traditional Bundle Adjustment. In fact, FBA is called only in OPLib and does not have a very standard name. The difference between it and BundleAdjustment is the optimization variables and objective functions. FBA only optimizes the camera pose, The optimization objective function is:</p>
 <div class="arithmatex">\[
 E(T) = \sum_{i}^{\vert\Omega\vert}\sum_{j}^{\vert C_{i}\vert}\Vert T_sp_{s(j)} - T_tp_{t(j)} \Vert^2
 \]</div>
-<p><span class="arithmatex">\(\Omega\)</span> refers to all frame correspondences, <span class="arithmatex">\(C_{i}\)</span> refers to the <span class="arithmatex">\(i\)</span> frame correspondence, which is composed of multiple point correspondences. <span class="arithmatex">\(T_s and T_t\)</span> represent the poses of the source frame and target frame in the frame correspondence, respectively. <span class="arithmatex">\(p_(s(j))\)</span> represents the source point in the <span class="arithmatex">\(j\)</span>th point correspondence. For the optimization of this part, you can refer to the article <a href="https://ieeexplore. ieee.org/document/8606275">fastgo</a>, you can also find it in <code>related_paper/fastgo.pdf</code>. This article contains more optimization techniques to improve system efficiency, while FCLib only implements the basic parts. The functions are as follows:</p>
+<p><span class="arithmatex">\(\Omega\)</span> refers to all frame correspondences, <span class="arithmatex">\(C_{i}\)</span> refers to the <span class="arithmatex">\(i\)</span> frame correspondence, which is composed of multiple point correspondences. <span class="arithmatex">\(T_s and T_t\)</span> represent the poses of the source frame and target frame in the frame correspondence, respectively. <span class="arithmatex">\(p_(s(j))\)</span> represents the source point in the <span class="arithmatex">\(j\)</span>th point correspondence. For the optimization of this part, you can refer to the article <a href="https://ieeexplore. ieee.org/document/8606275">fastgo</a>, you can also find it in <code>related_paper/fastgo.pdf</code>. This article contains more optimization techniques to improve system efficiency, while OPLib only implements the basic parts. The functions are as follows:</p>
 <pre><code class="cpp">void FastBA(const std::vector&lt;Correspondence&gt; &amp;correspondences, geometry::SE3List &amp;poses, int max_iteration =5);
 </code></pre>
 
@@ -170,7 +170,7 @@ E(T, p) = \sum_i^{N_f}\sum_{j}^{N_p}\Vert u_{i,j} -  \omega(T_i^{-1} p_j) \Vert,
     const camera::PinholeCamera &amp;camera, int max_iteration = 20);
 </code></pre>
 
-<p>When implementing FastBA, FCLib uses the Gauss-Newton optimization method, and BA must use the Levenberg-Marquardt algorithm, because it is easy to appear singular matrices, which causes Gauss-Newton to become very fragile and makes the result unable to converge. For the detailed derivation of BA, refer to <code>related_paper/BARevisited.pdf</code>.</p>
+<p>When implementing FastBA, OPLib uses the Gauss-Newton optimization method, and BA must use the Levenberg-Marquardt algorithm, because it is easy to appear singular matrices, which causes Gauss-Newton to become very fragile and makes the result unable to converge. For the detailed derivation of BA, refer to <code>related_paper/BARevisited.pdf</code>.</p>
 <p>Look the examples: <a href="../../examples/#bundleadjustment">bundle adjustment of two frames</a>.</p>
               
             </div>

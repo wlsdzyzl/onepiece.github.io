@@ -153,7 +153,7 @@
             <div class="section">
               
                 <h2 id="_1">示例</h2>
-<p>这里是一些使用FCLib的程序.所有的程序都可以在<code>examples</code>文件夹中找到源代码.编译后,进入到<code>build/example</code>下可以输入下面的命令来测试.</p>
+<p>这里是一些使用OPLib的程序.所有的程序都可以在<code>examples</code>文件夹中找到源代码.编译后,进入到<code>build/example</code>下可以输入下面的命令来测试.</p>
 <h3 id="ply">读取PLY的点云/网格并显示</h3>
 <pre><code>./ReadPLYPCD [filename.ply]
 ./ReadPLYMesh [filename.ply]
@@ -174,10 +174,11 @@
 <pre><code>./GenerateModelFromScannet [Path]
 </code></pre>
 
-<p><code>GetLabelUsingKDTree.cpp</code>可以根据scannet提供的带有语义label的mesh，来给生成的模型提供语义信息。</p>
-<pre><code>./GetLabelUsingKDTree [original model path] [reference model path]
+<p><code>GetLabelUsingKDTree.cpp</code>可以根据scannet提供的带有语义和实例的mesh，来给生成的模型提供语义信息。</p>
+<pre><code>./GetLabelUsingKDTree [original model path] [reference model path] [instance_json_path](optional)
 </code></pre>
 
+<p>生成的可视化模型将保存为<code>colored_model_semantic.ply</code>和<code>colored_model_instance.ply</code>。</p>
 <h3 id="_2">网格简化</h3>
 <pre><code>./SimplifyMeshClustering [filename.ply] [grid_length]
 ./SimplifyMeshQuadric [filename.ply] [simplify_ratio]
@@ -243,7 +244,7 @@
 <h3 id="_4">三个重建系统</h3>
 <p>一个没有后端的系统是不完整的.如果只追踪,而不进行优化,得到的结果会出现重影,如下图：
 <img alt="" src="../img/without_loop.bmp" /></p>
-<p>FCLib实现了3种较为完整的系统,使用的方法在前端或者后端略有不同,下面逐一介绍.</p>
+<p>OPLib实现了3种较为完整的系统,使用的方法在前端或者后端略有不同,下面逐一介绍.</p>
 <h4 id="fbafusion">FBAFusion</h4>
 <p>FBAFusion用的是SparseTracking,Mild闭环检测,加上Fast BundleAdjustment后端优化,也就是首页展示的内容.</p>
 <pre><code>./FBAFusion ../../TestData/rgbd/607 0.01

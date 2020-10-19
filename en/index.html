@@ -55,6 +55,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#download">Download</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#why-one-piece">Why 'One Piece'?</a>
+    </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="rules/">Some Rules</a>
@@ -132,21 +134,27 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="welcome-to-fclib">Welcome to FCLib</h1>
+                <h1 id="welcome-to-oplib">Welcome to OPLib</h1>
 <p>点击<a href="../">这里</a>查看中文说明文档。</p>
-<p>FCLib (fucking cool library) is a C++ library for RGB-D based SLAM and 3D vision. This library is mainly a summary of some basic knowledge and is used to satisfy the author's obsessive-compulsive disorder. It tries to be designed to be relatively simple, clear in structure, easy to understand, and friendly to novices, but limited to the level of the author, there may still be many areas where the design is not good enough. Currently this library does not use GPU except for the visualization part. The author hopes that FCLib can help people who are more interested in this field get started faster. Therefore, the first demand of FCLib is to be as simple as possible and rely less third libraris. Relatively speaking, FCLib has no advantage in efficiency and speed. In <a href="./examples">example</a>, you can see that using FCLib, you can easily build a simple RGBD SLAM system, and finally extract a three-dimensional model, as shown below:</p>
+<p>Congratulations! You find the One Piece!</p>
+<p>OPLib (One-Piece library) is a C++ library for RGB-D based SLAM and 3D vision. This library is mainly a summary of some basic knowledge and is used to satisfy the author's obsessive-compulsive disorder. It tries to be designed to be relatively simple, clear in structure, easy to understand, and friendly to novices, but limited to the level of the author, there may still be many areas where the design is not good enough. Currently this library does not use GPU except for the visualization part. The author hopes that OPLib can help people who are more interested in this field get started faster. Therefore, the first demand of OPLib is to be as simple as possible and rely less third libraris. Relatively speaking, OPLib has no advantage in efficiency and speed. In <a href="./examples">example</a>, you can see that using OPLib, you can easily build a simple RGBD SLAM system, and finally extract a three-dimensional model, as shown below:</p>
 <p><img alt="" src="img/index.gif" />
 <center><font color="gray">FBAFusion in example</font></center></p>
 <h2 id="get-started">Get Started</h2>
-<p>The FCLib development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV and Eigen. Other small dependencies are integrated into 3rdParty. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
+<p>The OPLib development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV and Eigen. Other small dependencies are integrated into 3rdParty. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
 <ul>
 <li>Install OpenCV(3.x): <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85OpenCV%20c%2B%2B&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV&amp;rsv_pq=f928910b000254f0&amp;rsv_t=034cztj1mxA2IikxtwpL9m7CGXlFHK9C2o4WUvbn1tLBWgpQpdepgBSOIag&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_sug3=9&amp;rsv_sug1=4&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_btype=t&amp;inputT=29790&amp;rsv_sug4=29888">baidu</a>/<a href="https://www.google.com/search?q=install+OpenCV+ubuntu+c%2B%2B&amp;oq=install+OpenCV+ubuntu+c%2B%2B&amp;aqs=chrome..69i57j0l7.20507j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
 <li>Install Eigen（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85Eigen3&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV%2520c%252B%252B&amp;rsv_pq=896186f10003e52b&amp;rsv_t=1a0emBH99X6quER27vW11eytwjSUxelZj4%2FHFcWuZbbDioMIAKM%2F2d0r3X0&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_btype=t&amp;inputT=23100&amp;rsv_sug3=35&amp;rsv_sug1=28&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_sug4=37169">baidu</a>/<a href="https://www.google.com/search?q=eigen3+install+ubuntu&amp;oq=Eigen3&amp;aqs=chrome.1.0l7j69i60.3110j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
 <li><code>mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</code></li>
 </ul>
-<p>In addition, why not design to be less dependent? In addition to the poor level of the author, another point is that OpenCV and Eigen are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in FCLib).</p>
+<p>In addition, why not design to be less dependent? In addition to the poor level of the author, another point is that OpenCV and Eigen are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OPLib).</p>
 <h2 id="download">Download</h2>
-<p>The code is released in github: <a href="https://github.com/MyEvolution/FCLib">FCLib</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
+<p>The code is released in github: <a href="https://github.com/MyEvolution/OPLib">OPLib</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
+<h2 id="why-one-piece">Why 'One Piece'?</h2>
+<ul>
+<li>One Piece is the final secret treasure in <a href="https://en.wikipedia.org/wiki/One_Piece">One Piece</a>. Congratulations on finding the treasure (I hope it can help you and is a treasure for you)!</li>
+<li>OPLib is also just one piece of knowledge in 3D vision and compute graphics. There is a sea for you to explore. </li>
+</ul>
               
             </div>
           </div>

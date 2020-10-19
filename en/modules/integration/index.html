@@ -141,7 +141,7 @@
 <p>From tracking and optimization, now we have frames with accurate poses. How to generate a dense model? </p>
 <h3 id="tsdf">TSDF</h3>
 <p>TSDF is an implicit representation of a 3D scene. The world is divided into a voxel, and each voxel stores the distance to the nearest surface. This distance is signed, and the position interpolated to 0 is the real surface If the distance is very far, it is actually useless and can be truncated directly, which is TSDF (Truncated Signed Distance Field).</p>
-<p>In FCLib, such voxel is defined as:</p>
+<p>In OPLib, such voxel is defined as:</p>
 <pre><code class="cpp">class TSDFVoxel
 {
     public:
@@ -154,7 +154,7 @@
 };
 </code></pre>
 
-<p>FCLib use voxel-hashing to save the voxels that are close to surface for memory and time efficiency. <span class="arithmatex">\(8\times 8 \times 8\)</span> voxels are treated as a cube, and these Cube is stored through a spatial hash list.</p>
+<p>OPLib use voxel-hashing to save the voxels that are close to surface for memory and time efficiency. <span class="arithmatex">\(8\times 8 \times 8\)</span> voxels are treated as a cube, and these Cube is stored through a spatial hash list.</p>
 <pre><code class="cpp">class VoxelCube
 {
     public:
@@ -170,7 +170,7 @@ $$
 sdf = z(T^{-1} * p_v) - d(\omega(T^{-1} * p_v)) 
 $$</p>
 <p><span class="arithmatex">\(z(\cdot)\)</span> get the third value of a 3D vector, <span class="arithmatex">\(d(\cdot)\)</span> get the depth of an uv coordinate, <span class="arithmatex">\(\omega\)</span> is the reprojection function.</p>
-<p>One problem is that the three-dimensional world is infinite, so we cannot do this operation for every voxel. Here we introduce frustum, which defines an effective imaging area for the camera. Only points in the frustum are considered. The frustum is defined in <code>Frustum.h</code> in FCLib.</p>
+<p>One problem is that the three-dimensional world is infinite, so we cannot do this operation for every voxel. Here we introduce frustum, which defines an effective imaging area for the camera. Only points in the frustum are considered. The frustum is defined in <code>Frustum.h</code> in OPLib.</p>
 <p>For a certain frame, we only process cubes in the frustum. Even so, the number of voxels is still large. So we can sample and filter based on 8-corner of a cube. If the SDF value signs of the 8 vertices are the same, we think that there is no surface in this Cube, please refer to <a href="http://roboticsproceedings.org/rss14/p06.pdf">FlashFusion</a> for details.</p>
 <p>A voxel's sdf may get different results for multiple frames, so we use weighted addition according to <code>weight</code> to get the final value.</p>
 <p>The integration of a frame is implemented by the member function of <code>CubeHandler</code>:</p>
@@ -205,7 +205,7 @@ std::shared_ptr&lt;CubeHandler&gt;
 <center><font color=gray>8-neighbor(voxel resolution: 0.00625)</font></center></p>
 <p><img alt="" src="../../img/nearest.bmp" />
 <center><font color=gray>neareast(voxel resolution: 0.00625)</font></center></p>
-<p>It should be noted that the FCLib implements the most primitive Marching Cubes algorithm. The obtained Mesh is often very dense, you can use <code>ClusteringSimplify</code> to aggregate the points which are close to one point, and the normal vector can be calculated by <code>ComputeNormals</code>.</p>
+<p>It should be noted that the OPLib implements the most primitive Marching Cubes algorithm. The obtained Mesh is often very dense, you can use <code>ClusteringSimplify</code> to aggregate the points which are close to one point, and the normal vector can be calculated by <code>ComputeNormals</code>.</p>
               
             </div>
           </div>

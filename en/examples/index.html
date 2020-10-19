@@ -153,7 +153,7 @@
             <div class="section">
               
                 <h2 id="examples">Examples</h2>
-<p>Here are some examples of using FCLib. All the codes are in directory <code>examples</code>. After compilation, you can find the binary files in <code>build/example</code> and enter following commend to test.</p>
+<p>Here are some examples of using OPLib. All the codes are in directory <code>examples</code>. After compilation, you can find the binary files in <code>build/example</code> and enter following commend to test.</p>
 <h3 id="read-ply-files-and-visualize-the-point-cloud-or-mesh">Read PLY Files and Visualize the Point Cloud or Mesh</h3>
 <pre><code>./ReadPLYPCD [filename.ply]
 ./ReadPLYMesh [filename.ply]
@@ -174,10 +174,11 @@
 <pre><code>./GenerateModelFromScannet [Path]
 </code></pre>
 
-<p><code>GetLabelUsingKDTree.cpp</code> can infer the semantic label of each point in generated model based on KDTree and the given labeled model.</p>
-<pre><code>./GetLabelUsingKDTree [original model path] [reference model path]
+<p><code>GetLabelUsingKDTree.cpp</code> can infer the semantic and instance label of each point in generated model based on KDTree and the given labeled model.</p>
+<pre><code>./GetLabelUsingKDTree [original model path] [reference model path] [instance_json_path](optional)
 </code></pre>
 
+<p>The results will be saved as <code>colored_model_semantic.ply</code> and <code>colored_model_instance.ply</code>.</p>
 <h3 id="mesh-simplification">Mesh Simplification</h3>
 <pre><code>./SimplifyMeshClustering [filename.ply] [grid_length]
 ./SimplifyMeshQuadric [filename.ply] [simplify_ratio]
@@ -242,7 +243,7 @@
 <h3 id="three-reconstruction-systems">Three Reconstruction Systems</h3>
 <p>A slam system wihout an backend is incomplete. If you just track frames and don't optimize the poses, the results will have ghosting, just like this:
 <img alt="" src="../img/without_loop.bmp" /></p>
-<p>FCLib implements three complete SLAM systems, which are different in backend or tracking method.</p>
+<p>OPLib implements three complete SLAM systems, which are different in backend or tracking method.</p>
 <h4 id="fbafusion">FBAFusion</h4>
 <p>FBAFusion using SparseTracking, Mild loop closure detector,Fast BundleAdjustment for optimization. </p>
 <pre><code>./FBAFusion ../../TestData/rgbd/607 0.01

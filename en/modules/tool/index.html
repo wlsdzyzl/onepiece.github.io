@@ -156,7 +156,7 @@
 <p><em>namespace: tool</em></p>
 <p>The tool module defines some of functions that other modules needs. At present, the tool contains basic image processing, control of console output color, Ply file reading and writing, timer, multithreading, etc.</p>
 <h3 id="consolecolor">ConsoleColor</h3>
-<p>Defines some controls for the console output color. The author hopes that the entire structure of FCLib is clear and the output is as elegant as possible. 'Red', 'yellow', 'green' and 'blue' are defined in the header file. Red corresponds to Error, yellow corresponds to Warning, and green means things is running as expected, the blue color is to output some related information, which is good for debug. After including the ConsoleColor header file, you can change the output color by following operation:</p>
+<p>Defines some controls for the console output color. The author hopes that the entire structure of OPLib is clear and the output is as elegant as possible. 'Red', 'yellow', 'green' and 'blue' are defined in the header file. Red corresponds to Error, yellow corresponds to Warning, and green means things is running as expected, the blue color is to output some related information, which is good for debug. After including the ConsoleColor header file, you can change the output color by following operation:</p>
 <pre><code class="cpp">//output error information
 std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&lt;&lt;std::endl;
 </code></pre>
@@ -198,8 +198,8 @@ bool WritePLY(const std::string &amp;filename, const geometry::Point3List&amp;po
 </code></pre>
 
 <h4 id="rplymanagerdeleted">RPLYManager(Deleted)</h4>
-<p>FCLib uses the RPLY library to read and write PLY and to read the point Cloud or triangle mesh. The loading and writing of 'geometry::PointCloud' and 'geometry::TriangleMesh' are encapsulation of this class.</p>
-<p>FCLib also supports reading or writing of other properties or labels of vertices(FCLib supports int32, float, double, unchar, ushort currently). However, when you want to do this, you need to call some low-level functions implemented in <code>RPLYManager.h</code>.</p>
+<p>OPLib uses the RPLY library to read and write PLY and to read the point Cloud or triangle mesh. The loading and writing of 'geometry::PointCloud' and 'geometry::TriangleMesh' are encapsulation of this class.</p>
+<p>OPLib also supports reading or writing of other properties or labels of vertices(OPLib supports int32, float, double, unchar, ushort currently). However, when you want to do this, you need to call some low-level functions implemented in <code>RPLYManager.h</code>.</p>
 <pre><code class="cpp">//template function for reading the information of a certain label, you need to provide the label name, value type, and corresponding contained vector
 //You can read the values of one label at a time.
 template&lt;typename T&gt;
@@ -216,9 +216,9 @@ bool WritePLY(const std::string &amp;filename, const geometry::Point3List&amp;po
     bool use_ascii = true);
 </code></pre>
 
-<p>For reading and writing of labels or properties, you can check <code>example/GetLabelUsingKDTree.cpp</code>, which will perform  reading and writing semantic information of meshes. Here FCLib can pack Reading operation into the same form as Writing, but in fact Writing is more troublesome to call, and it also means to allocate space for void pointers (which needs to be released). This is more dangerous behavior, so FCLib gave up this method.</p>
+<p>For reading and writing of labels or properties, you can check <code>example/GetLabelUsingKDTree.cpp</code>, which will perform  reading and writing semantic information of meshes. Here OPLib can pack Reading operation into the same form as Writing, but in fact Writing is more troublesome to call, and it also means to allocate space for void pointers (which needs to be released). This is more dangerous behavior, so OPLib gave up this method.</p>
 <h3 id="objmanager">OBJManager</h3>
-<p>FCLib uses OBJManager to read and write OBJ file, which is an encapsulation of tinyobjloader.</p>
+<p>OPLib uses OBJManager to read and write OBJ file, which is an encapsulation of tinyobjloader.</p>
 <h3 id="multithreads">MultiThreads</h3>
 <p>What you need to provide is the parameters, that is, the input, and the output container that needs to be changed, and the function to call. The input parameters and the return are stored in two <code>std::vector</code>. The function prototype is as follows:</p>
 <pre><code class="cpp">template &lt;class T1, class T2&gt;

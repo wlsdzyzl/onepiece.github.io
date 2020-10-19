@@ -135,7 +135,7 @@
                 <h2 id="_1">优化</h2>
 <p><em>namespace: optimization</em></p>
 <p>在<a href="../lcdetection">回环检测</a>中提到了，tracking一定会有累积误差，需要闭环检测提供约束来优化消除误差，优化也就是这部分的内容。</p>
-<p>后端优化一般会用一个优化器，g2o，ceres都是很不错的，可惜的是作者只会Eigen。当然，对于优化部分自己用Eigen实现，应该会更有助于学习吧。FCLib实现了两种后端优化方式：Fast BundleAdjustment与BundleAdjustment。</p>
+<p>后端优化一般会用一个优化器，g2o，ceres都是很不错的，可惜的是作者只会Eigen。当然，对于优化部分自己用Eigen实现，应该会更有助于学习吧。OPLib实现了两种后端优化方式：Fast BundleAdjustment与BundleAdjustment。</p>
 <h3 id="fast-bundleadjustment">Fast BundleAdjustment</h3>
 <p>介绍之前，先介绍一个数据结构：<code>Correspondence</code>:</p>
 <pre><code class="cpp">class Correspondence
@@ -149,11 +149,11 @@
 </code></pre>
 
 <p>一个Frame Correspondence意思是一对匹配的frame，其中source id是source frame在优化变量中的id，target id是target frame在优化变量中的id。而<code>average_disparity</code>用来衡量这些配对点在2维图片上的位移，主要是根据这个位移来判断是否应该开始一个新的关键帧。<code>geometry::PointCorrespondenceSet</code>是这一对匹配的frame包含的匹配点的集合。</p>
-<p>Fast BundleAdjustment（FBA）比传统的BundleAdjustment更快。实际上FBA是在FCLib中的叫法，并没有一个很标准的名字。它和BundleAdjustment的区别在于优化变量与目标函数。FBA只优化相机位姿，优化目标函数为：</p>
+<p>Fast BundleAdjustment（FBA）比传统的BundleAdjustment更快。实际上FBA是在OPLib中的叫法，并没有一个很标准的名字。它和BundleAdjustment的区别在于优化变量与目标函数。FBA只优化相机位姿，优化目标函数为：</p>
 <div class="arithmatex">\[
 E(T) = \sum_{i}^{\vert\Omega\vert}\sum_{j}^{\vert C_{i}\vert}\Vert T_sp_{s(j)} - T_tp_{t(j)} \Vert^2
 \]</div>
-<p><span class="arithmatex">\(\Omega\)</span>为所有的frame correspondences，<span class="arithmatex">\(C_{i}\)</span>指的是第<span class="arithmatex">\(i\)</span>个frame correspondence，由多个point correspondence组成。<span class="arithmatex">\(T_s, T_t\)</span>分别代表了frame correspondence中的source frame的位姿与target frame的位姿，而<span class="arithmatex">\(p_{s(j)}\)</span>表示第<span class="arithmatex">\(j\)</span>个point correspondence中的source point。对于这部分的优化，可以参考文章<a href="https://ieeexplore.ieee.org/document/8606275">fastgo</a>，也就是<code>related_paper/fastgo.pdf</code>。在这篇文章中还包含了有更多的优化技巧，提高系统效率，而FCLib只实现了比较基础的部分，函数如下：</p>
+<p><span class="arithmatex">\(\Omega\)</span>为所有的frame correspondences，<span class="arithmatex">\(C_{i}\)</span>指的是第<span class="arithmatex">\(i\)</span>个frame correspondence，由多个point correspondence组成。<span class="arithmatex">\(T_s, T_t\)</span>分别代表了frame correspondence中的source frame的位姿与target frame的位姿，而<span class="arithmatex">\(p_{s(j)}\)</span>表示第<span class="arithmatex">\(j\)</span>个point correspondence中的source point。对于这部分的优化，可以参考文章<a href="https://ieeexplore.ieee.org/document/8606275">fastgo</a>，也就是<code>related_paper/fastgo.pdf</code>。在这篇文章中还包含了有更多的优化技巧，提高系统效率，而OPLib只实现了比较基础的部分，函数如下：</p>
 <pre><code class="cpp">void FastBA(const std::vector&lt;Correspondence&gt; &amp;correspondences, geometry::SE3List &amp;poses, int max_iteration =5);
 </code></pre>
 
@@ -170,7 +170,7 @@ E(T, p) = \sum_i^{N_f}\sum_{j}^{N_p}\Vert u_{i,j} -  \omega(T_i^{-1} p_j) \Vert,
     const camera::PinholeCamera &amp;camera, int max_iteration = 20);
 </code></pre>
 
-<p>在实现FastBA时，FCLib使用高斯牛顿优化法，而BA一定要使用列文伯格-马夸尔特算法，因为很容易出现奇异矩阵，导致高斯牛顿变得很脆弱，使得结果无法收敛。对于BA的详细推导，可以看<code>related_paper/BARevisited.pdf</code>。</p>
+<p>在实现FastBA时，OPLib使用高斯牛顿优化法，而BA一定要使用列文伯格-马夸尔特算法，因为很容易出现奇异矩阵，导致高斯牛顿变得很脆弱，使得结果无法收敛。对于BA的详细推导，可以看<code>related_paper/BARevisited.pdf</code>。</p>
 <p>点击查看<a href="../../examples/#bundleadjustment">示例</a>。</p>
               
             </div>

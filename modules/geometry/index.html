@@ -180,7 +180,7 @@ std::tuple&lt;Vector2, double, double&gt; FitLine(const Point2List &amp; _points
 </code></pre>
 
 <p>上述函数分别用来拟合一组3D点的平面，以及2D点的直线。例如三维坐标系下，平面的参数方程为：<span class="arithmatex">\(ax+by+cz+d = 0\)</span>，其中<span class="arithmatex">\(n=\{a, b, c\}^T\)</span>是平面的法向量。上述函数返回值类型为<code>std::tuple</code>，其中第一个为平面或者直线的法向量，第二个为<span class="arithmatex">\(d\)</span>，第三个是次大奇异值与最大奇异值的一个比值(使用SVD来拟合平面或者直线，可以得到奇异值)，可以用来作为对原始点与拟合平面误差的指标，如果所有点都在平面上，该值为0。也就是平面fit得越好，该值越小。</p>
-<p>FCLib使用<code>Point3List</code>来表示一组<code>Eigen::Matrix&lt;geometry::scalar, 3, 1&gt;</code>，类似的， <code>PointXList</code>表示一组<code>Eigen::Matrix&lt;scalar, Eigen::Dynamic, 1&gt;</code>。另外，有了CPP11标准，我们可以给一个模板类取别名，比如<code>Eigen::Matrix&lt;geometry::Scalar, T, 1&gt;</code>通过下面方式命名：</p>
+<p>OPLib使用<code>Point3List</code>来表示一组<code>Eigen::Matrix&lt;geometry::scalar, 3, 1&gt;</code>，类似的， <code>PointXList</code>表示一组<code>Eigen::Matrix&lt;scalar, Eigen::Dynamic, 1&gt;</code>。另外，有了CPP11标准，我们可以给一个模板类取别名，比如<code>Eigen::Matrix&lt;geometry::Scalar, T, 1&gt;</code>通过下面方式命名：</p>
 <pre><code class="cpp">    template &lt;int T&gt;
         using Vector = Eigen::Matrix&lt;scalar, T, 1&gt;;
 </code></pre>
@@ -263,7 +263,7 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
 <h3 id="kdtreeh">KDTree.h</h3>
 <p><code>KDTree.h</code>有封装了两个库，你可以选择底层为Opencv的实现，也可以选择nanoflann的实现（通过更改预定义<code>NANO_IMPLEMENTATION</code>），默认是<code>nanoflann</code>，到目前来说，<code>nanoflann</code>是完爆OpenCV的实现的。</p>
 <h4 id="opencv">OpenCV(不推荐)</h4>
-<p>对OpenCV中FLANN的封装简化了调用过程。这里发现OpenCV的<code>flann</code>有不少挺坑爹的地方，需要注意（FCLib使用的是OpenCV-3.4.5）。</p>
+<p>对OpenCV中FLANN的封装简化了调用过程。这里发现OpenCV的<code>flann</code>有不少挺坑爹的地方，需要注意（OPLib使用的是OpenCV-3.4.5）。</p>
 <p>调用OpenCV的KDTree最麻烦的地方在于，eigen和opencv的互相转换，而实际上封装kdtree就是为了解决这个。</p>
 <p>下面是一段用OpenCv的<code>flann</code>建立kdtree的代码（源自互联网）：</p>
 <pre><code class="cpp">int main() {
@@ -304,10 +304,10 @@ std::tuple&lt;geometry::Point3, double, double&gt; FitPlaneRANSAC(const Point3Li
 2. 上述代码中，<code>query</code>是<code>vector&lt;float&gt;</code>，如果用<code>cv::Mat(features[0])</code>，会出问题。
 3. 对于建立kdtree引入的Input matrix，需要一直维护着，不能释放掉，也不能对它进行别的操作。如果想要将建立kdtree与search分成两个函数，那么就一定要克隆一份input matrix，再用它来建立kdtree，使用中不可以释放掉它。
 4. <code>knnSearch</code>不会返回什么值，并且<code>indices</code>与<code>dists</code>需要在开始提前<code>resize(k)</code>，而<code>radiusSearch</code>中，开始时候不需要对<code>indices</code>与<code>dists</code>进行<code>resize</code>，并且会返回查找到的点有多少。一定要根据这个值来访问<code>indices</code>与<code>dists</code>，而不是<code>indices.size()</code>。</p>
-<p>不过上面的这些问题已经通过封装解决了。<code>FCLib</code>中，<code>KDTree</code>使用很简单。它是一个模板类，也就是你需要指定放入树中的数据的维度。建立树时，直接传入<code>geometry</code>中提供的<code>PointList</code>系列（本质上是<code>Eigen</code>向量的<code>vector</code>），可以是动态向量组，也可以是静态向量组。如果是动态向量组，需要让动态向量的维度等于设定模板的维度。此外，通过<code>RadiusSearch</code>与<code>KnnSearch</code>来进行查找，也是可以直接根据<code>Eigen</code>的向量来查询。调用方式类似于<code>OpenCV</code>的方式，只是少了很多需要考虑的麻烦事。</p>
+<p>不过上面的这些问题已经通过封装解决了。<code>OPLib</code>中，<code>KDTree</code>使用很简单。它是一个模板类，也就是你需要指定放入树中的数据的维度。建立树时，直接传入<code>geometry</code>中提供的<code>PointList</code>系列（本质上是<code>Eigen</code>向量的<code>vector</code>），可以是动态向量组，也可以是静态向量组。如果是动态向量组，需要让动态向量的维度等于设定模板的维度。此外，通过<code>RadiusSearch</code>与<code>KnnSearch</code>来进行查找，也是可以直接根据<code>Eigen</code>的向量来查询。调用方式类似于<code>OpenCV</code>的方式，只是少了很多需要考虑的麻烦事。</p>
 <h4 id="nanoflann">nanoflann</h4>
-<p><a href="https://github.com/jlblancoc/nanoflann">nanoflann</a>是一个c++11的库，非常轻量级，只有一个hpp文件。相对于OpenCV的实现，nanoflann更高效内存占用也更少。在nanoflann中，对于每种需要搜索的点都要重新建立一个类，需要包含某些函数。这些东西也被FCLib封装好了。nanoflann的<code>radiusSearch</code>原本不能指定<code>max_neighbors</code>，也就是它会找到所有在半径内的点。这个在某些情况下是没有必要的。FCLib在这里修改了<code>nanoflann</code>的源码，好让它拥有这个feature（当<code>max_neighbors=0</code>时会搜索所有点），提高运行效率。</p>
-<p>在调用上，FCLib将OpenCV与Nanoflann封装成一样的调用方式：</p>
+<p><a href="https://github.com/jlblancoc/nanoflann">nanoflann</a>是一个c++11的库，非常轻量级，只有一个hpp文件。相对于OpenCV的实现，nanoflann更高效内存占用也更少。在nanoflann中，对于每种需要搜索的点都要重新建立一个类，需要包含某些函数。这些东西也被OPLib封装好了。nanoflann的<code>radiusSearch</code>原本不能指定<code>max_neighbors</code>，也就是它会找到所有在半径内的点。这个在某些情况下是没有必要的。OPLib在这里修改了<code>nanoflann</code>的源码，好让它拥有这个feature（当<code>max_neighbors=0</code>时会搜索所有点），提高运行效率。</p>
+<p>在调用上，OPLib将OpenCV与Nanoflann封装成一样的调用方式：</p>
 <pre><code class="cpp">    class SearchParameter
     {
         public:

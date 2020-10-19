@@ -55,6 +55,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#_2">下载</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#one-piece">为什么是One Piece？</a>
+    </li>
     </ul>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="rules/">一些关于代码的规则</a>
@@ -132,21 +134,27 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="fclib">欢迎来到FCLib</h1>
+                <h1 id="oplib">欢迎来到OPLib</h1>
 <p>Click <a href="./en/">here</a> for English version.</p>
-<p>FCLib(fucking cool library)是一个关于RGBD SLAM以及三维场景重建的C++库。这个库主要是对一些基础知识的总结，并且用来满足作者的强迫症。它尝试被设计得比较简单，结构清晰，通俗易懂，对新手友好，但是限制于作者的水平，可能还是存在很多设计不够好的地方。目前这个库除了可视化部分，没有用到GPU。作者希望FCLib可以帮助一些对这个领域比较感兴趣的人更快地入门，所以FCLib的首要任务是尽可能简单，依赖较少，相对来说在效率和速度上没有什么优势。在<a href="./examples">示例</a>中，你可以看到，使用FCLib，可以很容易搭建出一个简单的RGBD SLAM系统，并最终提取出三维模型，如下图：</p>
+<p>恭喜你找到了One Piece！</p>
+<p>OPLib(One-Piece library)是一个关于RGBD SLAM以及三维场景重建的C++库。这个库主要是对一些基础知识的总结，并且用来满足作者的强迫症。它尝试被设计得比较简单，结构清晰，通俗易懂，对新手友好，但是限制于作者的水平，可能还是存在很多设计不够好的地方。目前这个库除了可视化部分，没有用到GPU。作者希望OPLib可以帮助一些对这个领域比较感兴趣的人更快地入门，所以OPLib的首要任务是尽可能简单，依赖较少，相对来说在效率和速度上没有什么优势。在<a href="./examples">示例</a>中，你可以看到，使用OPLib，可以很容易搭建出一个简单的RGBD SLAM系统，并最终提取出三维模型，如下图：</p>
 <p><img alt="" src="img/index.gif" />
 <center><font color="gray">FBAFusion in example</font></center></p>
 <h2 id="_1">开始搞</h2>
-<p>FCLib开发环境是ubuntu 16.04，但是它的依赖库很少，所以对于18的ubuntu应该也是没什么问题的。它比较出名的依赖是OpenCV和Eigen，其他一些小的依赖都被整合到3rdParty中，一般来说只要环境中有OpenCV和Eigen，就能一键编译运行了。</p>
+<p>OPLib开发环境是ubuntu 16.04，但是它的依赖库很少，所以对于18的ubuntu应该也是没什么问题的。它比较出名的依赖是OpenCV和Eigen，其他一些小的依赖都被整合到3rdParty中，一般来说只要环境中有OpenCV和Eigen，就能一键编译运行了。</p>
 <ul>
 <li>安装OpenCV（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85OpenCV%20c%2B%2B&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV&amp;rsv_pq=f928910b000254f0&amp;rsv_t=034cztj1mxA2IikxtwpL9m7CGXlFHK9C2o4WUvbn1tLBWgpQpdepgBSOIag&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_sug3=9&amp;rsv_sug1=4&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_btype=t&amp;inputT=29790&amp;rsv_sug4=29888">baidu</a>/<a href="https://www.google.com/search?q=install+OpenCV+ubuntu+c%2B%2B&amp;oq=install+OpenCV+ubuntu+c%2B%2B&amp;aqs=chrome..69i57j0l7.20507j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
 <li>安装Eigen（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85Eigen3&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV%2520c%252B%252B&amp;rsv_pq=896186f10003e52b&amp;rsv_t=1a0emBH99X6quER27vW11eytwjSUxelZj4%2FHFcWuZbbDioMIAKM%2F2d0r3X0&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_btype=t&amp;inputT=23100&amp;rsv_sug3=35&amp;rsv_sug1=28&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_sug4=37169">baidu</a>/<a href="https://www.google.com/search?q=eigen3+install+ubuntu&amp;oq=Eigen3&amp;aqs=chrome.1.0l7j69i60.3110j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
-<li>进入到FCLib目录下，输入<code>mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</code></li>
+<li>进入到OPLib目录下，输入<code>mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</code></li>
 </ul>
-<p>另外说一句，为什么不设计得再少点依赖呢？除了作者水平不行，还有一点是，OpenCV和Eigen用得真的很多啊，如果什么io接口都用更底层的，这样并不方便库用在更多别的项目中（作者最开始用Open3D中某个算法时，Open3D图片读取用的都是更底层的库，而不是OpenCV，而自己的项目中用的是OpenCV的mat。这样格式转换就变得很麻烦，后来就自己实现了那个算法，这段代码成了FCLib最早的一段代码）。</p>
+<p>另外说一句，为什么不设计得再少点依赖呢？除了作者水平不行，还有一点是，OpenCV和Eigen用得真的很多啊，如果什么io接口都用更底层的，这样并不方便库用在更多别的项目中（作者最开始用Open3D中某个算法时，Open3D图片读取用的都是更底层的库，而不是OpenCV，而自己的项目中用的是OpenCV的mat。这样格式转换就变得很麻烦，后来就自己实现了那个算法，这段代码成了OPLib最早的一段代码）。</p>
 <h2 id="_2">下载</h2>
-<p>源码可以在<a href="https://github.com/MyEvolution/FCLib">FCLib</a>下载，用于测试的数据可以在<a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>下载。</p>
+<p>源码可以在<a href="https://github.com/MyEvolution/OPLib">OPLib</a>下载，用于测试的数据可以在<a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>下载。</p>
+<h2 id="one-piece">为什么是One Piece？</h2>
+<ul>
+<li>One Piece是海贼王里的大秘宝，恭喜你找到宝藏（我希望它能帮到你，并且对你来说是个宝藏）！</li>
+<li>One Piece直译是<code>一块</code>，正如这个库一样，它只是整个三维视觉，图形学体系知识的一小块，还有一片汪洋等你探索。</li>
+</ul>
               
             </div>
           </div>

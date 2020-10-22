@@ -141,13 +141,30 @@
 <p><img alt="" src="img/index.gif" />
 <center><font color="gray">FBAFusion in example</font></center></p>
 <h2 id="_1">开始搞</h2>
-<p>OPLib开发环境是ubuntu 16.04，但是它的依赖库很少，所以对于18的ubuntu应该也是没什么问题的。它比较出名的依赖是OpenCV和Eigen，其他一些小的依赖都被整合到3rdParty中，一般来说只要环境中有OpenCV和Eigen，就能一键编译运行了。</p>
+<p>OPLib开发环境是ubuntu 16.04，但是它的依赖库很少，所以对于18的ubuntu应该也是没什么问题的。它比较出名的依赖是OpenCV，Eigen以及OpenGL，比较轻量级的依赖都被整合到<code>3rdParty</code>中，一般来说只要环境中有OpenCV，OpenGL，就能一键编译运行了。</p>
 <ul>
-<li>安装OpenCV（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85OpenCV%20c%2B%2B&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV&amp;rsv_pq=f928910b000254f0&amp;rsv_t=034cztj1mxA2IikxtwpL9m7CGXlFHK9C2o4WUvbn1tLBWgpQpdepgBSOIag&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_sug3=9&amp;rsv_sug1=4&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_btype=t&amp;inputT=29790&amp;rsv_sug4=29888">baidu</a>/<a href="https://www.google.com/search?q=install+OpenCV+ubuntu+c%2B%2B&amp;oq=install+OpenCV+ubuntu+c%2B%2B&amp;aqs=chrome..69i57j0l7.20507j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
-<li>安装Eigen（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85Eigen3&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV%2520c%252B%252B&amp;rsv_pq=896186f10003e52b&amp;rsv_t=1a0emBH99X6quER27vW11eytwjSUxelZj4%2FHFcWuZbbDioMIAKM%2F2d0r3X0&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_btype=t&amp;inputT=23100&amp;rsv_sug3=35&amp;rsv_sug1=28&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_sug4=37169">baidu</a>/<a href="https://www.google.com/search?q=eigen3+install+ubuntu&amp;oq=Eigen3&amp;aqs=chrome.1.0l7j69i60.3110j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
-<li>进入到OPLib目录下，输入<code>mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</code></li>
+<li>安装OpenCV（3.4）：<ol>
+<li>下载<a href="https://github.com/opencv/opencv/archive/3.4.12.zip">opencv</a></li>
+<li>解压后，进入对应文件夹：
+<code>$ mkdir build
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_opencv_stitching=OFF -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUDA=OFF -DENABLE_PRECOMPILED_HEADERS=OFF -D CMAKE_BUILD_TYPE=RELEASE -D BUILD_DOCS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_TESTS=OFF ..
+$ make -j
+$ sudo make install
+$ sudo /bin/bash -c 'echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/opencv.conf'
+$ sudo ldconfig</code></li>
+</ol>
+</li>
+<li>安装OpenNI2（可选）：
+    <code>$ apt-cache search openni2
+    $ sudo apt-get install libopenni2-dev</code></li>
+<li>安装OpenGL
+    <code>$ sudo apt-get install build-essential libgl1-mesa-dev
+    $ sudo apt-get install freeglut3-dev
+    $ sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev</code></li>
+<li>进入到OPLib目录下，输入
+    <code>$ mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make -j</code></li>
 </ul>
-<p>另外说一句，为什么不设计得再少点依赖呢？除了作者水平不行，还有一点是，OpenCV和Eigen用得真的很多啊，如果什么io接口都用更底层的，这样并不方便库用在更多别的项目中（作者最开始用Open3D中某个算法时，Open3D图片读取用的都是更底层的库，而不是OpenCV，而自己的项目中用的是OpenCV的mat。这样格式转换就变得很麻烦，后来就自己实现了那个算法，这段代码成了OPLib最早的一段代码）。</p>
+<p>另外说一句，为什么不设计得再少点依赖呢？除了作者水平不行，还有一点是，OpenCV和Eigen等有些开源库用得很多，如果什么io接口都用更底层的，这样并不方便库用在更多别的项目中（作者最开始用Open3D中某个算法时，Open3D图片读取用的都是更底层的库，而不是OpenCV，而自己的项目中用的是OpenCV的mat。这样格式转换就变得很麻烦，后来就自己实现了那个算法，这段代码成了OPLib最早的一段代码）。</p>
 <h2 id="_2">下载</h2>
 <p>源码可以在<a href="https://github.com/MyEvolution/OPLib">OPLib</a>下载，用于测试的数据可以在<a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>下载。</p>
 <h2 id="one-piece">为什么是One Piece？</h2>

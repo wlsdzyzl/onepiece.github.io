@@ -141,13 +141,30 @@
 <p><img alt="" src="img/index.gif" />
 <center><font color="gray">FBAFusion in example</font></center></p>
 <h2 id="get-started">Get Started</h2>
-<p>The OPLib development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV and Eigen. Other small dependencies are integrated into 3rdParty. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
+<p>The OPLib development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV, OpenGL and Eigen. Lightweight 3rd libraries are integrated into <code>3rdParty</code>. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
 <ul>
-<li>Install OpenCV(3.x): <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85OpenCV%20c%2B%2B&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV&amp;rsv_pq=f928910b000254f0&amp;rsv_t=034cztj1mxA2IikxtwpL9m7CGXlFHK9C2o4WUvbn1tLBWgpQpdepgBSOIag&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_sug3=9&amp;rsv_sug1=4&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_btype=t&amp;inputT=29790&amp;rsv_sug4=29888">baidu</a>/<a href="https://www.google.com/search?q=install+OpenCV+ubuntu+c%2B%2B&amp;oq=install+OpenCV+ubuntu+c%2B%2B&amp;aqs=chrome..69i57j0l7.20507j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
-<li>Install Eigen（3.x）: <a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=ubuntu%E5%AE%89%E8%A3%85Eigen3&amp;fenlei=256&amp;oq=ubuntu%25E5%25AE%2589%25E8%25A3%2585Open%2526lt%253BV%2520c%252B%252B&amp;rsv_pq=896186f10003e52b&amp;rsv_t=1a0emBH99X6quER27vW11eytwjSUxelZj4%2FHFcWuZbbDioMIAKM%2F2d0r3X0&amp;rqlang=cn&amp;rsv_enter=1&amp;rsv_dl=tb&amp;rsv_btype=t&amp;inputT=23100&amp;rsv_sug3=35&amp;rsv_sug1=28&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;rsv_sug4=37169">baidu</a>/<a href="https://www.google.com/search?q=eigen3+install+ubuntu&amp;oq=Eigen3&amp;aqs=chrome.1.0l7j69i60.3110j0j4&amp;sourceid=chrome&amp;ie=UTF-8">google</a></li>
-<li><code>mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make</code></li>
+<li>Install OpenCV (3.4):<ol>
+<li>Download <a href="https://github.com/opencv/opencv/archive/3.4.12.zip">opencv</a></li>
+<li>After decompression, enter the folder and type following commands:
+<code>$ mkdir build
+$ cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_opencv_stitching=OFF -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUDA=OFF -DENABLE_PRECOMPILED_HEADERS=OFF -D CMAKE_BUILD_TYPE=RELEASE -D BUILD_DOCS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_TESTS=OFF ..
+$ make -j
+$ sudo make install
+$ sudo /bin/bash -c 'echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/opencv.conf'
+$ sudo ldconfig</code></li>
+</ol>
+</li>
+<li>Install OpenNI2 (optional):
+    <code>$ apt-cache search openni2
+    $ sudo apt-get install libopenni2-dev</code></li>
+<li>Install OpenGL
+    <code>$ sudo apt-get install build-essential libgl1-mesa-dev
+    $ sudo apt-get install freeglut3-dev
+    $ sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev</code></li>
+<li>Enter OPLib, type following commands:
+    <code>$ mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make -j</code></li>
 </ul>
-<p>In addition, why not design to be less dependent? In addition to the poor level of the author, another point is that OpenCV and Eigen are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OPLib).</p>
+<p>In addition, why not design to be less dependent? In addition to the poor level of the author, another point is that some open-source libraries like OpenCV and Eigen, are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OPLib).</p>
 <h2 id="download">Download</h2>
 <p>The code is released in github: <a href="https://github.com/MyEvolution/OPLib">OPLib</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
 <h2 id="why-one-piece">Why 'One Piece'?</h2>

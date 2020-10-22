@@ -145,26 +145,40 @@
 <ul>
 <li>Install OpenCV (3.4):<ol>
 <li>Download <a href="https://github.com/opencv/opencv/archive/3.4.12.zip">opencv</a></li>
-<li>After decompression, enter the folder and type following commands:
-<code>$ mkdir build
+<li>After decompression, enter the folder and type following commands:</li>
+</ol>
+</li>
+</ul>
+<pre><code>$ mkdir build
 $ cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_opencv_stitching=OFF -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENGL=ON -D WITH_CUDA=OFF -DENABLE_PRECOMPILED_HEADERS=OFF -D CMAKE_BUILD_TYPE=RELEASE -D BUILD_DOCS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_TESTS=OFF ..
 $ make -j
 $ sudo make install
-$ sudo /bin/bash -c 'echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/opencv.conf'
-$ sudo ldconfig</code></li>
-</ol>
-</li>
-<li>Install OpenNI2 (optional):
-    <code>$ apt-cache search openni2
-    $ sudo apt-get install libopenni2-dev</code></li>
-<li>Install OpenGL
-    <code>$ sudo apt-get install build-essential libgl1-mesa-dev
-    $ sudo apt-get install freeglut3-dev
-    $ sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev</code></li>
-<li>Enter OPLib, type following commands:
-    <code>$ mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make -j</code></li>
+$ sudo /bin/bash -c 'echo &quot;/usr/local/lib&quot; &gt; /etc/ld.so.conf.d/opencv.conf'
+$ sudo ldconfig
+</code></pre>
+
+<ul>
+<li>Install OpenNI2 (optional):</li>
 </ul>
-<p>In addition, why not design to be less dependent? In addition to the poor level of the author, another point is that some open-source libraries like OpenCV and Eigen, are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OPLib).</p>
+<pre><code>$ apt-cache search openni2
+$ sudo apt-get install libopenni2-dev 
+</code></pre>
+
+<ul>
+<li>Install OpenGL:</li>
+</ul>
+<pre><code>$ sudo apt-get install build-essential libgl1-mesa-dev
+$ sudo apt-get install freeglut3-dev
+$ sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libfreetype6-dev
+</code></pre>
+
+<ul>
+<li>Enter OPLib, type following commands:</li>
+</ul>
+<pre><code>$ mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make -j
+</code></pre>
+
+<p>Why not design it to be less dependent? In addition to the poor level of the author, another point is that some open-source libraries like OpenCV and Eigen, are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OPLib).</p>
 <h2 id="download">Download</h2>
 <p>The code is released in github: <a href="https://github.com/MyEvolution/OPLib">OPLib</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
 <h2 id="why-one-piece">Why 'One Piece'?</h2>

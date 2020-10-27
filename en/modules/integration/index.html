@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Generate Model - OPLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Generate Model";
+    var mkdocs_page_input_path = "modules\\integration.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> OPLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Overview</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Brief Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">Some Rules</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">Camera</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">Geometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">Odometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">Loop Closure Detection</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">Point Cloud Registration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">Optimization</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Generate Model</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#tsdf">TSDF</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#from-frame-to-tsdf">From Frame to TSDF</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#from-tsdf-to-triangle-mesh">From TSDF to Triangle Mesh</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#transformation-of-tsdf">Transformation of TSDF</a>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">Some Algorithms</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">Other Useful Tools</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Others</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">ChangeLog</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">Acknowledgments</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">About Author</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">OPLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Generate Model</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="generate-the-model">Generate the Model</h2>
+<p><em>namespace: integration</em></p>
+<p>From tracking and optimization, now we have frames with accurate poses. How to generate a dense model? </p>
+<h3 id="tsdf">TSDF</h3>
+<p>TSDF is an implicit representation of a 3D scene. The world is divided into a voxel, and each voxel stores the distance to the nearest surface. This distance is signed, and the position interpolated to 0 is the real surface If the distance is very far, it is actually useless and can be truncated directly, which is TSDF (Truncated Signed Distance Field).</p>
+<p>In OPLib, such voxel is defined as:</p>
+<pre><code class="cpp">class TSDFVoxel
+{
+    public:
+    //distance
+    float sdf = 999;
+    //weight
+    float weight = 0;
+    //color
+    geometry::Point3 color = geometry::Point3(-1,-1,-1);
+};
+</code></pre>
+
+<p>OPLib use voxel-hashing to save the voxels that are close to surface for memory and time efficiency. <span class="arithmatex">\(8\times 8 \times 8\)</span> voxels are treated as a cube, and these Cube is stored through a spatial hash list.</p>
+<pre><code class="cpp">class VoxelCube
+{
+    public:
+    std::vector&lt;TSDFVoxel&gt; voxels;
+    Eigen::Vector3i cube_id;
+};
+</code></pre>
+
+<p>Through the ID of the Cube, you can easily find the location of the Cube, and then find the internal voxel. The hash map of the Cube is encapsulated in the class <code>CubeHandler</code>.</p>
+<h3 id="from-frame-to-tsdf">From Frame to TSDF</h3>
+<p>How to get the sdf value of a voxel through a frame?  First, we calculate the position of the world coordinate system of the Voxel center through the position of voxel and the cube where it is located, and then project this position into the frame to find the corresponding depth. This depth is distance the point of the surface to the camera plane. Then SDF is defined as:
+$$
+sdf = z(T^{-1} * p_v) - d(\omega(T^{-1} * p_v)) 
+$$</p>
+<p><span class="arithmatex">\(z(\cdot)\)</span> get the third value of a 3D vector, <span class="arithmatex">\(d(\cdot)\)</span> get the depth of an uv coordinate, <span class="arithmatex">\(\omega\)</span> is the reprojection function.</p>
+<p>One problem is that the three-dimensional world is infinite, so we cannot do this operation for every voxel. Here we introduce frustum, which defines an effective imaging area for the camera. Only points in the frustum are considered. The frustum is defined in <code>Frustum.h</code> in OPLib.</p>
+<p>For a certain frame, we only process cubes in the frustum. Even so, the number of voxels is still large. So we can sample and filter based on 8-corner of a cube. If the SDF value signs of the 8 vertices are the same, we think that there is no surface in this Cube, please refer to <a href="http://roboticsproceedings.org/rss14/p06.pdf">FlashFusion</a> for details.</p>
+<p>A voxel's sdf may get different results for multiple frames, so we use weighted addition according to <code>weight</code> to get the final value.</p>
+<p>The integration of a frame is implemented by the member function of <code>CubeHandler</code>:</p>
+<pre><code class="cpp">void CubeHandler::IntegrateImage(const cv::Mat &amp;depth, 
+    const cv::Mat &amp;rgb, const geometry::TransformationMatrix &amp; pose);
+void CubeHandler::IntegrateImage(const geometry::RGBDFrame &amp;rgbd, 
+    const geometry::TransformationMatrix &amp; pose);
+</code></pre>
+
+<h3 id="from-tsdf-to-triangle-mesh">From TSDF to Triangle Mesh</h3>
+<p>We can further extract the triangular mesh from TSDF. The most famous algorithm is <a href="http://www.eecs.berkeley.edu/~jrs/meshpapers/LorensenCline.pdf">Marching Cubes</a>. In Marching Cubes, the extraction of surface is done through cubes(not the cube we mentioned in CubeHandler). A cube has 8 vertices and 8 sdf values respectively. And the sdf value of each vertex may be greater than 0 or less than 0, so there are <span class="arithmatex">\(8 \times 8 \times 8\)</span> possible situations. However, there are only 15 basic cases listed as following:</p>
+<p><img alt="" src="../../img/marching_cubes_0.jpg" /></p>
+<p>256 cases have been enumerated to form a mapping table to store the edges where the triangle vertices is interpolated, so given any cube like this, the triangle can be extracted according to the mapping table. In TSDF, 8 Voxel can be regarded as 8 vertices of a cube, and TSDF to Mesh is performed in this way.</p>
+<p>Mesh extraction is also implemented by the member function of <code>CubeHandler</code>:</p>
+<pre><code class="cpp">void CubeHandler::ExtractTriangleMesh(geometry::TriangleMesh &amp;mesh);
+</code></pre>
+
+<h3 id="transformation-of-tsdf">Transformation of TSDF</h3>
+<p>Compared with point cloud and triangular mesh, the rotation and translation of TSDF is slightly different.  The world are divided into voxels, and after the rotation and translation, the transformed voxel center coordinates become real numbers and need to be remapped to the voxels in the world coordinate system.</p>
+<p><img alt="" src="../../img/8_neighbor.jpg" /></p>
+<p>If the transformed voxel is only mapped to the nearest voxel, it will cause inaccurate results, and may produce holes and missing. An 8-neighbor filter can provide accurate results.</p>
+<p>In <code>CubeHandler</code>, we provide these two methods of Transformation for comparison(It will be more obvious if the voxel resolution is higher):</p>
+<pre><code class="cpp">//Map to the nearest voxel
+std::shared_ptr&lt;CubeHandler&gt; 
+    TransformNearest(const geometry::TransformationMatrix &amp;trans) const;
+//Map to 8 neighbor voxel, use weighted addition to get the final value
+std::shared_ptr&lt;CubeHandler&gt; 
+    Transform(const geometry::TransformationMatrix &amp;trans) const;
+</code></pre>
+
+<p><img alt="" src="../../img/8_neighbor.bmp" />
+<center><font color=gray>8-neighbor(voxel resolution: 0.00625)</font></center></p>
+<p><img alt="" src="../../img/nearest.bmp" />
+<center><font color=gray>neareast(voxel resolution: 0.00625)</font></center></p>
+<p>It should be noted that the OPLib implements the most primitive Marching Cubes algorithm. The obtained Mesh is often very dense, you can use <code>ClusteringSimplify</code> to aggregate the points which are close to one point, and the normal vector can be calculated by <code>ComputeNormals</code>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../visualization/" class="btn btn-neutral float-right" title="Visualization">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../optimization/" class="btn btn-neutral" title="Optimization"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/OPLib" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../optimization/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../visualization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

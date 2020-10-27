@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Point Cloud Registration - OPLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Point Cloud Registration";
+    var mkdocs_page_input_path = "modules\\registration.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> OPLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Overview</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Brief Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">Some Rules</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">Camera</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">Geometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">Odometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">Loop Closure Detection</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Point Cloud Registration</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#global-registration">Global Registration</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#icp">ICP</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#pointtopoint">PointToPoint</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pointtoplane">PointToPlane</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">Optimization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">Generate Model</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../visualization/">Visualization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">Some Algorithms</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">Other Useful Tools</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Others</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">ChangeLog</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">Acknowledgments</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">About Author</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">OPLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Point Cloud Registration</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="point-cloud-registration">Point Cloud Registration</h2>
+<p><em>namespace: registration</em></p>
+<p>The task of point cloud registration is very similar to the visual odometer, except that the input of the visual odometer is a pair of frames and camera intrinsics, and the input of the point cloud registration is two point clouds without other conditiosn, such as camera parameters. So it is impossible to use 2D reprojection for point cloud registration. Generally speaking, the scale of the point cloud used for registration is much larger than frame, which can be a model extracted from dozens of frames, or even a model of two rooms.</p>
+<p>For point cloud registration, there are also two different ways just the spase tracking and dense tracking in visual odometry: ICP based on dense points and Global Registration based on 3D features.</p>
+<h3 id="global-registration">Global Registration</h3>
+<p>Global Registration does not require an initial pose, the basic steps are:
+- Extract 3D features
+- Feature matching
+- Outlier filtering
+- Calculate transformation matrix</p>
+<p>The methods are as following:</p>
+<pre><code class="cpp">std::shared_ptr&lt;RegistrationResult&gt; 
+    RansacRegistration(const geometry::PointCloud &amp;source_pcd, 
+    const geometry::PointCloud &amp;target_pcd, 
+    const RANSACParameter &amp;r_para = RANSACParameter());
+std::shared_ptr&lt;RegistrationResult&gt; 
+    RansacRegistration(const geometry::PointCloud &amp;source_feature_pcd, 
+    const geometry::PointCloud &amp;target_feature_pcd, 
+    const FeatureSet &amp; source_features,
+    const FeatureSet &amp; target_features,
+    const RANSACParameter &amp;r_para);
+</code></pre>
+
+<p>The difference between the above two functions is that the first is to directly register the two point clouds, and the second is to register the feature points, which means that the step of extracting 3D features is skipped. When building a system, saving the 3D features can avoid repeated calculation and improve efficiency.</p>
+<p>Extracting 3D features are generally implemented in libraries such as PCL or Open3D, but such libraries are too large. OpenCV does not implement 3D feature extraction, so OPLib implements this part. FPFH features can be calculated by the following function :</p>
+<pre><code class="cpp">std::tuple&lt;geometry::PointCloud, FeatureSet&gt; DownSampleAndExtractFeature(const geometry::PointCloud &amp;pcd, 
+    const RANSACParameter &amp;r_para = RANSACParameter()); 
+</code></pre>
+
+<p>The above function input is the point cloud and related parameters, and returns the extracted feature point position and features (33-dimensional vector). The we can perform knn search for the nearest point to get the matching result. Outlier filtering are quiet similar to the methods introduced in <a href=".. /odometry/#sparsetracking">SparseTracking</a>, so I won’t introduce them here. Finally, the transformation matrix and inliers are calculated by <a href="../geometry/#ransach">RANSAC</a>.</p>
+<h3 id="icp">ICP</h3>
+<p>ICP (iterative closest point) is a very classic algorithm with many variants. OPLib implements two basic ICPs, one is point-to-point and the other is point-to-plane.</p>
+<h4 id="pointtopoint">PointToPoint</h4>
+<p><code>PointToPoint</code> optimizes the distance from point to point. The optimized objective function is: <span class="arithmatex">\(\Vert T \cdot p_s-p_t\Vert^2\)</span>. Through OpenCV's KDtree to find the closest point, then the best transformation <span class="arithmatex">\(T\)</span> can be obtained directly by the <code>geometry::EstimateRigidTransformation</code>(which can also be optimized by computing the Jacobian matrix). Then re-find the nearest point according to the new <span class="arithmatex">\(T\)</span>, and iterate the process until convergence.</p>
+<h4 id="pointtoplane">PointToPlane</h4>
+<p><code>PointToPlane</code> optimizes the distance from point to plane, so it needs the vector normal of target point cloud. The equation of the plane whose normal vector is <span class="arithmatex">\(n_t\)</span> and passing through <span class="arithmatex">\(p_t\)</span> is
+$$
+n_t^T (\cdot p - p_t) = 0,
+$$</p>
+<p><span class="arithmatex">\(n_t^T (\cdot p - p_t)\)</span> is the distance from point to plane. So the objective function is: <span class="arithmatex">\(\Vert n_t^T\cdot(T\cdot p_s - p_t)\Vert^2\)</span>. For the linearization of this cost function, you can view <code>related_paper/lowk_point-to-plane_icp_techrep.pdf</code>. The new <span class="arithmatex">\(T\)</span> is obtained through computing Jacobian matrix and optimization, and then the closest point is re-finded according to the new <span class="arithmatex">\(T\)</span>. Iterate this process until convergence .</p>
+<p>Both experimental and theoretical analysis prove that <code>PointToPlane</code> has a faster convergence rate than <code>PointToPoint</code>. The method is defined as following:</p>
+<pre><code class="cpp">std::shared_ptr&lt;RegistrationResult&gt; PointToPoint(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target, 
+    const geometry::TransformationMatrix &amp;init_T = geometry::TransformationMatrix::Identity(), const ICPParameter &amp;icp_para = ICPParameter() );
+std::shared_ptr&lt;RegistrationResult&gt; PointToPlane(const geometry::PointCloud &amp;source, const geometry::PointCloud &amp;target,
+    const geometry::TransformationMatrix &amp;init_T = geometry::TransformationMatrix::Identity(), const ICPParameter &amp;icp_para = ICPParameter() );
+</code></pre>
+
+<p><code>icp_para</code> are parameters of ICP, using the default value is a good choice. <code>RegistrationResult</code> is defined as following:</p>
+<pre><code class="cpp">class RegistrationResult
+{
+    public:
+    //relative transformation
+    geometry::TransformationMatrix T;
+    //the id of inliers
+    geometry::FMatchSet correspondence_set_index;
+    //inliers
+    geometry::PointCorrespondenceSet correspondence_set;
+    //rmse
+    double rmse;
+};
+</code></pre>
+
+<p>In this case, it is left to the user to determine whether the registration is successful.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../optimization/" class="btn btn-neutral float-right" title="Optimization">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../lcdetection/" class="btn btn-neutral" title="Loop Closure Detection"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/OPLib" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../lcdetection/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../optimization/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

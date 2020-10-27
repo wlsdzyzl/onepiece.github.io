@@ -158,7 +158,7 @@
 <pre><code class="cpp">typedef float scalar; 
 </code></pre>
 
-<p>这里默认将<code>float</code>作为标量类型，因此之后点云，矩阵等，格式都是单精度的，如果你想改变整个库使用的浮点数精度，使用双精度浮点数，在<code>CMakeLists.txt</code>文件中，对<code>CMAKE_CXX_FLAGS</code>变量添加<code>-DUSING_FLOAT64</code>选项。。</p>
+<p>这里默认将<code>float</code>作为标量类型，因此之后点云，矩阵等，格式都是单精度的，如果你想改变整个库使用的浮点数精度，使用双精度浮点数，在<code>CMakeLists.txt</code>文件中，对<code>CMAKE_CXX_FLAGS</code>变量添加<code>-DUSING_FLOAT64</code>选项。</p>
 <pre><code class="cpp">typedef Vector6 Se3;
 typedef Matrix4 SE3;
 </code></pre>

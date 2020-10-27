@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Visualization - OPLib</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../../css/theme.css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Visualization";
+    var mkdocs_page_input_path = "modules\\visualization.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> OPLib</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Overview</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../..">Brief Introduction</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../rules/">Some Rules</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Modules</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../camera/">Camera</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../geometry/">Geometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../odometry/">Odometry</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../lcdetection/">Loop Closure Detection</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../registration/">Point Cloud Registration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../optimization/">Optimization</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../integration/">Generate Model</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Visualization</a>
+    <ul class="current">
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../algorithm/">Some Algorithms</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tool/">Other Useful Tools</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../examples/">Examples</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Others</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../../changelog/">ChangeLog</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../thanksto/">Acknowledgments</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../../about/">About Author</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">OPLib</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Modules &raquo;</li>
+        
+      
+    
+    <li>Visualization</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="visualization">Visualization</h2>
+<p><em>namespace: visualization</em></p>
+<p>Visualization is for the convenience of observing the data. It always brings more intuitive understanding and feelings (for the researcher), and also makes the things you do look cooler (for the author).</p>
+<p>OPLib does not have much need for visualization. It is mainly used to display point clouds, triangular meshes (display colors, or phong models). OPLib also supports to display line segments (used to describe correspondence) and triangular pyramids (used to display camera positions) .</p>
+<p>The visualization is implemented in the class <code>Visualizer</code>, which is a partial encapsulation of <a href="https://github.com/stevenlovegrove/Pangolin">Pangolin</a>. The main member functions are as follows:</p>
+<pre><code class="cpp">class Visualizer
+{
+    public:
+    //initialize, name refer to the window name
+    void Initialize(const std::string &amp;name = &quot;OnePiece&quot;);
+    //insert a point coud into the buffer
+    void AddPointCloud( const geometry::PointCloud &amp;pcd);
+    //insert a triangle mesh into the buffer
+    void AddTriangleMesh(const geometry::TriangleMesh &amp;mesh); 
+    //Display once, mainly used to display dynamically changing objects, such as the reconstruction process
+    void ShowOnce();
+    //Continuous display, during which the geometric objects in the buffer cannot be changed
+    void Show();
+    //Add a set of Camera (triangular pyramid), the first parameter is the poses, the second parameter is the camera colors
+    void AddCameraSet(const geometry::SE3List &amp; _camera_poses,
+        const geometry::Point3List &amp;_camera_colors);
+    //Add a set of line segments, the first parameter is the two end points of the line, and the second parameter is the color of the line segment
+    void AddLineSet(const geometry::Point3List &amp; _points, 
+        const std::vector&lt;std::pair&lt;int, int&gt;&gt; &amp;_index, const geometry::Point3List &amp;_line_colors);
+};
+</code></pre>
+
+<p><code>visualizer</code> does not support the display of multiple kinds of geometric objects(such as display of point cloud and mesh), nor does it support UI. These functions may not be supported in the future.</p>
+<hr />
+<p>At present, <code>Visualizer</code> adds the method <code>SetModelViewMatrix</code> to set the view matrix. You only need to pass in the camera pose, and this function will automatically compute the view matrix of the current camera pose in the OpenGL coordinate system. The principle behind is a little confusing, The explanation is as follows.</p>
+<p>First of all, we need to know that how the model is rendered: firstly the world coordinate system need to be transformed into the camera coordinate system, and then perform a transmission projection on 3D model to a 2D picture under the camera coordinate system. Finally we got what we see.</p>
+<p><strong>View Matrix</strong> converts world coordinates of points into camera coordinates, and <strong>Projection Matrix</strong> projects 3D points onto a 2D plane.  Through <code>SetModelViewMatrix</code>, which is to set the view matrix, we can follow camera poses during a reconstruction process as follows:</p>
+<p><center></p>
+<p><img alt="" src="../../img/fbafusion_follow_pose.gif" /></p>
+<p></center></p>
+<p>The following points will introduce in detail of how to obtain the OpenGL view matrix according to the real camera pose:</p>
+<ul>
+<li>A camera pose is denoted as <span class="arithmatex">\(T = [R|t]\)</span>, then its coordinate system is rotated and translated in the same way. We analyze rotation firstly. The direction vectors of <span class="arithmatex">\(x, y, z\)</span> axis of the world coordinate system are <span class="arithmatex">\((1, 0, 0)^T, (0, 1, 0)^T, (0, 0, 1)^T\)</span>. After rotation, the coordinate system becomes:<span class="arithmatex">\(R\cdot[x, y, z] = R\)</span>.
+Therefore, the direction vectors of rotated coordinate system are the column vectors of <span class="arithmatex">\(R\)</span>. In order to get the coordinates of a certain point in this coordinate system, the column vectors needs to be converted into row vectors. So the transformed coordinate system is <span class="arithmatex">\(R^T\)</span>. After the rotation, we then translate the coordinate system. The coordinate of the camera position in the rotated coordinate system is: <span class="arithmatex">\(R^Tt\)</span>. If the coordinate system is translated by <span class="arithmatex">\(t\)</span>, the coordinate of the original point <span class="arithmatex">\(p\)</span> are <span class="arithmatex">\(p-t\)</span>. Then, we can get that when the camera pose is <span class="arithmatex">\([R|t]\)</span>, its view matrix is ​​<span class="arithmatex">\([R^T|-R^Tt] = T^{-1}\)</span>.</li>
+<li>In OpenGL, it is stipulated that the <span class="arithmatex">\(z\)</span> axis points to the camera, and the <span class="arithmatex">\(y\)</span> axis points upward. In our SLAM system( general camera model), the <span class="arithmatex">\(z\)</span> axis is pointed out from the camera, so after obtaining the camera coordinate system, <span class="arithmatex">\(z\)</span> axis must be reversed. If the camera's <span class="arithmatex">\(f_y\)</span> is positive when modeling, it means that the imaging is upside down (<span class="arithmatex">\(z\)</span> is pointed out from the camera, the <span class="arithmatex">\(y\)</span> axis is down, and if <span class="arithmatex">\(f_y\)</span> is positive, this means y-axis of the world coordinate system is also facing down. <span class="arithmatex">\(x\)</span>-axis is facing right, so the <span class="arithmatex">\(x\)</span>-axis is normal). So if it is the case, the <span class="arithmatex">\(y\)</span> axis also needs to be reversed. Therefore, after obtaining the camera coordinate system according to the camera pose, these two axes need to be processed. The other axis is facing to the right, which can be obtained by cross product (right-hand coordinate system). So we get the direction vectors <span class="arithmatex">\(R_g\)</span> of the transformed coordinate system on OpeGL.</li>
+<li>Now we are in the last step. The coordinate system also needs to be translated. Multiply the matrix of the direction vectors( row vectors) by the observation position <span class="arithmatex">\(t\)</span> and then take the negative value as we discussed before: <span class="arithmatex">\(t_g = -R_g t\)</span>. Combine <span class="arithmatex">\(R_g\)</span> and <span class="arithmatex">\(t_g\)</span> to get final view matrix <span class="arithmatex">\([R_g|t_g]\)</span>.</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../algorithm/" class="btn btn-neutral float-right" title="Some Algorithms">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../integration/" class="btn btn-neutral" title="Generate Model"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/MyEvolution/OPLib" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../integration/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../algorithm/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../javascripts/config.js" defer></script>
+      <script src="https://polyfill.io/v3/polyfill.min.js?features=es6" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -251,7 +251,7 @@
 
 <p>You should see:</p>
 <p><img alt="" src="../img/index.gif" /></p>
-<p>FBAFusion is the fastest of the three, the generated model looks like:</p>
+<p>FBAFusion is the fastest of the three systems, the generated model looks like:</p>
 <p><img alt="" src="../img/FBAFusion.bmp" /></p>
 <h4 id="bafusion">BAFusion</h4>
 <p>BAFusion uses SparseTracking, Mild closed-loop detection, plus BundleAdjustment back-end optimization. As mentioned before, BA will have a larger matrix dimension in later stage. Even in BAFusion, each keyframe has only 30 feature points for coordinate optimization, and it still takes about a minute or more to optimize them. And BA will optimize the spatial points (optimize the projection noise and parameters), but this part of the optimization is not considered when the final model is generated, only the optimized pose is used, so the reconstruction model does not look as good as FBAFusion. However, you can still see the optimization effects (no ghosting). If all aspects are taken into consideration, the effects of BA should be the best.</p>
@@ -261,7 +261,7 @@
 <p>Generated model:
 <img alt="" src="../img/BAFusion.bmp" /></p>
 <h4 id="densefusion">DenseFusion</h4>
-<p>DenseFusion using DenseTracking, without a 2D loop closure detetion. It takes every <span class="arithmatex">\(N\)</span> of the read frame as a submap. When a new submap is detected, BAFusion perform GlobalRegistration for the current submap and the previous submaps, and then sets a threshold to detect whether there is a correct loop closure. Of course, DenseTracking and GlobalRegistration are much slower than SparseTracking and MILD loop closure detection. Therefore, DenseFusion is also slower that FBAFusion and is an offline reconstruction system. As for backend optimization, DenseFusion uses Fast BundleAdjustment.</p>
+<p>DenseFusion uses DenseTracking. Instead of using a 2D loop closure detetion, it uses Rassac registration for 3D loop closure detection. It takes every <span class="arithmatex">\(N\)</span> of the read frame as a submap. When a new submap is detected, BAFusion perform GlobalRegistration for the current submap and the previous submaps, and then detect whether there is a correct loop closure based on a threshold. Of course, DenseTracking and GlobalRegistration are much slower than SparseTracking and MILD loop closure detection. Therefore, DenseFusion is also slower than FBAFusion and is an offline reconstruction system. As for backend optimization, DenseFusion simply uses Fast BundleAdjustment.</p>
 <pre><code>./DenseFusion ../../TestData/rgbd/607 0.01
 </code></pre>
 

@@ -131,8 +131,8 @@
                 <h2 id="_1">闭环检测</h2>
 <p><em>namespace: lcdetection</em></p>
 <p>由于噪声等因素，tracking的结果一定会有误差，这就意味着扫描一圈回来不一定能回到原点，反映到重建结果，就是会出现重影。而闭环检测是检查当前扫描的图片与之前扫描图片的相似度，从而找到之前遇到的场景，为全局的位姿优化提供约束，达到global consistency。</p>
-<p>闭环检测方法很多，包括2D的和3D的，目前OPLib只引入了<a href="https://github.com/lhanaf/MILD">MILD</a>，是2D的基于多索引哈希的闭环检测。通过闭环检测得到一系列可能的相似场景，再根据<code>odometry::SparseTracking</code>来检查是否能追踪成功，相对于对每个帧来进行tracking，可以大大减少消耗的时间。</p>
-<p>OPLib将MILD封装成类<code>MildLCDetector</code>，主要成员函数为：</p>
+<p>闭环检测方法很多，包括2D的和3D的，目前OnePiece只引入了<a href="https://github.com/lhanaf/MILD">MILD</a>，是2D的基于多索引哈希的闭环检测。通过闭环检测得到一系列可能的相似场景，再根据<code>odometry::SparseTracking</code>来检查是否能追踪成功，相对于对每个帧来进行tracking，可以大大减少消耗的时间。</p>
+<p>OnePiece将MILD封装成类<code>MildLCDetector</code>，主要成员函数为：</p>
 <pre><code class="cpp">//为当前帧找到可能的重复场景，输入为当前帧
 //输出是可能为重复场景的帧在数据库中的ID的集合
 void SelectCandidates(const geometry::RGBDFrame &amp;frame, std::vector&lt;int&gt; &amp;candidates);

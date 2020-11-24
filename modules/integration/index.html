@@ -141,7 +141,7 @@
 <p>通过tracking，optimization，现在我们已经得到了有着精确位姿的图片序列，如何根据这些序列生成高精度的网格模型就是integration要解决的事情。</p>
 <h3 id="tsdf">TSDF</h3>
 <p>TSDF是一种对于三维场景的隐式表征。世界被划分成一个个体素，而每个体素中存储着到最近表面的距离，这个距离是有符号的，而插值到0的位置就是真正表面上的点。如果这个距离很远，实际上就没什么用，所以可以直接进行截断，这也就是TSDF(Truncated Signed Distance Field)。</p>
-<p>在OPLib中，这样的体素被定义为</p>
+<p>在OnePiece中，这样的体素被定义为</p>
 <pre><code class="cpp">class TSDFVoxel
 {
     public:
@@ -154,7 +154,7 @@
 };
 </code></pre>
 
-<p>为了提高效率和节省内存，一个普遍的做法是使用空间哈希，只存储距离表面比较近的voxel，在OPLib中，<span class="arithmatex">\(8\times 8 \times 8\)</span>个体素被当成一个立方体（Cube），而这些Cube又通过空间哈希函数来存储。</p>
+<p>为了提高效率和节省内存，一个普遍的做法是使用空间哈希，只存储距离表面比较近的voxel，在OnePiece中，<span class="arithmatex">\(8\times 8 \times 8\)</span>个体素被当成一个立方体（Cube），而这些Cube又通过空间哈希函数来存储。</p>
 <pre><code class="cpp">class VoxelCube
 {
     public:
@@ -170,7 +170,7 @@
 sdf = z(T^{-1} * p_v) - d(\omega(T^{-1} * p_v)) 
 \]</div>
 <p><span class="arithmatex">\(z(\cdot)\)</span>取出三维向量的<span class="arithmatex">\(z\)</span>值，<span class="arithmatex">\(d(\cdot)\)</span>读取帧在某一位置的depth，<span class="arithmatex">\(\omega\)</span>为重投影函数。</p>
-<p>有一个问题是，三维世界是无限大的，因此我们不可能对每一个voxel来这样做。这里要介绍一个视锥体的概念，也就是对于相机来说的一个成像有效区域，在视锥体之外的点不考虑。视锥体在OPLib中定义为<code>Frustum.h</code>。</p>
+<p>有一个问题是，三维世界是无限大的，因此我们不可能对每一个voxel来这样做。这里要介绍一个视锥体的概念，也就是对于相机来说的一个成像有效区域，在视锥体之外的点不考虑。视锥体在OnePiece中定义为<code>Frustum.h</code>。</p>
 <p>对于某个frame，我们只对视锥体内的cube进行处理。即使这样，voxel的个数依然很多。所以我们可以根据8个顶点采样滤波，如果8个顶点的SDF value符号都一致，则认为这个Cube中没有表面，详细内容可以参考<a href="http://roboticsproceedings.org/rss14/p06.pdf">FlashFusion</a>。</p>
 <p>一个Voxel对于多个frame的计算可能会得到不同的结果，根据<code>weight</code>使用加权相加，来得到最终的值。</p>
 <p>将一张rgbd frame融合到一个TSDF中，是通过<code>CubeHandler</code>的成员函数实现的：</p>
@@ -205,7 +205,7 @@ std::shared_ptr&lt;CubeHandler&gt;
 <center><font color=gray>8-neighbor(分辨率0.00625)</font></center></p>
 <p><img alt="" src="../../img/nearest.bmp" />
 <center><font color=gray>neareast(分辨率0.00625)</font></center></p>
-<p>需要说明的，OPLib实现的最原始的Marching Cubes算法。得到的Mesh往往点很密集，可以使用<code>ClusteringSimplify</code>将相同的点或者距离过近的聚合为一个点，需要法向量可以通过<code>ComputeNormals</code>来计算。</p>
+<p>需要说明的，OnePiece实现的最原始的Marching Cubes算法。得到的Mesh往往点很密集，可以使用<code>ClusteringSimplify</code>将相同的点或者距离过近的聚合为一个点，需要法向量可以通过<code>ComputeNormals</code>来计算。</p>
               
             </div>
           </div>

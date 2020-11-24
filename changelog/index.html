@@ -136,9 +136,9 @@
 <li>2020.9.25：为<code>geometry::Visualizer</code>添加设置视图矩阵的函数，这样可以在做slam时候跟着相机视角观察，以及根据传入模型点的位置自动选择观察视角（之前的版本你可能需要拖动很久才看到模型），点击查看：<a href="../modules/visualization/">可视化</a>。</li>
 <li>2020.9.26：0警告，0错误。</li>
 <li>2020.10.17：添加了jsoncpp库，支持对json文件的读写。</li>
-<li>2020.10.19：将库名称改为OPLib (One-Piece Lib)。</li>
+<li>2020.10.19：将库名称改为OnePiece。</li>
 <li>2020.10.22：在<code>3rdparty</code>中加了其他几个依赖，更改了CMake的一些配置，来简化在不同的环境下的安装过程。</li>
-<li>2020.10.26：更改了一些内容，让OPLib可以在ubuntu 18下配置。在ubuntu 18，GCC 7.5下，会出现一些原来（ubuntu 16，GCC 5.4）不会出现的错误和警告，使用<code>-Wno-maybe-uninitialized</code>来屏蔽来自Eigen的警告。</li>
+<li>2020.10.26：更改了一些内容，让OnePiece可以在ubuntu 18下配置。在ubuntu 18，GCC 7.5下，会出现一些原来（ubuntu 16，GCC 5.4）不会出现的错误和警告，使用<code>-Wno-maybe-uninitialized</code>来屏蔽来自Eigen的警告。</li>
 <li>2020.10.27：改变了更换浮点数精度的方式。现在如果你想使用双精度浮点数，在<code>CMakeLists.txt</code>文件中，对<code>CMAKE_CXX_FLAGS</code>变量添加<code>-DUSING_FLOAT64</code>选项。</li>
 </ul>
               

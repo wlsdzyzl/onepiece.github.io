@@ -156,7 +156,7 @@
 <p><em>namespace: tool</em></p>
 <p>工具模块定义了一些其他模块需要使用的，比较杂的功能，目前tool中包含了图片的基本处理，对于控制台颜色输出的控制，Ply文件的读取，计时器，多线程等等。</p>
 <h3 id="consolecolor">ConsoleColor</h3>
-<p>定义了一些对于控制台输出颜色的控制。作者希望OPLib整个构架清晰，输出也尽量优雅。在该头文件中定义了红黄绿蓝四种颜色，红色对应Error，黄色对应Warning，而绿色表示运行成功，蓝色则是输出一些相关信息，利于Debug之类的。使用方法，包含了ConsoleColor头文件后，输出：</p>
+<p>定义了一些对于控制台输出颜色的控制。作者希望OnePiece整个构架清晰，输出也尽量优雅。在该头文件中定义了红黄绿蓝四种颜色，红色对应Error，黄色对应Warning，而绿色表示运行成功，蓝色则是输出一些相关信息，利于Debug之类的。使用方法，包含了ConsoleColor头文件后，输出：</p>
 <pre><code class="cpp">//输出ERROR
 std::cout&lt;&lt;RED&lt;&lt;&quot;[ERROR]::There is a error.&quot;&lt;&lt;RESET&lt;&lt;std::endl;
 </code></pre>
@@ -199,7 +199,7 @@ bool WritePLY(const std::string &amp;filename, const geometry::Point3List&amp;po
 
 <h4 id="rplymanager">RPLYManager(已弃用)</h4>
 <p>使用RPLY库来进行PLY的读写，可以读取点云与三角网格，<code>geometry::PointCloud</code>以及<code>geometry::TriangleMesh</code>中load，write操作是对这个类的封装。</p>
-<p>同时，OPLib支持对vertex的其他属性或者label的读写，你可以读写语义信息等。用法如下：</p>
+<p>同时，OnePiece支持对vertex的其他属性或者label的读写，你可以读写语义信息等。用法如下：</p>
 <pre><code class="cpp">//模板函数。读某个label的信息，你需要提供的是label名，value的类型，以及对应的容器vector
 //每次读一个label，你可以只读自己感兴趣的label
 template&lt;typename T&gt;

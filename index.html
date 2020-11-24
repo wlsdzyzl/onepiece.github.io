@@ -134,14 +134,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="oplib">欢迎来到OPLib</h1>
+                <h1 id="onepiece">欢迎来到OnePiece</h1>
 <p>Click <a href="./en/">here</a> for English version.</p>
 <p>恭喜你找到了One Piece！</p>
-<p>OPLib(One-Piece library)是一个关于RGBD SLAM以及三维场景重建的C++库。这个库主要是对一些基础知识的总结，并且用来满足作者的强迫症。它尝试被设计得比较简单，结构清晰，通俗易懂，对新手友好，但是限制于作者的水平，可能还是存在很多设计不够好的地方。目前这个库除了可视化部分，没有用到GPU。作者希望OPLib可以帮助一些对这个领域比较感兴趣的人更快地入门，所以OPLib的首要任务是尽可能简单，依赖较少，相对来说在效率和速度上没有什么优势。在<a href="./examples">示例</a>中，你可以看到，使用OPLib，可以很容易搭建出一个简单的RGBD SLAM系统，并最终提取出三维模型，如下图：</p>
+<p>OnePiece(libonepiece)是一个关于RGBD SLAM以及三维场景重建的C++库。这个库主要是对一些基础知识的总结，并且用来满足作者的强迫症。它尝试被设计得比较简单，结构清晰，通俗易懂，对新手友好，但是限制于作者的水平，可能还是存在很多设计不够好的地方。目前这个库除了可视化部分，没有用到GPU。作者希望OnePiece可以帮助一些对这个领域比较感兴趣的人更快地入门，所以OnePiece的首要任务是尽可能简单，依赖较少，相对来说在效率和速度上没有什么优势。在<a href="./examples">示例</a>中，你可以看到，使用OnePiece，可以很容易搭建出一个简单的RGBD SLAM系统，并最终提取出三维模型，如下图：</p>
 <p><img alt="" src="img/index.gif" />
 <center><font color="gray">FBAFusion in example</font></center></p>
 <h2 id="_1">开始搞</h2>
-<p>OPLib开发环境是ubuntu 16.04，但是它的依赖库很少，所以对于18的ubuntu应该也是没什么问题的。它比较出名的依赖是OpenCV，Eigen以及OpenGL，比较轻量级的依赖都被整合到<code>3rdParty</code>中，一般来说只要环境中有OpenCV，OpenGL，就能一键编译运行了。</p>
+<p>OnePiece开发环境是ubuntu 16.04，但是它的依赖库很少，所以对于18的ubuntu应该也是没什么问题的。它比较出名的依赖是OpenCV，Eigen以及OpenGL，比较轻量级的依赖都被整合到<code>3rdParty</code>中，一般来说只要环境中有OpenCV，OpenGL，就能一键编译运行了。</p>
 <ul>
 <li>安装OpenCV（3.4）：<ol>
 <li>下载<a href="https://github.com/opencv/opencv/archive/3.4.12.zip">opencv</a></li>
@@ -173,14 +173,14 @@ $ sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libf
 </code></pre>
 
 <ul>
-<li>进入到OPLib目录下，输入</li>
+<li>进入到OnePiece目录下，输入</li>
 </ul>
 <pre><code>$ mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make -j
 </code></pre>
 
-<p>另外说一句，为什么不设计得再少点依赖呢？除了作者水平不行，还有一点是，OpenCV和Eigen等有些开源库用得很多，如果什么io接口都用更底层的，这样并不方便库用在更多别的项目中（作者最开始用Open3D中某个算法时，Open3D图片读取用的都是更底层的库，而不是OpenCV，而自己的项目中用的是OpenCV的mat。这样格式转换就变得很麻烦，后来就自己实现了那个算法，这段代码成了OPLib最早的一段代码）。</p>
+<p>另外说一句，为什么不设计得再少点依赖呢？除了作者水平不行，还有一点是，OpenCV和Eigen等有些开源库用得很多，如果什么io接口都用更底层的，这样并不方便库用在更多别的项目中（作者最开始用Open3D中某个算法时，Open3D图片读取用的都是更底层的库，而不是OpenCV，而自己的项目中用的是OpenCV的mat。这样格式转换就变得很麻烦，后来就自己实现了那个算法，这段代码成了OnePiece最早的一段代码）。</p>
 <h2 id="_2">下载</h2>
-<p>源码可以在<a href="https://github.com/MyEvolution/OPLib">OPLib</a>下载，用于测试的数据可以在<a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>下载。</p>
+<p>源码可以在<a href="https://github.com/MyEvolution/OnePiece">OnePiece</a>下载，用于测试的数据可以在<a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>下载。</p>
 <h2 id="one-piece">为什么是One Piece？</h2>
 <ul>
 <li>One Piece是海贼王里的大秘宝，恭喜你找到宝藏（我希望它能帮到你，并且对你来说是个宝藏）！</li>

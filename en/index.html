@@ -134,14 +134,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="welcome-to-oplib">Welcome to OPLib</h1>
+                <h1 id="welcome-to-onepiece">Welcome to OnePiece</h1>
 <p>点击<a href="../">这里</a>查看中文说明文档。</p>
 <p>Congratulations! You find the One Piece!</p>
-<p>OPLib (One-Piece library) is a C++ library for RGB-D based SLAM and 3D vision. This library is mainly a summary of some basic knowledge and is used to satisfy the author's obsessive-compulsive disorder. It tries to be designed to be relatively simple, clear in structure, easy to understand, and friendly to novices, but limited to the level of the author, there may still be many areas where the design is not good enough. Currently this library does not use GPU except for the visualization part. The author hopes that OPLib can help people who are more interested in this field get started faster. Therefore, the first demand of OPLib is to be as simple as possible and rely less third libraris. Relatively speaking, OPLib has no advantage in efficiency and speed. In <a href="./examples">example</a>, you can see that using OPLib, you can easily build a simple RGBD SLAM system, and finally extract a three-dimensional model, as shown below:</p>
+<p>OnePiece (libonepiece) is a C++ library for RGB-D based SLAM and 3D vision. This library is mainly a summary of some basic knowledge and is used to satisfy the author's obsessive-compulsive disorder. It tries to be designed to be relatively simple, clear in structure, easy to understand, and friendly to novices, but limited to the level of the author, there may still be many areas where the design is not good enough. Currently this library does not use GPU except for the visualization part. The author hopes that OnePiece can help people who are more interested in this field get started faster. Therefore, the first demand of OnePiece is to be as simple as possible and rely less third libraris. Relatively speaking, OnePiece has no advantage in efficiency and speed. In <a href="./examples">example</a>, you can see that using OnePiece, you can easily build a simple RGBD SLAM system, and finally extract a three-dimensional model, as shown below:</p>
 <p><img alt="" src="img/index.gif" />
 <center><font color="gray">FBAFusion in example</font></center></p>
 <h2 id="get-started">Get Started</h2>
-<p>The OPLib development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV, OpenGL and Eigen. Lightweight 3rd libraries are integrated into <code>3rdParty</code>. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
+<p>The OnePiece development environment is ubuntu 16.04, but it has very few dependent libraries, so there should be no problem to build with ubuntu 18. The two main dependencies are OpenCV, OpenGL and Eigen. Lightweight 3rd libraries are integrated into <code>3rdParty</code>. Generally speaking, as long as there are OpenCV and Eigen in the environment, it can be compiled and run with one click.</p>
 <ul>
 <li>Install OpenCV (3.4):<ol>
 <li>Download <a href="https://github.com/opencv/opencv/archive/3.4.12.zip">opencv</a></li>
@@ -173,18 +173,18 @@ $ sudo apt-get install libglew-dev libsdl2-dev libsdl2-image-dev libglm-dev libf
 </code></pre>
 
 <ul>
-<li>Enter OPLib, type following commands:</li>
+<li>Enter OnePiece, type following commands:</li>
 </ul>
 <pre><code>$ mkdir build &amp;&amp; cd build &amp;&amp; cmake .. &amp;&amp; make -j
 </code></pre>
 
-<p>Why not design it to be less dependent? In addition to the poor level of the author, another point is that some open-source libraries like OpenCV and Eigen, are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OPLib).</p>
+<p>Why not design it to be less dependent? In addition to the poor level of the author, another point is that some open-source libraries like OpenCV and Eigen, are used widely. If all io interfaces are used at a lower level, it is not convenient for the library to be used in more other projects (the author firstly used Open3D in one project. Because Open3D image reading uses a lower-level library instead of OpenCV, and the project uses OpenCV mat. The format conversion becomes very troublesome. So he decided to implemented the algorithm by hiself. This code became the earliest piece in OnePiece).</p>
 <h2 id="download">Download</h2>
-<p>The code is released in github: <a href="https://github.com/MyEvolution/OPLib">OPLib</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
+<p>The code is released in github: <a href="https://github.com/MyEvolution/OnePiece">OnePiece</a>. Test data can be downloaded from <a href="https://cloud.tsinghua.edu.cn/f/a2372da684f14330af21/?dl=1">TestData</a>.</p>
 <h2 id="why-one-piece">Why 'One Piece'?</h2>
 <ul>
 <li>One Piece is the final secret treasure in <a href="https://en.wikipedia.org/wiki/One_Piece">One Piece</a>. Congratulations on finding the treasure (I hope it can help you and is a treasure for you)!</li>
-<li>OPLib is also just one piece of knowledge in 3D vision and computer graphics. There is a vast ocean for you to explore. </li>
+<li>OnePiece is also just one piece of knowledge in 3D vision and computer graphics. There is a vast ocean for you to explore. </li>
 </ul>
               
             </div>

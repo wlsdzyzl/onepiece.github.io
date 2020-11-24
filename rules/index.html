@@ -129,8 +129,8 @@
             <div class="section">
               
                 <h2 id="_1">一些规则</h2>
-<p>既然想要对初学者友好，代码结构尽量清晰是很有必要的。这里说明一些OPLib在编写时候遵循的规则。</p>
-<p>首先，除了示例，所有的类，函数等，都被包含在<code>one_piece</code>命名空间里。而OPLib分成各个模块，每个模块也有各自的命名空间，分别是相机(<code>camera</code>)，几何(<code>geometry</code>)，视觉里程计(<code>odometry</code>)，闭环检测(<code>lcdetection</code>)，点云注册(<code>registration</code>)，优化(<code>optimization</code>)，生成模型(<code>integration</code>)，可视化(<code>visualization</code>)，算法(<code>algorithm</code>)以及其他工具(<code>tool</code>)。</p>
+<p>既然想要对初学者友好，代码结构尽量清晰是很有必要的。这里说明一些OnePiece在编写时候遵循的规则。</p>
+<p>首先，除了示例，所有的类，函数等，都被包含在<code>one_piece</code>命名空间里。而OnePiece分成各个模块，每个模块也有各自的命名空间，分别是相机(<code>camera</code>)，几何(<code>geometry</code>)，视觉里程计(<code>odometry</code>)，闭环检测(<code>lcdetection</code>)，点云注册(<code>registration</code>)，优化(<code>optimization</code>)，生成模型(<code>integration</code>)，可视化(<code>visualization</code>)，算法(<code>algorithm</code>)以及其他工具(<code>tool</code>)。</p>
 <p>目录以及文件名称都是大写加小写的方式(<code>OnePiece</code>)，命名空间都是小写加下划线(<code>one_piece</code>)，函数以及类名都是大写加小写(<code>OnePiece</code>)，而某个特定的对象是小写加下划线的方式(<code>one_piece</code>)(基本都是这样，有些函数可能由于作者疏忽而可能会有破坏规则的情况)。对于提前定义的一些特殊值或者参数用全部大写加下划线的方式(<code>MAX_VALUE</code>)。</p>
 <p>代码缩进参考python的语法。</p>
 <p>作者的注释写的很差。但是相关的文章会在<code>related_paper</code>文件夹中给出。</p>

@@ -138,7 +138,7 @@
               
                 <h2 id="visual-odometry">Visual Odometry</h2>
 <p><em>namespace: odometry</em></p>
-<p>The visual odometer here specifically refers to the RGBD visual odometer. The function of the visual odometer is to estimate the camera movement between two frames, which is the first step of SLAM. Two visual odometries are implemented in OPLib, which are widely used: Sparse matching based on feature points, and dense matching based on optical flow. The usage is very simple:</p>
+<p>The visual odometer here specifically refers to the RGBD visual odometer. The function of the visual odometer is to estimate the camera movement between two frames, which is the first step of SLAM. Two visual odometries are implemented in OnePiece, which are widely used: Sparse matching based on feature points, and dense matching based on optical flow. The usage is very simple:</p>
 <pre><code class="cpp">std::shared_ptr&lt;SparseTrackingResult&gt; SparseTracking(const cv::Mat &amp;source_color, const cv::Mat &amp;target_color, 
 const cv::Mat &amp;source_depth, const cv::Mat &amp;target_depth);
 
@@ -193,14 +193,14 @@ class DenseTrackingResult
 };
 </code></pre>
 
-<p>The main difference is that the ID types of the matching points finally obtained by the two are different. The sparse tracking feature point ID is one-dimensional. For example, a pair of correctly matched feature points is <span class="arithmatex">\((501, 308)\)</span>, which refers to the 501st feature point of source frame and the 308th feature point of target frame. The ID of the point for dense tracking is two-dimensional. The result is for example: <span class="arithmatex">\([(501, 308), (489, 311)]\)</span>, which refers to a pair of 3D points of source frame and target frame in pixel <span class="arithmatex">\((501, 308)\)</span>  and <span class="arithmatex">\((489, 311)\)</span>. Of course, the results of dense tracking can be integrated into the same form as the results of sparse tracking, but OPLib believes that this format is closer to the essence of the algorithm, because it reveals a piece of information: sparse tracking is based on the extracted feature points, while dense tracking is pixel by pixel.</p>
+<p>The main difference is that the ID types of the matching points finally obtained by the two are different. The sparse tracking feature point ID is one-dimensional. For example, a pair of correctly matched feature points is <span class="arithmatex">\((501, 308)\)</span>, which refers to the 501st feature point of source frame and the 308th feature point of target frame. The ID of the point for dense tracking is two-dimensional. The result is for example: <span class="arithmatex">\([(501, 308), (489, 311)]\)</span>, which refers to a pair of 3D points of source frame and target frame in pixel <span class="arithmatex">\((501, 308)\)</span>  and <span class="arithmatex">\((489, 311)\)</span>. Of course, the results of dense tracking can be integrated into the same form as the results of sparse tracking, but OnePiece believes that this format is closer to the essence of the algorithm, because it reveals a piece of information: sparse tracking is based on the extracted feature points, while dense tracking is pixel by pixel.</p>
 <h3 id="sparsetracking">SparseTracking</h3>
 <p>The basic steps of SparseTracking are as follows:
 - Extract feature points
 - Feature point matching
 - Outlier filtering
 - Compute the transformation matrix</p>
-<p>OPLib extract ORB feature, which is a fast binary feature. For feature matching, OPLib introduce two methods: BFMatcher(brutal fource) based on OpenCV, and Sparse Match introduced in <a href="https://github.com/lhanaf/MILD">MILD</a>(Open Source Library). Refer to <a href="https://arxiv.org/abs/1709.05833">Beyond SIFT Using Binary features in Loop Closure Detection</a> for details, which is downloaded in <code>relative_paper/sparse_match.pdf</code>. This method is packaged in class <code>SparseMatcher</code>, the main member functions are listed as following:</p>
+<p>OnePiece extract ORB feature, which is a fast binary feature. For feature matching, OnePiece introduce two methods: BFMatcher(brutal fource) based on OpenCV, and Sparse Match introduced in <a href="https://github.com/lhanaf/MILD">MILD</a>(Open Source Library). Refer to <a href="https://arxiv.org/abs/1709.05833">Beyond SIFT Using Binary features in Loop Closure Detection</a> for details, which is downloaded in <code>relative_paper/sparse_match.pdf</code>. This method is packaged in class <code>SparseMatcher</code>, the main member functions are listed as following:</p>
 <pre><code class="cpp">//Match
 void Match(const geometry::Descriptor &amp;source_descriptors, const geometry::Descriptor &amp;target_descriptors, 
     geometry::DMatchSet &amp; matches);
@@ -228,10 +228,10 @@ void RanSaPC(const geometry::Point3List &amp;source_local_points,
     const geometry::Point3List &amp;target_local_points, std::default_random_engine &amp;engine, std::vector&lt; cv::DMatch &gt; &amp;init_matches);
 </code></pre>
 
-<p>OPLib names the tracking function using <a href="https://github.com/lhanaf/MILD">MILD</a> as <code>SparseTrackingMILD</code>. Generally speaking, it has better performance than <code>SparseTracking</code> and can get more The right inliers.</p>
+<p>OnePiece names the tracking function using <a href="https://github.com/lhanaf/MILD">MILD</a> as <code>SparseTrackingMILD</code>. Generally speaking, it has better performance than <code>SparseTracking</code> and can get more The right inliers.</p>
 <h3 id="densetracking">DenseTracking</h3>
 <p>For details of DenseTracking, refer to <a href="https://vision.cs.tum.edu/_media/spezial/bib/steinbruecker_sturm_cremers_iccv11.pdf">Real-Time Visual Odometry from Dense RGB-D Images</a>, you can also find the paper from <code>related_paper/steinbruecker_sturm_cremers_iccv11.pdf</code>.</p>
-<p>The above paper is only for tracking the intensity of the color map, that is, the optical flow method. However it is easy to extend to track the depth of the depth map. In OPLib, you can choose to use color or depth term, or hybrid terms by changing the last parameter <code>term_type</code> :</p>
+<p>The above paper is only for tracking the intensity of the color map, that is, the optical flow method. However it is easy to extend to track the depth of the depth map. In OnePiece, you can choose to use color or depth term, or hybrid terms by changing the last parameter <code>term_type</code> :</p>
 <pre><code class="cpp">if(term_type == 0 )//hybrid
 std::cout&lt;&lt;BLUE&lt;&lt;&quot;[DEBUG]::Using hybrid term&quot;&lt;&lt;RESET&lt;&lt;std::endl;
 else if(term_type == 1)//color

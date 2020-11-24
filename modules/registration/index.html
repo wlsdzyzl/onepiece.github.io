@@ -162,14 +162,14 @@ std::shared_ptr&lt;RegistrationResult&gt;
 </code></pre>
 
 <p>上面两个函数的区别在于第一个是直接对两个点云进行注册，第二个是对特征点进行注册，也就是跳过了提取3D特征这一步。在构建一个系统时候，保存3D特征可以避免重复计算，提高效率。</p>
-<p>提取3D特征的库一般在PCL或者Open3D这种库中有实现，但是这样的库太大，OpenCV没有实现3D特征的提取，所以OPLib实现了这一部分，提取FPFH特征，可以通过下面的函数计算得到：</p>
+<p>提取3D特征的库一般在PCL或者Open3D这种库中有实现，但是这样的库太大，OpenCV没有实现3D特征的提取，所以OnePiece实现了这一部分，提取FPFH特征，可以通过下面的函数计算得到：</p>
 <pre><code class="cpp">std::tuple&lt;geometry::PointCloud, FeatureSet&gt; DownSampleAndExtractFeature(const geometry::PointCloud &amp;pcd, 
     const RANSACParameter &amp;r_para = RANSACParameter()); 
 </code></pre>
 
 <p>上面函数输入为点云以及相关参数，返回提取到的特征点位置以及特征（33维向量）。在match时候，只要进行knnsearch，搜索最近点得到匹配结果。outlier的过滤与<a href="../odometry/#sparsetracking">SparseTracking</a>中原理很相似，在这里就不多介绍了。最后通过<a href="../geometry/#ransach">RANSAC</a>来计算得到变换矩阵以及inliers。</p>
 <h3 id="icp">ICP</h3>
-<p>ICP(iterative closest point)是很经典的算法，变种很多，OPLib实现了ICP比较基础的两种，一种是点对点（PointToPoint），一种是点对面（PointToPlane）。</p>
+<p>ICP(iterative closest point)是很经典的算法，变种很多，OnePiece实现了ICP比较基础的两种，一种是点对点（PointToPoint），一种是点对面（PointToPlane）。</p>
 <h4 id="pointtopoint">PointToPoint</h4>
 <p>优化点到点的距离，优化的目标函数为：<span class="arithmatex">\(\Vert T \cdot p_s - p_t\Vert^2\)</span>。根据OpenCV的KDtree找到最近点，可通过<code>geometry::EstimateRigidTransformation</code>函数直接求得最优的<span class="arithmatex">\(T\)</span>（也可以通过求雅可比矩阵优化），接着根据新的<span class="arithmatex">\(T\)</span>重新寻找最近点，不断迭代到收敛。</p>
 <h4 id="pointtoplane">PointToPlane</h4>
